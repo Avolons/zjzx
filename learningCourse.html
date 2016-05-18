@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+			html {
+				height: 100%;
+				background-color: #FFFFFF;
+			}
+			
+			body {
+				font-family: "微软雅黑";
+				color: #333333;
+			}
+			
+			li {
+				list-style: none;
+			}
+			
+			body .mui-bar-nav {
+				background-color: #e93f32;
+			}
+			
+			.mui-bar h1 {
+				color: #FFFFFF;
+				font-family: "微软雅黑";
+				font-size: 20px;
+			}
+			
+			.mui-bar-nav a {
+				color: #FFFFFF;
+			}
+			
+			#table_one {
+				font-family: "微软雅黑";
+				color: #333333;
+				position: relative;
+				height: 36px;
+				padding: 0;
+				margin: 0;
+				display: -webkit-box;
+				-webkit-box-pack: justify;
+				background-color: #FFFFFF
+			}
+			
+			#table_one>li {
+				width: 100%;
+				font-size: 15px;
+				height: 36px;
+				line-height: 36px;
+				text-align: center;
+			}
+			#table_one>li>a{
+				color: #909090;
+			}
+			
+			#table_one>li:nth-of-type(1) {
+				-webkit-box-flex: 1;
+			}
+			
+			#table_one>li:nth-of-type(2) {
+				-webkit-box-flex: 1;
+			}
+			
+			#table_one>li:nth-of-type(3) {
+				-webkit-box-flex: 1;
+			}
+			
+			#table_one>li:nth-of-type(1):after {
+				content: "";
+				display: block;
+				background-color: #d9d9d9;
+				height: 16px;
+				width: 1px;
+				float: right;
+				margin-top: 10px;
+			}
+			
+			#table_one>li:nth-of-type(2):after {
+				content: "";
+				display: block;
+				background-color: #d9d9d9;
+				height: 16px;
+				width: 1px;
+				float: right;
+				margin-top: 10px;
+			}
+			
+			#table_one>li>ul {
+				display: none;
+				width: 100%;
+				padding: 0;
+				margin: 0;
+				position: absolute;
+				left: 0;
+				top: 36px;
+				background-color: #FFFFFF;
+				margin-bottom: 42px;
+			}
+			
+			#table_index>li {
+				padding: 0 16px;
+				text-align: left;
+				font-size: 14px;
+				height: 50px;
+				line-height: 50px;
+			}
+			
+			body .mui-bar-tab {
+				height: 42px;
+			}
+			
+			body .mui-bar-tab .mui-tab-item {
+				height: 42px;
+				box-sizing: border-box;
+			}
+			
+			#table_one>li .table {
+				display: block;
+			}
+			
+			footer {
+				width: 100%;
+				height: 42px;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				border-top: 1px solid #ececec;
+				z-index: 999;
+				background-color: #FFFFFF;
+				padding-right: 37px;
+			}
+			
+			footer>.mui-icon {
+				height: 42px;
+				width: 42px;
+				line-height: 42px;
+				text-align: center;
+				font-size: 20px;
+				float: right;
+				display: block;
+			}
+			
+			#table_index>li>span {
+				font-size: 10px;
+				margin-bottom: 19px;
+				margin-right: 8px;
+			}
+			
+			#table_index>li>b {
+				position: absolute;
+				right: 16px;
+				font-weight: 500;
+			}
+			
+			#table_one>li .click {
+				color: #E93F32;
+			}
+			
+			.video-js {
+				width: 100%;
+			}
+			#get_list>li{
+				border-top: 1px solid #e3e2e2;
+				padding: 15px;
+			}
+			#get_list>li:after{
+				content: "";
+				display: block;
+				clear: both;
+			}
+			#get_list>li>img{
+				display: block;
+				border-radius: 50%;
+				height: 30px;
+				width: 30px;
+				float: left;
+				margin-right: 10px;
+			}
+			#get_list>li>div{
+				float: left;
+			}
+			#get_list>li>div>h3{
+				text-align: left;
+				font-size: 15px;
+				color: #434343;
+				margin-bottom: 10px;
+			}
+			#get_list>li>div>p{
+				text-align: left;
+				font-size: 14px;
+				color: #999999;
+				line-height: 16px;
+				margin-bottom: 17px;
+			}
+			#get_list>li>div>h6{
+				text-align: left;
+				font-size: 11px;
+				color: #c7c7c7;
+			}
+			#talk_list {
+				padding: 0;
+				margin: 0;
+			}
+			
+			#talk_list>li {
+				border-top: 1px solid #e3e2e2;
+				padding: 15px;
+				margin-top: 5px;
+				background-color: #FFFFFF
+			}
+			
+			#talk_list>li>ul {
+				padding: 0;
+				margin: 0;
+				float: left;
+			}
+			
+			#talk_list li:after {
+				content: "";
+				display: block;
+				clear: both;
+				height: 0;
+			}
+			
+			#talk_list>li img {
+				display: block;
+				border-radius: 50%;
+				height: 30px;
+				width: 30px;
+				float: left;
+				margin-right: 10px;
+			}
+			
+			#talk_list>li>div {
+				float: left;
+			}
+			
+			#talk_list>li>ul>li>div {
+				float: left;
+			}
+			
+			#talk_list>li div>h3 {
+				text-align: left;
+				font-size: 15px;
+				color: #434343;
+				margin-bottom: 10px;
+			}
+			
+			#talk_list>li div>p {
+				text-align: left;
+				font-size: 14px;
+				color: #999999;
+				line-height: 16px;
+				margin-bottom: 7px;
+			}
+			
+			#talk_list>li div .time {
+				line-height: 30px;
+				height: 30px;
+			}
+			
+			#talk_list>li div .time h6 {
+				height: 30px;
+				line-height: 30px;
+				margin: 0;
+				text-align: left;
+				font-size: 11px;
+				color: #c7c7c7;
+				float: left;
+			}
+			
+			#talk_list>li div .time:after {
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			#talk_list>li div .time .rightback {
+				line-height: 30px;
+				height: 30px;
+				color: #d5d5d5;
+				font-size: 11px;
+				float: right;
+			}
+			.talkback{
+				float: left;
+				width: calc(100% - 40px);
+			}
+			#get_list>button{ 
+				display: block;
+				border-radius: 0;
+				margin: 0;
+				width: 100%;
+				border-bottom: 0;
+			}
+		</style>
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/video-js.min.css" />
+		<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/video.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/webjwplayer.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/webjwplayer.html5.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" id="title">行动日志——成功人士的</h1>
+		</header>
+		<footer>
+			<span class="mui-icon iconfont icon-fenxiang" style="color: #E93F32;" id="share"></span>
+			<span class="mui-icon iconfont icon-shoucang" style="color: #acabab;font-size: 25px;" id="collection"></span>
+
+		</footer>
+		<div class="mui-content">
+			<div class="video-wrap clearfix">
+				<div id="video" style="position:relative;">
+					<img src="http://img.mukewang.com/5715f0dc000103d607200480-590-330.jpg" alt="为什么要有可选型" width="100%" style="position:absolute;top:0;left:0;">
+				</div>
+			</div>
+
+			<ul id="table_one">
+				<li><a href="javascript:void(0);" class="click">目录</a>
+					<ul id="table_index" class="table">
+						<li id="childTitle">课程名称：行动日志——成功人士的五项修炼</li>
+					</ul>
+				</li>
+				<li><a href="javascript:void(0);" >心得</a>
+					<ul id="get_list"  >
+						<button type="button"   id="addCourseGet">输入课程心得</button>    
+						<li>
+							<img src="images/course/weixin.png"/>
+							<div class="talkback" >
+								<h3>匿名</h3>
+								<p>感觉很好还不错学到了很多知识嘻嘻</p>
+								<h6>2016-04-23   10:05:01</h6>
+							</div>
+						</li>
+						<li>
+							<img src="images/course/weixin.png"/>
+							<div class="talkback" >
+								<h3>匿名</h3>
+								<p>感觉很好还不错学到了很多知识嘻嘻</p>
+								<h6>2016-04-23   10:05:01</h6>
+							</div>
+						</li>
+						<li>
+							<img src="images/course/weixin.png"/>
+							<div class="talkback" >
+								<h3>匿名</h3>
+								<p>感觉很好还不错学到了很多知识嘻嘻</p>
+								<h6>2016-04-23   10:05:01</h6>
+							</div>
+						</li>
+						<li>
+							<img src="images/course/weixin.png"/>
+							<div class="talkback" >
+								<h3>匿名</h3>
+								<p>感觉很好还不错学到了很多知识嘻嘻感觉很好还不错学到了很</p>
+								<h6>2016-04-23   10:05:01</h6>
+							</div>
+						</li>
+					</ul>
+				</li>
+				<li><a href="javascript:void(0);" >讨论</a>
+					<ul id="talk_list" >
+						<li>
+							<img src="images/course/weixin.png"/>
+							<div class="talkback">
+								<h3>匿名</h3>
+								<p>感觉很好还不错学到了很多知识嘻嘻</p>
+								<div class="time">
+									<h6>2016-04-23   10:05:01</h6>
+									<div class="rightback">
+										<span class="mui-icon iconfont icon-taolun"></span>
+										<span>0</span>
+										<span class="mui-icon iconfont icon-xuexi"></span>
+										<span>回答</span>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+						<img src="images/course/weixin.png"/>
+							<div class="talkback">
+								<h3>匿名</h3>
+								<p>感觉很好还不错学到了很多知识嘻嘻</p>
+								<div class="time">
+									<h6>2016-04-23   10:05:01</h6>
+									<div class="rightback">
+										<span class="mui-icon iconfont icon-taolun"></span>
+										<span>0</span>
+										<span class="mui-icon iconfont icon-xuexi"></span>
+										<span>回答</span>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+						<img src="images/course/weixin.png"/>
+							<div class="talkback">
+								<h3>匿名</h3>
+								<p>感觉很好还不错学到了很多知识嘻嘻</p>
+								<div class="time">
+									<h6>2016-04-23   10:05:01</h6>
+									<div class="rightback">
+										<span class="mui-icon iconfont icon-taolun"></span>
+										<span>0</span>
+										<span class="mui-icon iconfont icon-xuexi"></span>
+										<span>回答</span>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+						<img src="images/course/weixin.png"/>
+							<div class="talkback">
+								<h3>匿名</h3>
+								<p>感觉很好还不错学到了很多知识嘻嘻</p>
+								<div class="time">
+									<h6>2016-04-23   10:05:01</h6>
+									<div class="rightback">
+										<span class="mui-icon iconfont icon-taolun"></span>
+										<span>0</span>
+										<span class="mui-icon iconfont icon-xuexi"></span>
+										<span>回答</span>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<div style="display: none">
+			<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff0cfcccd7b1393990c78efdeebff3968' type='text/javascript'%3E%3C/script%3E"));
+			</script>
+		</div>
+		<script>
+			var pageInfo = {
+				mid: 11679
+			};
+			pageInfo.islogin = 0;
+			var course = course || {};
+			course.videoUrl = "http://v1.mukewang.com/0eb562b5-5772-4099-8236-c7ba084248f5/L.mp4";
+			course.imageUrl = "http://img.mukewang.com/5715f0dc000103d607200480-590-330.jpg";
+			course.allowId = "11679";
+			$(function() {
+				// 视频播放器初始化
+				if (course.videoUrl && course.videoUrl != "false") {
+					videoPlayer = jwplayer('video').setup({
+						file: course.videoUrl.replace(/\.flv\s*$/, ".mp4"),
+						autostart: "true",
+						width: "100%",
+						startparam: "starttime",
+						aspectratio: "16:9",
+						image: course.imageUrl,
+						primary: "html5",
+						autochange: true,
+						events: {
+							onComplete: function() {
+								sendLearnTime();
+							}
+						}
+					});
+				}
+			});
+			
+			//table的切换效果
+			$("#table_one>li").on("tap",function  () {
+				$(this).children("a").addClass("click");
+				$(this).children("ul").addClass("table");
+				$(this).siblings().children("a").removeClass("click");
+				$(this).siblings().children("ul").removeClass("table");
+			})
+			
+		</script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			var courselist = {
+				title: "心动日志-成功人士的",
+				childTitle: "行动日志-成功人士的五项基本修炼",
+				courseList: [{
+					title: "行动日志-成功人士的五项基本修炼",
+					time: "31:02"
+				}, {
+					title: "行动日志-成功人士的五项基本修炼",
+					time: "31:02"
+				}, {
+					title: "行动日志-成功人士的五项基本修炼",
+					time: "31:02"
+				}, {
+					title: "行动日志-成功人士的五项基本修炼",
+					time: "31:02"
+				}, {
+					title: "行动日志-成功人士的五项基本修炼",
+					time: "31:02"
+				}, {
+					title: "行动日志-成功人士的五项基本修炼",
+					time: "31:02"
+				}, {
+					title: "行动日志-成功人士的五项基本修炼",
+					time: "31:02"
+				}]
+			}
+			//目录页的标题的修改
+			var title = document.getElementById("title");
+			var childTitle = document.getElementById("childTitle");
+			title.innerHTML = courselist.title;
+			childTitle.innerHTML = courselist.childTitle;
+			//获取所需修改的一级二级标题
+			function creatList(courselist) {
+				var famework = "";
+				for (var i = 0; i < courselist.courseList.length; i++) {
+					famework += '<li><span class="mui-icon iconfont icon-yousanjiao"></span>' + (i + 1) + '.' + courselist.courseList[i].title + '<b>' + courselist.courseList[i].time + '</b></li>'
+				}
+				return famework;
+			}
+			var table_index=document.getElementById("table_index");
+			//获取课程列
+			table_index.innerHTML += creatList(courselist);
+			
+			window.addEventListener('newsId',function(event){
+			  //获得事件参数
+			  var id = event.detail.id;
+			  
+			  mui.get('http://server-name/list.php',{courseid:id},function(data){
+						//获得服务器响应
+						title.innerHTML = data.title;
+			            childTitle.innerHTML = data.childTitle;
+			            table_index.innerHTML += creatList(data);
+					},'json'
+				);
+			  //根据id向服务器请求课程详情
+			});
+			//	将数据进行添加
+			
+			var indexs = document.getElementById("table_index").getElementsByTagName("li");
+			for (var i = 0; i < indexs.length; i++) {
+				if (i % 2 == 0) {
+					indexs[i].style.backgroundColor = "#f5f5f5";
+				}
+			}
+			//控制课程目录的背景颜色间隔
+			
+			
+			var getlist=[{
+				imgsrc:"images/course/weixin.png",
+				name:"匿名",
+				p:"感觉很好还不错学到了很多知识嘻嘻",
+				time:"2016-04-23   10:05:01"
+			},{
+				imgsrc:"images/course/weixin.png",
+				name:"匿名",
+				p:"感觉很好还不错学到了很多知识嘻嘻",
+				time:"2016-04-23   10:05:01"
+			},{
+				imgsrc:"images/course/weixin.png",
+				name:"匿名",
+				p:"感觉很好还不错学到了很多知识嘻嘻",
+				time:"2016-04-23   10:05:01"
+			},{
+				imgsrc:"images/course/weixin.png",
+				name:"匿名",
+				p:"感觉很好还不错学到了很多知识嘻嘻",
+				time:"2016-04-23   10:05:01"
+			},];
+			
+			
+			function creatgetlist (list) {
+				var frame=document.createDocumentFragment();
+				var li;
+				for (var i=0;i<list.length;i++) {
+					li=document.createElement("li");
+					li.innerHTML='<img src='+list[i].imgsrc+' /><div class="talkback"><h3>'+list[i].name+'</h3><p>'+list[i].p+'</p><h6>'+list[i].time+'</h6>'
+				    frame.appendChild(li);
+				}
+				return frame;
+			}
+			
+			var getList=document.getElementById("get_list");
+			getList.appendChild(creatgetlist(getlist));
+			
+			
+			
+			document.getElementById("addCourseGet").addEventListener('click',function(e) {
+				//修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+				var btnArray = ['取消', '确定'];
+				mui.prompt('请输入你的心得：', '很有收获', 'Hello ZJZX', btnArray, function(e) {
+					if (e.index == 1) {
+						var src = "images/course/weixin.png";
+						//获取img的src值
+						var time = getNowFormatDate();
+						//获取回复时的时间
+						var thisname = '誓约胜利之剑';
+						//回复的昵称，本人的昵称 
+						$("#get_list").append(creatnewget(src, thisname, e.value, time));	
+					}
+				})
+			})
+			
+			function creatnewget(src, name, texts, time) {
+				var li = document.createElement("li")
+				li.innerHTML = '<img src=' + src + ' /><div class="talkback"><h3>' + name + '</h3><p>' + texts + '</p><h6>' + time + '</h6>'
+				return li;
+			}
+
+			function getNowFormatDate() {
+				var date = new Date();
+				var seperator1 = "-";
+				var seperator2 = ":";
+				var month = date.getMonth() + 1;
+				var strDate = date.getDate();
+				if (month >= 1 && month <= 9) {
+					month = "0" + month;
+				}
+				if (strDate >= 0 && strDate <= 9) {
+					strDate = "0" + strDate;
+				}
+				var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate + " " + date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
+				return currentdate;
+			}
+			
+			
+			
+			var talklist=[{
+				imgsrc:"images/course/weixin.png",
+				name:"匿名",
+				p:"感觉很好还不错学到了很多知识嘻嘻",
+				time:"2016-04-23   10:05:01",
+				number:"3",
+				backlist:[{
+					imgsrc:"images/course/weixin.png",
+					name:"匿名",
+					p:"感觉很好还不错学到了很多知识嘻嘻",
+					time:"2016-04-23   10:05:01"
+				},{
+					imgsrc:"images/course/weixin.png",
+					name:"匿名",
+					p:"感觉很好还不错学到了很多知识嘻嘻",
+					time:"2016-04-23   10:05:01"
+				},{
+					imgsrc:"images/course/weixin.png",
+					name:"匿名",
+					p:"感觉很好还不错学到了很多知识嘻嘻",
+					time:"2016-04-23   10:05:01"
+				},]
+			},{
+				imgsrc:"images/course/weixin.png",
+				name:"匿名",
+				p:"感觉很好还不错学到了很多知识嘻嘻",
+				time:"2016-04-23   10:05:01",
+				number:"3",
+				backlist:[]
+			}];
+			function creatbacklist (list) {
+				var li="";
+				for (var i=0;i<list.length;i++) {
+					li+='<img src='+list[i].imgsrc+' /><div class="talkback"><h3>'+list[i].name+'</h3><p>'+list[i].p+'</p><div class="time"><h6>'+list[i].time+'</h6><div class="rightback"><span class="mui-icon iconfont icon-xuexi"></span><span  class="answer_two">回答</span></div></div></div>'
+				}
+				return li;
+			}
+			
+			function creattalklist (list) {
+				var frame=document.createDocumentFragment();
+				var li;
+				for (var i=0;i<list.length;i++) {
+					li=document.createElement("li");
+					li.innerHTML='<img src='+list[i].imgsrc+' /><div class="talkback"><h3>'+list[i].name+'</h3><p>'+list[i].p+'</p><div class="time"><h6>'+list[i].time+'</h6><div class="rightback"><span class="mui-icon iconfont icon-taolun"></span><span>'+list[i].number+'</span><span class="mui-icon iconfont icon-xuexi"></span><span class="answer">回答</span></div></div></div><ul class="callback">'+creatbacklist (list[i].backlist)+'</ul>'
+				    frame.appendChild(li);
+				}
+				return frame;
+			}
+			
+			document.getElementById("talk_list").appendChild(creattalklist(talklist));
+			
+			$('.answer_two').on("click", function(e) {
+				//修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+				var btnArray = ['取消', '确定'];
+				var that = $(this)
+				mui.prompt('请输入你的评论：', '老师讲的好', 'Hello ZJZX', btnArray, function(e) {
+					if (e.index == 1) {
+						var src = that.parents('.talkback').prev('img').attr('src');
+						//获取img的src值
+						var backname = that.parents('.talkback').children('h3').html().split('回复')[0];
+						//获取需要回复的昵称
+						var time = getNowFormatDate();
+						//获取回复时的时间
+						var thisname = '誓约胜利之剑';
+						//回复的昵称，本人的昵称 
+						that.parents('.callback').append(creatAnswer(src, thisname + '  回复   ' + backname, e.value, time));
+						
+					}
+				})
+			});
+			
+			
+			//为一级目录添加回复事件
+			$('.answer').on("click", function(e) {
+				//修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+				var btnArray = ['取消', '确定'];
+				var that = $(this)
+				mui.prompt('请输入你的评论：', '老师讲的好', 'Hello ZJZX', btnArray, function(e) {
+					if (e.index == 1) {
+						var src = that.parents('.talkback').prev('img').attr('src');
+						//获取img的src值
+						var backname = that.parents('.talkback').children('h3').html().split('回复')[0];
+						//获取需要回复的昵称
+						var time = getNowFormatDate();
+						//获取回复时的时间
+						var thisname = '誓约胜利之剑';
+						//回复的昵称，本人的昵称 
+						that.parents('li').children('.callback').append(creatAnswer(src, thisname + '  回复   ' + backname, e.value, time));
+						
+					}
+				})
+			});
+            
+            //定义回复事件的dom操作
+			function creatAnswer(src, name, texts, time) {
+				var li = document.createElement("li")
+				li.innerHTML = '<img src=' + src + ' /><div class="talkback"><h3>' + name + '</h3><p>' + texts + '</p><div class="time"><h6>' + time + '</h6><div class="rightback"><span class="mui-icon iconfont icon-xuexi"></span><span class="answer_two">回答</span></div></div></div>'
+				return li;
+			}
+			
+			//重写back函数，退出后会关闭整个页面
+			mui.plusReady(function  () {
+				var thiswebview=plus.webview.currentWebview();
+				mui.back=function  () {
+					plus.webview.close(thiswebview);
+				}
+				
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			body,
+			html {
+				width: 100%;
+				font-family: "微软雅黑";
+			}
+			
+			body .mui-bar-nav {
+				background-color: #e93f32;
+			}
+			
+			.mui-bar h1 {
+				color: #FFFFFF;
+				font-family: "微软雅黑";
+				font-size: 20px;
+			}
+			
+			.mui-bar-nav a {
+				color: #FFFFFF;
+			}
+			
+			.mui-content {
+				background-color: #FFFFFF
+			}
+			
+			li {
+				list-style: none;
+			}
+			
+			#message_list {
+				margin: 0;
+				padding: 0 16.5px;
+			}
+			
+			#message_list li {
+				height: 70px;
+				padding: 15px 0;
+				border-bottom: 1px solid #e7e7e7;
+			}
+			
+			#message_list li .img_outer {
+				position: relative;
+				display: block;
+				height: 40px;
+				float: left;
+				margin-right: 10px;
+			}
+			
+			#message_list li .img_outer img {
+				display: block;
+				width: 40px;
+			}
+			
+			#message_list li>div {
+				float: left;
+				height: 40px;
+			}
+			
+			#message_list li>div:nth-last-of-type {
+				width: calc(100% - 50px);
+			}
+			
+			.title:after {
+				content: "";
+				clear: both;
+				display: block;
+			}
+			
+			.title h6 {
+				font-size: 15px;
+				color: #5f5f5f;
+				float: left;
+				margin: 0;
+			}
+			
+			.title b {
+				font-size: 11px;
+				color: #afafaf;
+				float: right;
+			}
+			
+			.intrdouce p {
+				font-size: 13px;
+				color: #ababab;
+				width: 100%;
+				white-space: pre;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			
+			.noneRead:after {
+				content: "";
+				display: block;
+				height: 7px;
+				width: 7px;
+				border-radius: 50%;
+				position: absolute;
+				z-index: 9999;
+				background-color: #e93f32;
+				right: -1px;
+				top: -1px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">消息通知</h1>
+		</header>
+		<div class="mui-content">
+			<ul id="message_list">
+				<li>
+					<div class="img_outer noneRead">
+						<img src="images/message/system.png" />
+					</div>
+					<div class="intrdouce">
+						<div class="title">
+							<h6>系统通知</h6>
+							<b>16/04/25</b>
+						</div>
+						<p>为适应职业资格证书制度改革工作需要，我部对</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({
+				preloadPages: [{
+					id: 'messageInformation.html',
+					url: 'messageInformation.html'
+				}]
+			});
+			var message = [{
+				noneread: 'true',
+				id: 'sadfas',
+				imgsrc: "images/message/system.png",
+				title: "系统通知",
+				time: "16/04/25",
+				innertext: "为适应职业资格证书制度改革工作需要，我部对"
+			}, {
+				noneread: 'false',
+				id: 'sadfas',
+				imgsrc: "images/message/logo.png",
+				title: "通知消息",
+				time: "16/04/25",
+				innertext: "您订购的教材《地理》等，已发货"
+			}, {
+				noneread: 'true',
+				id: 'sadfas',
+				imgsrc: "images/message/charster.png",
+				title: "系统通知",
+				time: "16/04/25",
+				innertext: "为适应职业资格证书制度改革工作需要，我部对"
+			}]
+			
+            
+			function creatMessage(message_list) {
+				var farme = document.createDocumentFragment();
+				var li;
+				for (var i = 0; i < message_list.length; i++) {
+					li = document.createElement("li");
+					if (message_list[i].noneread == "true") {
+						li.innerHTML = '<div class="img_outer noneRead"><img src=' + message_list[i].imgsrc + ' /></div><div class="intrdouce"><div class="title"><h6>' + message_list[i].title + '</h6><b>' + message_list[i].time + '</b></div><p>' + message_list[i].innertext + '</p></div>';
+					} else {
+						li.innerHTML = '<div class="img_outer"><img src=' + message_list[i].imgsrc + ' /></div><div class="intrdouce"><div class="title"><h6>' + message_list[i].title + '</h6><b>' + message_list[i].time + '</b></div><p>' + message_list[i].innertext + '</p></div>';
+					}
+					li.newsid=message_list[i].id;
+					farme.appendChild(li);
+				}
+				return farme;
+			}
+			document.getElementById("message_list").appendChild(creatMessage(message));
+			mui.ajax('http://server-name/login.php',{
+				data:{
+					user:'username',
+					school:'password'
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				success:function(data){
+					document.getElementById("message_list").appendChild(creatMessage(data));
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					console.log(type);
+				}
+			});
+			var detailPage = null;
+			//定义下级目录
+			$("li").on('tap', function() {
+				var imgouter = $(this).children('.img_outer');
+				if (imgouter.hasClass('noneRead')) {
+					imgouter.removeClass("noneRead");
+				}
+				if (!detailPage) {
+					detailPage = plus.webview.getWebviewById('messageInformation.html');
+				}
+				//触发详情页面的newsId事件
+				var newsid=this.newsid;
+					mui.fire(detailPage, 'messageId', {
+						id: newsid
+					});
+				mui.openWindow({
+						id: 'messageInformation.html',
+						styles: {
+							scrollIndicator: "none"
+						}
+					})
+					//发送ajax；
+					//重新刷新页面,
+			})
+		</script>
+	</body>
+
+</html>

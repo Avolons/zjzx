@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<!--<link rel="stylesheet" type="text/css" href="css/app.css" />-->
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			html,
+			body {
+				height: 100%;
+				background-color: #FFFFFF
+			}
+			
+			body .mui-bar-nav {
+				background-color: #e93f32;
+			}
+			
+			.mui-bar h1 {
+				color: #FFFFFF;
+				font-family: "微软雅黑";
+				font-size: 20px;
+			}
+			
+			.mui-bar-nav a {
+				color: #FFFFFF;
+			}
+			
+			.studyCard {
+				font-family: "微软雅黑";
+				margin: 0;
+				padding: 0;
+				margin-bottom: 13px;
+				background-color: #FFFFFF
+			}
+			
+			.studyCard>li {
+				list-style: none;
+				height: 35px;
+				border-bottom: 1px solid #e8e8e8;
+				line-height: 35px;
+				padding: 0 20px;
+			}
+			
+			ul h5 {
+				font-size: 15px;
+				color: #333333;
+				height: 40px;
+				line-height: 40px;
+				padding-left: 20px;
+				border-bottom: 1px solid #e8e8e8;
+			}
+			
+			li a {
+				font-size: 13px;
+				color: #737373;
+			}
+			
+			.right {
+				float: right;
+			}
+			
+			.address {
+				font-family: "微软雅黑";
+				background-color: #FFFFFF;
+				padding: 15px 45px 20px 20px;
+			}
+			
+			.address>h5 {
+				font-size: 15px;
+				color: #333333;
+				margin-bottom: 20px;
+			}
+			
+			.addresslist {
+				height: 25px;
+				margin-bottom: 13px;
+			}
+			
+			.addresslist:after {
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			.addresslist i {
+				float: left;
+				text-align: center;
+				display: block;
+				color: #ffa759;
+				height: 25px;
+				line-height: 25px;
+				width: 5%;
+			}
+			
+			.addresslist h3 {
+				float: left;
+				text-align: center;
+				margin: 0;
+				font-size: 13px;
+				color: #333333;
+				height: 25px;
+				line-height: 25px;
+				width: 30%;
+			}
+			
+			.addresslist input {
+				float: left;
+				text-align: center;
+				font-family: "微软雅黑";
+				font-size: 13px;
+				height: 25px;
+				border-radius: 0;
+				padding: 0;
+				margin: 0;
+				width: 55%;
+			}
+			
+			.addresslist button {
+				float: left;
+				width: 55%;
+				height: 25px;
+				border-radius: 0;
+				padding: 0;
+				margin: 0;
+				text-align: center;
+				font-family: "微软雅黑";
+				font-size: 13px;
+				color: #c4c4c4;
+			}
+			
+			.addresslist span {
+				float: left;
+				text-align: center;
+				display: block;
+				color: #76d872;
+				width: 10%;
+			}
+			
+			.detail textarea {
+				width: 85%;
+				margin-left: 5%;
+				border-radius: 0;
+				padding: 0;
+				height: 50px;
+				text-align: left;
+				font-family: "微软雅黑";
+				font-size: 13px;
+			}
+			
+			.detail {
+				height: 50px;
+			}
+			
+			.ui-alert {
+				text-align: center;
+				padding: 20px 10px;
+				font-size: 16px;
+				display: none;
+			}
+			
+			.submit {
+				display: -webkit-box;
+				-webkit-box-pack: center;
+			}
+			
+			.submit button {
+				display: block;
+				width: 20%;
+				border-radius: 0;
+				color: #FFFFFF;
+				background-color: #f2b928;
+				border: none;
+			}
+			
+			.mui-content .pursePerson {
+				display: none;
+			}
+			
+			.mui-content .content {
+				display: none;
+			}
+			
+			.mui-content .showCityPicker3 {
+				display: none;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">激活学习卡</h1>
+		</header>
+		<div class="mui-content">
+			<ul id="courseIncloud" class="studyCard">
+				<h5>包含课程</h5>
+				<li><a href="javascript:void(0);" class="left">课程编号：</a>
+					<a href="javascript:void(0);" class="right"></a>
+				</li>
+				<li><a href="javascript:void(0);" class="left">课程名称 :</a>
+					<a href="javascript:void(0);" class="right"></a>
+				</li>
+				<li><a href="javascript:void(0);" class="left">学习有效期（天）：</a>
+					<a href="javascript:void(0);" class="right"></a>
+				</li>
+				<li></li>
+			</ul>
+			<ul id="bookIncloud" class="studyCard">
+				<h5>包含教材</h5>
+				<li><a href="javascript:void(0);" class="left">教材编号 :</a>
+					<a href="javascript:void(0);" class="right"></a>
+				</li>
+				<li><a href="javascript:void(0);" class="left">教材名称 : </a>
+					<a href="javascript:void(0);" class="right"></a>
+				</li>
+				<li><a href="javascript:void(0);" class="left">教材类型 : </a>
+					<a href="javascript:void(0);" class="right"></a>
+				</li>
+				<li><a href="javascript:void(0);" class="left">出版社: </a>
+					<a href="javascript:void(0);" class="right"></a>
+				</li>
+			</ul>
+
+			<div class="address">
+				<h5>请填写收货地址</h5>
+				<div class="addresslist">
+					<i>*</i>
+					<h3>收货人:</h3><input type="text" name="" id="pursePerson" placeholder="请填写收货人姓名" /><span class="pursePerson">√</span>
+				</div>
+				<div class="addresslist">
+					<i>*</i>
+					<h3>联系方式：</h3><input type="text" name="" id="content" placeholder="请填写联系方式" /><span class="content">√</span>
+				</div>
+				<div class="addresslist">
+					<i>*</i>
+					<h3>所在地区：</h3><button id='showCityPicker3' class="mui-btn mui-btn-block" type='button'>请填写所在地区</button>
+					<div id='cityResult3' class="ui-alert"></div><span class='showCityPicker3'>√</span>
+				</div>
+				<div class="addresslist  detail">
+					<textarea name="" rows="" cols="" placeholder="请输入具体地址" id="specificAddress"></textarea>
+				</div>
+				<div class="addresslist submit">
+					<button type="button" id="submits">确定</button>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script src="js/city.data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="UTF-8">
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					var presentWebview = plus.webview.currentWebview();
+					var informationUrl = presentWebview.information;
+					$.getJSON(informationUrl, {
+						category: 'news'
+					}, function(data) {
+						//获取到所要显示在页面的静态数据
+						var courseIncloud = [
+							'kc000050',
+							'新商务礼仪',
+							'100'
+						]
+						var bookIncloud = [
+							'jc000000',
+							'地理',
+							'教材',
+							'----'
+						]
+						var courses = document.getElementById("courseIncloud").getElementsByClassName('right');
+						var books = document.getElementById("bookIncloud").getElementsByClassName('right');
+						//获取了数据之后，通过js进行渲染。
+						for (var i = 0; i < courses.length; i++) {
+							courses[i].innerHTML = courseIncloud[i];
+						}
+						for (var i = 0; i < books.length; i++) {
+							books[i].innerHTML = bookIncloud[i];
+						}
+					});
+					//地区选择插件
+					var cityPicker3 = new $.PopPicker({
+						layer: 3
+					});
+					cityPicker3.setData(cityData3);
+					//插件初始化
+					var showCityPickerButton = doc.getElementById('showCityPicker3');
+					//地区
+					var cityResult3 = doc.getElementById('cityResult3');
+					var area_data;
+					var consignee = document.getElementById("pursePerson");
+					var consignee_data;
+					//收货人
+					var content = document.getElementById("content");
+					var content_data;
+					//联系方式
+					var specificAddress = document.getElementById("specificAddress");
+					var specificAddress_data;
+					//具体地址，这三个数据都会使用正则匹配
+					//所在地区
+					var local = localStorage;
+					local.getItem("consignee_data") ? consignee.value = local.getItem("consignee_data") : null;
+					local.getItem("content_data") ? content.value = local.getItem("content_data") : null;
+					local.getItem("area_data") ? showCityPickerButton.innerText = local.getItem("area_data") : null;
+					local.getItem("specificAddress_data") ? specificAddress.value = local.getItem("specificAddress_data") : null;
+					showCityPickerButton.addEventListener('tap', function(event) {
+						cityPicker3.show(function(items) {
+							area_data = "" + (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+							showCityPickerButton.innerText = area_data;
+							local.setItem('area_data', area_data);
+							//更换内容，在页面显示
+							document.getElementsByClassName("showCityPicker3")[0].style.display = 'block';
+							mui.ajax('http://server-name/login.php', {
+								data: {
+									areas: area_data
+								},
+								dataType: 'json', //服务器返回json格式数据
+								type: 'post', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(data) {},
+								error: function(xhr, type, errorThrown) {}
+							});
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+					consignee.addEventListener('input', function() {
+						this.onblur = function() {
+							this.onblur = null;
+							var re=new RegExp('^[\\u4e00-\\u9fa5]{0,}$');
+						if (re.test(this.value)) {
+								mui.ajax('http://server-name/login.php', {
+									data: {
+										consignee_data: this.value
+									},
+									dataType: 'json', //服务器返回json格式数据
+									type: 'post', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) {
+										document.getElementsByClassName('pursePerson')[0].style.display = 'block';
+									},
+									error: function(xhr, type, errorThrown) {
+										$.alert('请稍后重试', '网络错误', '确定')
+									}
+								});consignee_data = this.value;
+							local.setItem('consignee_data', this.value);
+							}else{
+								$.alert('请输入汉字', '格式错误', '确定');
+							}
+							
+						}
+					})
+					content.addEventListener('input', function() {
+						this.onblur = function() {
+							this.onblur = null;
+							var isPhone = /^([0-9]{3,4}-)?[0-9]{7,8}$/;
+	                    var isMob=/^((\+?86)|(\(\+86\)))?(13[012356789][0-9]{8}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8}|1349[0-9]{7})$/;
+						if (isMob.test(this.value)||isPhone.test(this.value)) {
+								mui.ajax('http://server-name/login.php', {
+									data: {
+										content_data: this.value
+									},
+									dataType: 'json', //服务器返回json格式数据
+									type: 'post', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) {
+										document.getElementsByClassName('content')[0].style.display = 'block';
+									},
+									error: function(xhr, type, errorThrown) {
+										$.alert('请稍后重试', '网络错误', '确定')
+									}
+								});content_data = this.value;
+							local.setItem('content_data', this.value);
+							}else{
+								mui.alert('请输入正确的联系方式', '格式错误', '确定')
+							}
+							
+						}
+					})
+					specificAddress.addEventListener('input', function() {
+						this.onblur = function() {
+							this.onblur = null;
+							if (this.value) {
+								$.ajax('http://server-name/login.php', {
+									data: {
+										specificAddress_data: this.value
+									},
+									dataType: 'json', //服务器返回json格式数据
+									type: 'post', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) {},
+									error: function(xhr, type, errorThrown) {
+										$.alert('请稍后重试', '网络错误', '确定')
+									}
+								});
+							}
+							specificAddress_data = this.value;
+							local.setItem('specificAddress_data', this.value);
+						}
+					})
+					document.getElementById("submits").addEventListener('tap', function() {
+						$.ajax('http://server-name/login.php', {
+							data: {
+								area_data: area_data,
+								consignee_data: consignee_data,
+								//收货人
+								content_data: content_data,
+								//联系方式
+								specificAddress_data: specificAddress_data
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								var btnArray = ['否', '是'];
+								$.confirm('确认激活学习卡？', '学习卡激活', btnArray, function(e) {
+									if (e.index == 1) {
+										mui.alert('你成功激活了学习卡', '学习卡激活');
+									} else {
+										mui.alert('你放弃了激活学习卡', '学习卡激活');
+									}
+								})
+							},
+							error: function(xhr, type, errorThrown) {
+								$.alert('请稍后重试', '网络错误', '确定');
+							}
+						});
+					})
+				});
+			})(mui, document);
+		</script>
+	</body>
+
+</html>

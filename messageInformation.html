@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+		body,html{
+			height: 100%;
+			background-color: #FFFFFF;
+			font-family: "微软雅黑";
+		}
+			body .mui-bar-nav {
+				background-color: #e93f32;
+
+			}
+			
+			.mui-bar h1 {
+				color: #FFFFFF;
+				font-family: "微软雅黑";
+				font-size: 20px;
+			}
+			
+			.mui-bar-nav a {
+				color: #FFFFFF;
+			}
+			.title{
+				background-color: #FFFFFF;
+				padding: 18px 16px;
+				border: 1px solid #e7e7e7;
+			}
+			#title{
+				font-size: 15px;
+				color: #000000;
+				margin-bottom: 8px;
+			}
+			#name{
+				font-size: 13px;
+				color: #a6a6a6;
+				margin-bottom: 5px;
+			}
+			#time{
+				font-size: 13px;
+				color: #a6a6a6;
+				margin-bottom: 5px;
+			}
+			#article{
+				padding: 16px;
+				background-color: #FFFFFF;
+				font-size: 14px;
+				color: #555555;
+				line-height: 23px;
+				white-space: pre-wrap;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">消息详情</h1>
+		</header>
+		<div class="mui-content">
+		    <div class="title">
+		    	<h3 id="title"></h3>
+		    	<p id="name">收件人：</p>
+		    	<p id="time">发布日期：</p>
+		    </div>
+		    <p id="article">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			window.addEventListener('newsId',function(event){
+				  //获得事件参数
+				  var newsid = event.detail.newsid;
+				  //根据id向服务器请求新闻详情
+				  
+				  mui.ajax('http://server-name/login.php',{
+						data:{
+							user:'username',
+							school:'password',
+							newsid:newsid
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'get',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；
+						success:function(data){
+							informationWrite(data);
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							console.log(type);
+						}
+					});
+				});
+			
+			var messageInformation={
+				title:"您订购的教材《地理》等，已发货",
+				name:"黄姣姣",
+				time:"2016-03-16 14:13",
+				texts:"您订购的教材《地理》，已发货，单号为：26894434312121212（申通）。请您保持手机畅通，查收快递"
+			}
+			function informationWrite (messageInformation) {
+				document.getElementById("title").innerHTML= messageInformation.title;
+				document.getElementById("name").innerHTML= '收件人：'+  messageInformation.name;
+				document.getElementById("time").innerHTML='发布日期：'+  messageInformation.time;
+				document.getElementById("article").innerHTML='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp'+messageInformation.texts;
+			}
+			informationWrite(messageInformation);
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>mine</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<style type="text/css">
+			body {
+				font-family: "微软雅黑";
+			}
+			
+			.mui-grid-9>li {
+				box-sizing: border-box;
+				width: 25%;
+				float: left
+			}
+			
+			.mui-grid-view.mui-grid-9 .mui-table-view-cell {
+				padding: 13.5px 18px;
+				box-sizing: border-box;
+			}
+			
+			.mui-grid-view.mui-grid-9 .mui-media .mui-icon {
+				font-size: 20px;
+			}
+			
+			.mui-grid-view.mui-grid-9 .mui-table-view-cell>a:not(.mui-btn) {
+				font-size: 13px;
+				padding: 0;
+				color: #818181;
+			}
+			
+			.mui-grid-view.mui-grid-9 {
+				height: 69px;
+				margin-bottom: 10px;
+				background-color: white;
+			}
+			
+			.mui-table-view:after {
+				height: 0;
+			}
+			
+			.mui-grid-view.mui-grid-9 .mui-table-view-cell {
+				border: none;
+			}
+			
+			.lists .mui-table-view-cell>span {
+				position: absolute;
+				left: 10px;
+				font-size: 21px;
+				color: #a1a1a1;
+				font-weight: 500;
+			}
+			
+			.mui-table-view li .mui-navigate-right {
+				font-size: 15px;
+				padding-left: 42px;
+				color: #808080;
+			}
+			
+			.lists {
+				margin-bottom: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content" id="list">
+			<div class="header_out" style="padding: 28px 0 31px 0;background-image: url(images/home/bc.jpg);height: 190px;">
+				<img src="images/water.jpg" style="width: 86px;height: 86px;border-radius: 50%;display: block;margin: 0 auto;" />
+				<button type="button" class="mui-btn  mui-btn-outlined" style="width: 120px;margin: 0 auto;margin-top:22px;display: block;border-radius: 0;font-size: 16px;color:#bdbdbd;padding:3px 0;border: none;border: 1px solid #bdbdbd;">点击登录</button>
+			</div>
+			<ul class="mui-table-view mui-grid-view mui-grid-9">
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" id="certificateQuery" data-href="certificateQuery.html">
+					<span class="mui-icon iconfont icon-chaxun"></span>
+					<a href="#">证书查询</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" id="myExam" data-href="myExam.html">
+					<span class="mui-icon iconfont icon-biji01"></span>
+					<a href="#">我的考试 </a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" id="learningRecord" data-href="learningRecord.html">
+					<span class="mui-icon iconfont icon-jilu"></span>
+					<a href="#">学习记录</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" id="messageNotification">
+					<span class="mui-icon iconfont icon-xiaoxi"></span>
+					<a href="#">消息通知</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view lists">
+				<li class="mui-table-view-cell" id="myTrade" data-href="myTrade.html">
+					<span class="mui-icon iconfont icon-jiaoyi" style="color: #fb7f8e;"></span>
+					<a class="mui-navigate-right">
+						我的交易
+					</a>
+				</li>
+				
+			</ul>
+			<ul class="mui-table-view lists">
+				<li class="mui-table-view-cell" id="myTask" data-href="activateLearningCard.html">
+					<span class="mui-icon iconfont icon-renwu" style="font-size: 23px;color: #56a4ee;"></span>
+					<a class="mui-navigate-right">
+					            激活学习卡
+					</a>
+				</li>
+				<li class="mui-table-view-cell" id="myDicussion" data-href="myDiscussion.html">
+					<span class="mui-icon iconfont icon-taolun" style="color: #56a4ee;"></span>
+					<a class="mui-navigate-right">
+						我的讨论
+					</a>
+				</li>
+				<li class="mui-table-view-cell" id="myGet" data-href="myGet.html">
+					<span class="mui-icon iconfont icon-xuexi" style="color: #56a4ee;"></span>
+					<a class="mui-navigate-right">
+						我的心得
+					</a>
+				</li>
+
+			</ul>
+			<ul class="mui-table-view lists">
+				<li class="mui-table-view-cell" id="helpAndFeedBack" data-href="helpAndFeedBack.html">
+					<span class="mui-icon mui-icon-help"></span>
+					<a class="mui-navigate-right">
+						帮助与反馈
+					</a>
+				</li>
+				<li class="mui-table-view-cell" id="setting" data-href="setting.html">
+					<span class="mui-icon iconfont icon-shezhi"></span>
+					<a class="mui-navigate-right">
+						设置
+					</a>
+				</li>
+			</ul>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/app.js"></script>
+		<script>
+			mui.init({
+				swipeBack: true, //启用右滑关闭功能
+			});
+			var aniShow = "pop-in";
+			//只有ios支持的功能需要在Android平台隐藏；
+			if (mui.os.android) {
+				var list = document.querySelectorAll('.ios-only');
+				if (list) {
+					for (var i = 0; i < list.length; i++) {
+						list[i].style.display = 'none';
+					}
+				}
+				//Android平台暂时使用slide-in-right动画
+				if (parseFloat(mui.os.version) < 4.4) {
+					aniShow = "slide-in-right";
+				}
+			}
+			var templates = {};
+			var getTemplate = function(name, header, content) {
+				var template = templates[name];
+				//定义template为templates的name属性值
+				//一定会预加载父模板
+				if (!template) {
+					//预加载共用父模板；
+					var headerWebview = mui.preload({
+						url: header,
+						id: name + "-main",
+						styles: {
+							popGesture: "hide",
+						},
+						//侧滑返回隐藏webviw窗口，仅ios有效
+						extras: {
+							mType: 'main'
+						}
+						//额外参数，当打开新页面是有效，如果是跳转到一个已经预加载的页面，则无效
+					});
+					//预加载共用子webview
+					var subWebview = mui.preload({
+						url: !content ? "" : content,
+						id: name + "-sub",
+						styles: {
+							top: '45px',
+							bottom: '0px',
+							scrollIndicator: "none"
+						},
+						extras: {
+							mType: 'sub'
+						}
+					});
+					//					subWebview.show();
+					subWebview.addEventListener('loaded', function() {
+						setTimeout(function() {
+							subWebview.show();
+						}, 50);
+					});
+					//子页面加载完成后延迟显示
+					subWebview.hide();
+					//子页面隐藏
+					headerWebview.append(subWebview);
+					//iOS平台支持侧滑关闭，父窗体侧滑隐藏后，同时需要隐藏子窗体；
+					if (mui.os.ios) { //5+父窗体隐藏，子窗体还可以看到？不符合逻辑吧？
+						headerWebview.addEventListener('hide', function() {
+							subWebview.hide("none");
+						});
+					}
+					templates[name] = template = {
+						name: name,
+						header: headerWebview,
+						content: subWebview,
+					};
+				}
+				return template;
+				//返回出来的template中含有主模板，子模板和name属性值
+			};
+			var initTemplates = function() {
+				getTemplate('default', 'template.html');
+				mui.preload({
+					id: 'setting.html',
+					url: 'setting.html',
+					styles: {
+						scrollIndicator: "none"
+					}
+				});
+			};
+			mui.plusReady(function() {
+				initTemplates();
+			});
+			document.getElementById("setting").addEventListener("tap", function() {
+				mui.openWindow({
+					url: 'setting.html',
+					show: {
+						duration: 200
+					}
+				})
+			});
+			//单独设定的设置页面
+			document.getElementById("messageNotification").addEventListener('tap',function () {
+				mui.openWindow({
+					url: 'messageNotification.html',
+					show: {
+						duration: 200
+					}
+				})
+			})
+			mui('#list').on('tap', 'li', function() {
+				if (this != document.getElementById("list").getElementsByTagName('li')[3]) {
+					var id = this.getAttribute('data-href');
+					if (id != "setting.html") {
+						//获得所设置的href值
+						var href = id;
+						//不使用父子模板方案的页面
+						//TODO  by chb 当初这么设计，是为了一个App中有多个模板，目前仅有一个模板的情况下，实际上无需这么复杂
+						//使用父子模板方案打开的页面
+						//获得共用模板组 
+						var template = getTemplate('default'); //getTemplate('default');
+						//alert(template); 
+						//判断是否显示右上角menu图标；
+						//获得共用父模板
+						var headerWebview = template.header;
+						//获得共用子webview
+						var contentWebview = template.content;
+						var title = this.getElementsByTagName("a")[0].innerText.trim();
+						//通知模板修改标题，并显示隐藏右上角图标；
+						mui.fire(headerWebview, 'updateHeader', {
+							title: title,
+							target: href,
+							aniShow: aniShow
+						});
+						if (mui.os.ios || (mui.os.android && parseFloat(mui.os.version) < 4.4)) {
+							var reload = true;
+							if (!template.loaded) {
+								if (contentWebview.getURL() != this.href) {
+									contentWebview.loadURL(this.href);
+								} else {
+									reload = false;
+								}
+							} else {
+								reload = false;
+							}
+							(!reload) && contentWebview.show();
+							headerWebview.show(aniShow, 150);
+						}
+					}
+				}
+			});
+		</script>
+	</body>
+
+</html>

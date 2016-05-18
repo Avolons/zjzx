@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			html {
+				height: 100%;
+			}
+			
+			body {
+				height: 100%;
+				font-family: "微软雅黑";
+			}
+			
+			body .mui-bar-nav {
+				background-color: #e93f32;
+			}
+			
+			.mui-bar>h1 {
+				color: #FFFFFF;
+				font-family: "微软雅黑";
+				font-size: 20px;
+			}
+			
+			.mui-bar>a {
+				color: #FFFFFF;
+			}
+			
+			.mui-content {
+				padding: 0 17px;
+				background-color: #FFFFFF
+			}
+			
+			.mui-content .course {
+				padding: 21px 0;
+				background-color: #FFFFFF;
+			}
+			
+			.mui-content .course:after {
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			.mui-content .course img {
+				display: block;
+				width: 37%;
+				float: left;
+			}
+			
+			.mui-content .course h5 {
+				box-sizing: border-box;
+				padding-left: 20px;
+				font-size: 15px;
+				color: #5c5c5c;
+				width: 62%;
+				float: left;
+				font-weight: 500;
+				overflow: hidden;
+				white-space: pre;
+				text-overflow: ellipsis;
+			}
+			
+			.mui-content .course p {
+				margin-top: 25px;
+				box-sizing: border-box;
+				padding-left: 20px;
+				width: 62%;
+				float: left;
+			}
+			
+			.mui-content .course p:after {
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			.mui-content .course p b {
+				font-size: 11px;
+				font-weight: 500;
+				color: #E93F32;
+				float: left;
+			}
+			
+			.mui-content .course p a {
+				color: #b3b3b3;
+				font-size: 11px;
+				font-weight: 500;
+				float: right;
+			}
+			
+			.mui-content>h3 {
+				height: 38px;
+				font-size: 15px;
+				line-height: 38px;
+				color: #5C5C5C;
+				margin: 0;
+				margin: 0 -17px;
+				padding-left: 17px;
+				background-color: #F3F3F3
+			}
+			
+			.mui-content .mui-input-row {
+				box-sizing: border-box;
+				height: 38px;
+				line-height: 38px;
+				margin: 0 -17px;
+				border-bottom: 1px solid #e3e3e3;
+			}
+			
+			.mui-checkbox input[type=checkbox]:checked:before,
+			.mui-radio input[type=radio]:checked:before {
+				color: #E93F32;
+			}
+			
+			.mui-input-row label {
+				font-family: "微软雅黑";
+				padding: 0;
+				font-size: 14px;
+				color: #5e5e5e;
+				height: 37px;
+				line-height: 37px;
+			}
+			
+			.mui-content>.mui-input-row:nth-of-type(2) span {
+				position: absolute;
+				content: "";
+				display: block;
+				height: 25px;
+				width: 25px;
+				background-image: url(images/course/zfb.png);
+				background-size: cover;
+				margin-top: 7.5px;
+				left: 48px;
+				z-index: 999;
+			}
+			
+			.mui-content>.mui-input-row:nth-of-type(3) span {
+				position: absolute;
+				content: "";
+				display: block;
+				height: 25px;
+				width: 25px;
+				background-image: url(images/course/weixin.png);
+				background-size: cover;
+				margin-top: 7.5px;
+				left: 48px;
+			}
+			
+			.mui-checkbox.mui-left label,
+			.mui-radio.mui-left label {
+				margin-left: 70px;
+				padding-left: 10px;
+				position: relative;
+			}
+			
+			.mui-content .mui-input-row {
+				box-sizing: content-box;
+			}
+			
+			.mui-checkbox label,
+			.mui-radio label {
+				float: left;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				height: 20px;
+				width: 20px;
+				top: 9px;
+			}
+			
+			.mui-checkbox input[type=checkbox]:before,
+			.mui-radio input[type=radio]:before {
+				font-size: 20px;
+			}
+			
+			footer {
+				width: 100%;
+				height: 42px;
+				line-height: 42px;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				padding-left: 17px;
+				background-color: #FFFFFF;
+			}
+			
+			footer b {
+				font-weight: 500;
+			}
+			
+			footer b:nth-of-type(1) {
+				font-size: 15px;
+				color: #5C5C5C;
+			}
+			
+			footer b:nth-of-type(2) {
+				font-size: 15px;
+				color: #E93F32;
+			}
+			
+			footer b:nth-of-type(3) {
+				float: right;
+				height: 42px;
+				padding: 0 13px;
+				color: #FFFFFF;
+				background-color: #E93F32
+			}
+			
+			.studyCard {
+				font-family: "微软雅黑";
+				margin: 0;
+				padding: 0;
+				margin-bottom: 13px;
+				background-color: #FFFFFF
+			}
+			
+			.studyCard>li {
+				list-style: none;
+				height: 35px;
+				line-height: 35px;
+				padding: 0 20px;
+			}
+			
+			ul h5 {
+				font-size: 15px;
+				color: #333333;
+				height: 40px;
+				line-height: 40px;
+				padding-left: 20px;
+				border-bottom: 1px solid #e8e8e8;
+			}
+			
+			li a {
+				font-size: 13px;
+				color: #737373;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">购买课程</h1>
+		</header>
+		<div class="mui-content">
+			<div class="course">
+				<img src="images/center/center (1).png" id="img" />
+				<h5 id="title"></h5>
+				<p><b id="price"></b>
+					<a href="javascript:voide(0);" id="time"></a>
+				</p>
+			</div>
+			<h3>选择支付模式</h3>
+			<div class=" mui-input-row  mui-radio mui-left">
+				<span></span>
+				<label>支付宝支付</label>
+				<input name="radio1" type="radio" value="alipay" checked="true">
+			</div>
+			<div class="mui-input-row mui-radio mui-left" style="margin-bottom: 70px;">
+				<span></span>
+				<label>微信支付</label>
+				<input name="radio1" type="radio" value="weixin">
+			</div>
+		</div>
+		<footer>
+			<b>应付金额:</b>
+			<b id="foot_price"></b>
+			<b>确认并付款</b>
+		</footer>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			var data = {
+				img: "images/center/center (1).png",
+				title: "高效能人士必修的7堂心理课",
+				time: 265,
+				price: 200,
+				book: {
+					number: 'jc5456',
+					name: '世界地理',
+					type: '高级教材',
+					shop: '中国国家出版社'
+				}
+			}
+			var img = document.getElementById("img");
+			var title = document.getElementById("title");
+			var time = document.getElementById("time");
+			var price = document.getElementById("price");
+			var foot_price = document.getElementById("foot_price");
+			img.style.src = data.img;
+			title.innerHTML = data.title;
+			price.innerHTML = "￥" + data.price;
+			time.innerHTML = "购买后" + data.time + "天有效"
+			foot_price.innerHTML = "￥" + data.price;
+			//以上为教程的数据渲染部分，以下为假设拥有教材的部分
+		</script>
+	</body>
+
+</html>

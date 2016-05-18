@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>Hello H5+</title>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript">
+	 	mui.plusReady(function(){
+			if (localStorage.getItem("ajaxCode")) {
+				mui.openWindow({
+					url: "login.html"
+				});
+			};
+		}) 
+			var img = null;
+			var blist = [];
+
+			function scaned(t, r, f) {
+				var d = new Date();
+				var h = d.getHours(),
+					m = d.getMinutes(),
+					s = d.getSeconds(),
+					ms = d.getMilliseconds();
+				if (h < 10) {
+					h = '0' + h;
+				}
+				if (m < 10) {
+					m = '0' + m;
+				}
+				if (s < 10) {
+					s = '0' + s;
+				}
+				if (ms < 10) {
+					ms = '00' + ms;
+				} else if (ms < 100) {
+					ms = '0' + ms;
+				}
+				var ts = '[' + h + ':' + m + ':' + s + '.' + ms + ']';
+				var li = null,
+					hl = document.getElementById("history");
+				if (blist.length > 0) {
+					li = document.createElement("li");
+					li.className = "ditem";
+					hl.insertBefore(li, hl.childNodes[0]);
+				} else {
+					li = document.getElementById("nohistory");
+				}
+				li.id = blist.length;
+				var html = '[' + h + ':' + m + ':' + s + '.' + ms + ']' + '　　' + t + '码<div class="hdata">';
+				html += r;
+				html += '</div>';
+				li.innerHTML = html;
+				li.setAttribute("onclick", "selected(id);");
+				blist[blist.length] = {
+					type: t,
+					result: r,
+					file: f
+				};
+				update(t, r, f);
+			}
+
+			function selected(id) {
+				var h = blist[id];
+				update(h.type, h.result, h.file);
+				if (h.result.indexOf("http://") == 0 || h.result.indexOf("https://") == 0) {
+					plus.nativeUI.confirm(h.result, function(i) {
+						if (i.index == 0) {
+							plus.runtime.openURL(h.result);
+						}
+					}, "", ["打开", "取消"]);
+				} else {
+					plus.nativeUI.alert(h.result);
+				}
+			}
+		</script>
+		<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+		<style type="text/css" media="screen">
+			.hdata {
+				color: #e1673e;
+				font-size: 14px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.nvtt {
+				width: 100%;
+				background-color: #E93F32;
+				color: #FFFFFF;
+				font-size: 20px;
+			}
+			
+			.button {
+				background-color: #E93F32;
+				font-size: 20px;
+				border: none;
+				width: 80%;
+				margin: 0 auto;
+				border-radius: 3px;
+			}
+			
+		</style>
+	</head>
+
+	<body onload="img=document.getElementById('bimg');">
+		<header id="header">
+			<div class="nvtt">选择施教机构</div>
+		</header>
+		<div  class="mui-content">
+			<br/>
+			<img style="width:50%;margin: 50px auto;display: block;margin-top: 80px gg;" id="bimg" src="images/barcode.png" />
+			<br/>
+			<div class="button" onclick="clicked('barcode_scan.html',true,true);">扫一扫</div>
+			<br/>
+			<br/>
+		</div>
+		<div id="output">
+			请扫描所在施教机构的二维码标识符
+		</div>
+	</body>
+	<script type="text/javascript" src="js/immersed.js"></script>
+</html>

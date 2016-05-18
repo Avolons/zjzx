@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="libs/easymob-webim-sdk/jquery-1.11.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.lazyload.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.lazyload.img.js" type="text/javascript" charset="utf-8"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-content {
+				color: #333;
+				font-family: "微软雅黑";
+			}
+			
+			.mui-content ul li {
+				list-style: none;
+			}
+			
+			.mui-content div {
+				padding: 0 15px;
+			}
+			
+			.mui-content>div:nth-of-type(1) {
+				border-bottom: 1px solid #DDDDDD;
+			}
+			
+			.mui-content>div>h3 {
+				font-size: 17px;
+				font-weight: 500;
+				float: left;
+				margin: 0;
+				height: 50px;
+				line-height: 50px;
+			}
+			
+			.mui-content div span {
+				font-size: 20px;
+				height: 50px;
+				line-height: 50px;
+				float: right;
+			}
+			
+			.mui-content div:after {
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			.mui-content .history {
+				padding: 0 30px;
+				margin: 0;
+				padding-top: 10px;
+			}
+			
+			.mui-content .history li {
+				font-size: 15px;
+				text-align: center;
+				overflow: hidden;
+				box-sizing: border-box;
+				color: #AAAAAA;
+				display: inline-block;
+				width: 45%;
+				padding: 5px;
+				margin-bottom: 10px;
+				background-color: #FFFFFF;
+				border: 1px solid #DDDDDD;
+				opacity: 0;
+				height: 33px;
+				text-overflow: ellipsis;
+				white-space: pre;
+			}
+			
+			.mui-content #hot {
+				background-color: #dadada;
+			}
+			
+			.mui-content .hot {
+				padding: 0 15px;
+				margin: 0;
+			}
+			
+			.mui-content .hot li {
+				border-bottom: 1px solid #DDDDDD;
+			}
+			
+			.mui-content .hot li span {
+				display: block;
+				height: 22px;
+				width: 22px;
+				border-radius: 50%;
+				float: left;
+				background-color: #0FC8C0;
+				color: #FFFFFF;
+				text-align: center;
+				margin-top: 9px;
+				margin-right: 7px;
+			}
+			
+			.mui-content .hot li a {
+				font-size: 15px;
+				display: block;
+				width: 90%;
+				color: #666;
+				height: 40px;
+				line-height: 40px;
+				float: left;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: pre;
+			}
+			
+			.mui-content .hot li:after {
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			#search_course {
+				height: 100%;
+				width: 100%;
+				display: none;
+				background-color: #FFFFFF
+			}
+			
+			#search_list {
+				padding-top: 10px;
+				background-color: transparent;
+			}
+			
+			#search_list li {
+				margin-bottom: 15px;
+			}
+			
+			#search_list li:after {
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			#search_list li img {
+				box-sizing: border-box;
+				display: block;
+				float: left;
+				border: 1px solid #F7F7F7;
+			}
+			
+			#search_list li div {
+				padding-left: 10px;
+				box-sizing: border-box;
+				width: 60%;
+				float: left;
+				padding-top: 3px;
+			}
+			
+			#search_list li div h1 {
+				font-weight: 500;
+				color: #333;
+				width: 100%;
+				white-space: pre;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				font-size: 13px;
+				margin-bottom: 25px;
+			}
+			
+			#search_list li div h3 {
+				font-weight: 500;
+				color: #999;
+				width: 100%;
+				white-space: pre;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				font-size: 12px;
+				margin-bottom: 12px;
+			}
+			
+			#search_list li div h4 {
+				font-weight: 500;
+				color: #e93f32;
+				width: 100%;
+				white-space: pre;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				font-size: 11px;
+			}
+			
+			.mui-bar-nav {
+				font-family: "微软雅黑";
+				background-color: #e93f32;
+			}
+			
+			.mui-bar-nav>a {
+				color: #FFFFFF;
+			}
+			
+			.mui-bar #static_search {
+				font-size: 20px;
+				color: #FFFFFF;
+				position: absolute;
+				right: 25px;
+			}
+			
+			.mui-search .mui-placeholder {
+				color: #FFFFFF;
+			}
+			
+			.mui-search .mui-placeholder .mui-icon {
+				color: #FFFFFF;
+			}
+			
+			#search {
+				font-family: "微软雅黑";
+				color: #FFFFFF;
+			}
+			.mui-content>.mui-table-view:first-child{
+				margin: 0;
+			}
+			.mui-table-view:after{
+				height: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding: 0  15px;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<div class="mui-input-row" style="position: absolute;left:65px;right:65px;border-radius: 0;">
+				<input id="search" type="search" class="mui-input-clear" autofocus="autofocus" placeholder="搜索课程、分类、讲师" style="background-color: transparent;border-radius: 0;">
+			</div>
+			<span id="static_search" class="mui-icon mui-icon-search">
+			</span>
+		</header>
+		<div class="mui-content" id="search_hist">
+			<div id="history">
+				<h3>搜索历史</h3> <span class="mui-icon mui-icon-trash" id="clear"></span></div>
+			<ul class="history">
+				<li>成功人际关系</li>
+				<li style="float: right;">感恩与职场</li>
+				<li>高品质沟通</li>
+				<li style="float: right;">老子的大智慧</li>
+			</ul>
+			<div id="hot">
+				<h3>热门搜索</h3></div>
+			<ul class="hot" id="hotSearch">
+				<!--<li><span style="background: #ff5757;">1</span>
+					<a href="javascript:void(0);"></a>
+				</li>
+				<li><span style="background: #f1904c;">2</span>
+					<a href="javascript:void(0);"></a>
+				</li>
+				<li><span style="background: #48bc97;">3</span>
+					<a href="javascript:void(0);"></a>
+				</li>-->
+			</ul>
+		</div>
+		<div class="mui-content" id="search_course" style="padding-left: 15px;padding-right: 15px">
+			<ul id="search_list" class="mui-table-view">
+				<li><img width="40%" src="images/home/hot_four.png">
+					<div>
+						<h1>名称：成功人士的准则</h1>
+						<h3>简介：成功人士的五项自我管理成功人</h3>
+						<h4>￥200</h4></div>
+				</li>
+			</ul>
+		</div>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			var storage = localStorage;
+			//自定义本地存储
+			if (!storage.getItem("hist")) {
+				var historys = ["", "", "", ""];
+				storage.setItem("hist", historys);
+			}
+			//自定义监听input数值变化的函数：valuechange;
+			var mb = document.getElementById("search_hist")
+			//搜索历史主体部分
+			var list = document.getElementById("search_course")
+			//搜索结果主体部分
+			var course_list = document.getElementById("search_list");
+			//搜索结果课程列表
+			var searchIput=document.getElementById("search");
+			//input输入框
+			//模拟数据
+			var courseList = [{
+				id:'course_165',
+				src: "images/home/hot_four.png",
+				title: "成功人士的准则",
+				introduce: "成功人士的五项自我管理成功人",
+				price: 200
+			}, {
+				id:'course_165',
+				src: "images/home/hot_one.png",
+				title: "成功人士的准则",
+				introduce: "成功人士的五项自我管理成功人",
+				price: 200
+			}, {
+				id:'course_165',
+				src: "images/home/hot_three.png",
+				title: "成功人士的准则",
+				introduce: "成功人士的五项自我管理成功人",
+				price: 200
+			}, {
+				id:'course_165',
+				src: "images/home/hot_two.png",
+				title: "成功人士的准则",
+				introduce: "成功人士的五项自我管理成功人",
+				price: 200
+			}, {
+				id:'course_165',
+				src: "images/home/hot_four.png",
+				title: "成功人士的准则",
+				introduce: "成功人士的五项自我管理成功人",
+				price: 200
+			}];
+			//定义模板函数 课程显示部分
+			var createFragment = function(courseList) {
+				var fragment = document.createDocumentFragment();
+				var li;
+				for (var i = 0; i < courseList.length; i++) {
+					li = document.createElement('li');
+					li.id=courseList[i].id;
+					li.innerHTML = "<img   width='40%' data-lazyload=" + courseList[i].src + " /><div><h1>名称：" + courseList[i].title + "</h1><h3>简介：" + courseList[i].introduce + "</h3><h4>￥" + courseList[i].price + "</h4></div>"
+					fragment.appendChild(li);
+				}
+				return fragment;
+			};
+			
+			function noneAndBlock (values) {
+				mb.style.display = "none";
+						//主体部分隐藏
+						for (var i = 3; i > 0; i--) {
+							historys[i].innerHTML = historys[i - 1].innerHTML;
+							//当点击搜索，也就是搜索按钮时，触发历史记录更替效果，从最后开始往前更替，使用父子页面传值，子页面进行ajax请求
+						}
+						historys[0].innerHTML = values;
+						mui.ajax('http://server-name/login.php',{
+								data:{
+									keyWards:values
+								},
+								dataType:'json',//服务器返回json格式数据
+								type:'post',//HTTP请求类型
+								timeout:10000,//超时时间设置为10秒；
+								success:function(data){
+									//开始调用模板渲染函数
+									course_list.appendChild(createFragment(data));
+									//懒加载
+									mui(document).imageLazyload({
+										placeholder: 'images/60x60.gif'
+									});
+											},
+								error:function(xhr,type,errorThrown){
+									//异常处理；
+									console.log(type);
+								}
+							});
+						list.style.display = "block";
+			}
+			
+			
+			function  resetHStyle () {
+				for (var i = 0; i < historys.length; i++) {
+							his_list[i] = historys[i].innerHTML;
+							if (historys[i].innerHTML) {
+								historys[i].style.opacity = 1;
+							}
+						}
+			}
+			//重置样式函数
+			
+			function localstyle () {
+				resetHStyle ();
+						//进行历史更新后需要再次判断，显示出有内容的li标签
+						storage.setItem("hist", his_list);
+						//重置本地历史
+			}
+			//重置样式代码,更改本地记录函数
+			
+			mui.plusReady(function() {
+				var his_list = storage.getItem("hist").split(",");
+				//    		将本地储存进行字符串分割，获得数组
+				var historys = document.getElementsByClassName("history")[0].getElementsByTagName("li");
+				// 页面历史记录
+				
+                resetHStyle ();
+				//由于本身历史记录是隐藏的，必须初始化时进行判断，得知是否有内容
+				
+				for (var i=0;i<historys.length;i++) {
+					historys[i].addEventListener('tap',function  () {
+						var values=(searchIput.value=this.innerText);
+						//首先执行括号内
+						noneAndBlock (values);
+						//封装在外面
+						resetHStyle ();
+						//样式重置
+					})
+				}
+				//点击历史记录进行搜索操作
+				
+				searchIput.addEventListener("keyup", function(e) {
+					if (e.keyCode == 13) { 
+						var values=this.value;
+						noneAndBlock (values);
+						//封装在外面
+						resetHStyle ();
+						//样式重置
+					}
+				})
+				
+				
+				//根据input的value值来进行隐藏页面的切换工作，有内容时立马显示，无内容是立马隐藏
+				searchIput.addEventListener("input", function() {
+					var values = searchIput.value;
+					if (values) {
+						mb.style.display = "none";
+					} else {
+						mb.style.display = "block";
+						course_list.innerHTML = null;
+						list.style.display = "none";
+					}
+				})
+				
+				//对清除按钮进行监听，清除所有记录
+				document.getElementsByClassName("mui-icon-clear")[0].addEventListener("tap", function() {
+					mb.style.display = "block";
+					course_list.innerHTML = null;
+					list.style.display = "none";
+				})
+				
+				
+				document.getElementById("static_search").addEventListener("tap", function() {
+					var values = document.getElementById("search").value;
+					if (values) {
+						noneAndBlock (values);
+						//封装在外面
+						resetHStyle ();
+						//样式重置
+					} else {
+						return;
+					}
+				})
+				
+				document.getElementById("clear").addEventListener("tap", function() {
+						his_list = ["", "", "", ""];
+						storage.setItem("hist", his_list);
+						for (var i = 0; i < historys.length; i++) {
+							historys[i].innerHTML = his_list[i];
+							if (historys[i].innerHTML) {
+								historys[i].style.opacity = 1;
+							} else {
+								historys[i].style.opacity = 0;
+							}
+						};
+					})
+				//定义清除历史记录方法
+				
+				
+				var hot_search = [{
+					id: 'search_14',
+					color: '#ff5757',
+					title: "老子大智慧——半善半恶的老子"
+				}, {
+					id: 'search_15',
+					color: '#f1904c',
+					title: "优秀员工培养计划：80、90后员工职业素养提升"
+				}, {
+					id: 'search_16',
+					color: '#48bc97',
+					title: "员工最佳执行力"
+				}];
+				
+				//  模拟数据，热门搜索
+				function creatHotSearch(list) {
+					var framat = document.createDocumentFragment();
+					var li;
+					for (var i = 0; i < list.length; i++) {
+						li = document.createElement("li");
+						li.id = list[i].id;
+						li.innerHTML='<span style="background:'+list[i].color+'">'+(i+1)+'</span><a href="javascript:void(0);">'+list[i].title+'</a>'
+					    framat.appendChild(li);
+					}
+					return framat;
+				}
+				var hotSearch=document.getElementById("hotSearch");
+				//热门搜索列表页最上册dom
+				
+				hotSearch.appendChild(creatHotSearch(hot_search));
+				//渲染热门搜索
+				
+				mui.getJSON('http://server-name/list.php',{category:'news'},function(data){
+							hotSearch.appendChild(creatHotSearch(data));
+							}
+						);
+			    //后台获取并且进行数据渲染
+				
+				var hotSearchList= hotSearch.getElementsByTagName('li');
+				//获取所有热门搜索历史记录
+				for (var i=0;i<hotSearchList.length;i++) {
+					hotSearchList[i].addEventListener('tap',function  () {
+						var values=(searchIput.value=this.getElementsByTagName('a')[0].innerText);
+						
+						noneAndBlock (values);
+						//封装在外面
+						resetHStyle ();
+						//样式重置
+					})
+				}
+				//点击热门，直接返回搜索结果
+				
+				mui('#search_list').on("tap",'li',function  () {
+					var courseid = this.getAttribute('id');
+					//向后台传输自带的id值,将id值传递进去
+					//打开详情页面          
+					mui.openWindow({
+						url: 'coursePurchase.html',
+						styles: {
+							scrollIndicator: 'none'
+						},
+						extras: {
+							courseid: courseid,
+						}
+					});
+				})
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<style type="text/css">
+			li {
+				list-style: none;
+				padding: 15px 16px;
+				border-bottom: 1px solid #d2d2d2;
+			}
+			
+			ul {
+				font-family: "微软雅黑";
+				padding: 0;
+				margin: 0;
+			}
+			
+			li h5 {
+				font-size: 15px;
+				color: #797979;
+			}
+			
+			li div {
+				height: 23px;
+				line-height: 23px;
+			}
+			
+			li div span {
+				font-size: 11px;
+				color: #b4b4b4;
+			}
+			
+			li div span:nth-of-type(2) {
+				float: right;
+				color: #6e6d6d;
+			}
+			
+			li div span:nth-of-type(3) {
+				float: right;
+				margin-right: 3px;
+				margin-top: 3px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="mui-content">
+			<ul id="talk_list">
+				<li>
+					<h5>成功人际关系</h5>
+					<div>
+						<span>04-29   10:03:01</span>
+						<span>3</span>
+						<span class="mui-icon iconfont icon-taolun"></span>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			
+			
+			var talkList = [{
+				id:"talk_11",
+				title: "成功人际关系",
+				time: "04-29   10:03:01 ",
+				number: "3"
+			}, {
+				id:"talk_11",
+				title: "国际商务成品",
+				time: "04-23  10:03:15   ",
+				number: "4"
+			}, {
+				id:"talk_11",
+				title: "轻松搞定大客户",
+				time: "04-23    03:02:01 ",
+				number: "5"
+			}, {
+				id:"talk_11",
+				title: "魅力口才与沟通艺术",
+				time: "04-22  03:02:01  ",
+				number: "6"
+			}, {
+				id:"talk_11",
+				title: "演讲技巧",
+				time: "03-23     01:02:03 ",
+				number: "7"
+			}, {
+				id:"talk_11",
+				title: "感恩·责任·忠诚",
+				time: "05-23      05:02:03    ",
+				number: "8"
+			}, {
+				id:"talk_11",
+				title: "职业化员工的12项修炼 ",
+				time: "02-23    05:06:03 ",
+				number: "2"
+			}, ]
+
+			function creatList(list) {
+				var framt = document.createDocumentFragment();
+				var li;
+				for (var i = 0; i < list.length; i++) {
+					li = document.createElement("li");
+					li.id=list[i].id;
+					li.innerHTML = '<h5>' + list[i].title + '</h5><div><span>' + list[i].time + '</span><span>' + list[i].number + '</span><span class="mui-icon iconfont icon-taolun"></span></div>'
+					framt.appendChild(li);
+				}
+				return framt;
+			}
+			mui.ajax('http://server-name/login.php',{
+						data:{
+							user:'username',
+							school:'password',
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'get',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；
+						success:function(data){
+							document.getElementById("talk_list").appendChild(creatList(data));
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							console.log(type);
+						}
+					});
+					
+			document.getElementById("talk_list").appendChild(creatList(talkList));
+			mui('#talk_list').on('tap', 'li', function() {
+				var li_id=this.id;
+				mui.openWindow({
+					url:'discussionInformation.html',
+					id:'discussionInformation.html',
+					style:{
+						scrollIndicator: "none"
+					},
+					extras:{
+					        name:li_id,
+					    }
+				})
+			})
+			//将id值传入打开页面，可以根据id进行数据请求
+		</script>
+	</body>
+
+</html>

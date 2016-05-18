@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			body {
+				font-family: "微软雅黑";
+			}
+			
+			body .mui-bar-nav {
+				background-color: #e93f32;
+			}
+			
+			.mui-bar h1 {
+				color: #FFFFFF;
+				font-family: "微软雅黑";
+				font-size: 20px;
+			}
+			
+			.mui-bar-nav a {
+				color: #FFFFFF;
+			}
+			
+			.mui-content>h1 {
+				font-size: 16px;
+				color: #434343;
+				height: 44px;
+				line-height: 44px;
+				font-weight: 700;
+				background-color: #FFFFFF;
+				margin: 0;
+				text-align: center;
+			}
+			
+			li {
+				list-style: none;
+			}
+			
+			#talk_list {
+				padding: 0;
+				margin: 0;
+			}
+			
+			#talk_list>li {
+				border-top: 1px solid #e3e2e2;
+				padding: 15px;
+				margin-top: 5px;
+				background-color: #FFFFFF
+			}
+			
+			#talk_list>li>ul {
+				padding: 0;
+				margin: 0;
+				float: left;
+			}
+			
+			#talk_list li:after {
+				content: "";
+				display: block;
+				clear: both;
+				height: 0;
+			}
+			
+			#talk_list>li img {
+				display: block;
+				border-radius: 50%;
+				height: 30px;
+				width: 30px;
+				float: left;
+				margin-right: 10px;
+			}
+			
+			#talk_list>li>div {
+				float: left;
+			}
+			
+			#talk_list>li>ul>li>div {
+				float: left;
+			}
+			
+			#talk_list>li div>h3 {
+				text-align: left;
+				font-size: 15px;
+				color: #434343;
+				margin-bottom: 10px;
+			}
+			
+			#talk_list>li div>p {
+				text-align: left;
+				font-size: 14px;
+				color: #999999;
+				line-height: 16px;
+				margin-bottom: 7px;
+			}
+			
+			#talk_list>li div .time {
+				line-height: 30px;
+				height: 30px;
+			}
+			
+			#talk_list>li div .time h6 {
+				height: 30px;
+				line-height: 30px;
+				margin: 0;
+				text-align: left;
+				font-size: 11px;
+				color: #c7c7c7;
+				float: left;
+			}
+			
+			#talk_list>li div .time:after {
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			#talk_list>li div .time .rightback {
+				line-height: 30px;
+				height: 30px;
+				color: #d5d5d5;
+				font-size: 11px;
+				float: right;
+			}
+			
+			.talkback {
+				float: left;
+				width: calc(100% - 40px);
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">讨论详情</h1>
+		</header>
+		<div class="mui-content">
+			<h1>优秀员工的10大心态</h1>
+			<ul id="talk_list">
+				<!--<li>
+					<img src="images/course/weixin.png" />
+					<div class="talkback">
+						<h3>匿名</h3>
+						<p>感觉很好还不错学到了很多知识嘻嘻</p>
+						<div class="time">
+							<h6>2016-04-23   10:05:01</h6>
+							<div class="rightback">
+								<span class="mui-icon iconfont icon-taolun"></span>
+								<span>0</span>
+								<span class="mui-icon iconfont icon-xuexi"></span>
+								<span>回答</span>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<img src="images/course/weixin.png" />
+					<div class="talkback">
+						<h3>匿名</h3>
+						<p>感觉很好还不错学到了很多知识嘻嘻</p>
+						<div class="time">
+							<h6>2016-04-23   10:05:01</h6>
+							<div class="rightback">
+								<span class="mui-icon iconfont icon-taolun"></span>
+								<span>3</span>
+								<span class="mui-icon iconfont icon-xuexi"></span>
+								<span>回答</span>
+							</div>
+						</div>
+					</div>
+					<ul class="callback">
+						<li>
+							<img src="images/course/weixin.png" />
+							<div class="talkback">
+								<h3>匿名</h3>
+								<p>感觉很好还不错学到了很多知识嘻嘻</p>
+								<div class="time">
+									<h6>2016-04-23   10:05:01</h6>
+									<div class="rightback">
+										<span class="mui-icon iconfont icon-xuexi"></span>
+										<span>回答</span>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<img src="images/course/weixin.png" />
+							<div class="talkback">
+								<h3>匿名</h3>
+								<p>感觉很好还不错学到了很多知识嘻嘻</p>
+								<div class="time">
+									<h6>2016-04-23   10:05:01</h6>
+									<div class="rightback">
+										<span class="mui-icon iconfont icon-xuexi"></span>
+										<span>回答</span>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<img src="images/course/weixin.png" />
+							<div class="talkback">
+								<h3>匿名</h3>
+								<p>感觉很好还不错学到了很多知识嘻嘻</p>
+								<div class="time">
+									<h6>2016-04-23   10:05:01</h6>
+									<div class="rightback">
+										<span class="mui-icon iconfont icon-xuexi"></span>
+										<span class="answer_two">回答</span>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</li>-->
+			</ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				var name = self.name;
+				console.log(name);
+			})
+			var talklist = [{
+				imgsrc: "images/course/weixin.png",
+				name: "匿名",
+				p: "感觉很好还不错学到了很多知识嘻嘻",
+				time: "2016-04-23   10:05:01",
+				number: "3",
+				backlist: [{
+					imgsrc: "images/course/weixin.png",
+					name: "匿名",
+					p: "感觉很好还不错学到了很多知识嘻嘻",
+					time: "2016-04-23   10:05:01"
+				}, {
+					imgsrc: "images/course/weixin.png",
+					name: "匿名  回复 我自己",
+					p: "感觉很好还不错学到了很多知识嘻嘻",
+					time: "2016-04-23   10:05:01"
+				}, {
+					imgsrc: "images/course/weixin.png",
+					name: "匿名",
+					p: "感觉很好还不错学到了很多知识嘻嘻",
+					time: "2016-04-23   10:05:01"
+				}, ]
+			}, {
+				imgsrc: "images/course/weixin.png",
+				name: "匿名 回复 我自己",
+				p: "感觉很好还不错学到了很多知识嘻嘻",
+				time: "2016-04-23   10:05:01",
+				number: "3",
+				backlist: []
+			}];
+
+			function creatbacklist(list) {
+				var li = "";
+				for (var i = 0; i < list.length; i++) {
+					li += '<img src=' + list[i].imgsrc + ' /><div class="talkback"><h3>' + list[i].name + '</h3><p>' + list[i].p + '</p><div class="time"><h6>' + list[i].time + '</h6><div class="rightback"><span class="mui-icon iconfont icon-xuexi"></span><span class="answer_two">回答</span></div></div></div>'
+				}
+				return li;
+			}
+			//二级讨论列表的显示
+			
+			function creattalklist(list) {
+				var frame = document.createDocumentFragment();
+				var li;
+				for (var i = 0; i < list.length; i++) {
+					li = document.createElement("li");
+					li.innerHTML = '<img src=' + list[i].imgsrc + ' /><div class="talkback"><h3>' + list[i].name + '</h3><p>' + list[i].p + '</p><div class="time"><h6>' + list[i].time + '</h6><div class="rightback"><span class="mui-icon iconfont icon-taolun"></span><span>' + list[i].number + '</span><span class="mui-icon iconfont icon-xuexi"></span><span class="answer">回答</span></div></div></div><ul class="callback">' + creatbacklist(list[i].backlist) + '</ul>'
+					frame.appendChild(li);
+				}
+				return frame;
+			}
+			//一级讨论列表的显示
+			
+			document.getElementById("talk_list").appendChild(creattalklist(talklist));
+			//全文渲染讨论详情，想使用延时加载的手法
+			//为二级目录添加回复事件
+			$('.answer_two').on("tap", function(e) {
+				//修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+				var btnArray = ['取消', '确定'];
+				var that = $(this)
+				mui.prompt('请输入你的评论：', '老师讲的好', 'Hello ZJZX', btnArray, function(e) {
+					if (e.index == 1) {
+						var src = that.parents('.talkback').prev('img').attr('src');
+						//获取img的src值
+						var backname = that.parents('.talkback').children('h3').html().split('回复')[0];
+						//获取需要回复的昵称
+						var time = getNowFormatDate();
+						//获取回复时的时间
+						var thisname = '誓约胜利之剑';
+						//回复的昵称，本人的昵称 
+						that.parents('.callback').append(creatAnswer(src, thisname + '  回复   ' + backname, e.value, time));
+						(function() {
+							var screenWidth = document.body.offsetWidth;
+							var title = screenWidth - 70 + "px";
+							$(".talkback").width(title);
+						}());
+					}
+				})
+			});
+			
+			//为一级目录添加回复事件
+			$('.answer').on("tap", function(e) {
+				//修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+				var btnArray = ['取消', '确定'];
+				var that = $(this)
+				mui.prompt('请输入你的评论：', '老师讲的好', 'Hello ZJZX', btnArray, function(e) {
+					if (e.index == 1) {
+						var src = that.parents('.talkback').prev('img').attr('src');
+						//获取img的src值
+						var backname = that.parents('.talkback').children('h3').html().split('回复')[0];
+						//获取需要回复的昵称
+						var time = getNowFormatDate();
+						//获取回复时的时间
+						var thisname = '誓约胜利之剑';
+						//回复的昵称，本人的昵称 
+						that.parents('li').children('.callback').append(creatAnswer(src, thisname + '  回复   ' + backname, e.value, time));
+						(function() {
+							var screenWidth = document.body.offsetWidth;
+							var title = screenWidth - 70 + "px";
+							$(".talkback").width(title);
+						}());
+					}
+				})
+			});
+			//定义回复事件的dom操作
+			function creatAnswer(src, name, texts, time) {
+				var li = document.createElement("li")
+				li.innerHTML = '<img src=' + src + ' /><div class="talkback"><h3>' + name + '</h3><p>' + texts + '</p><div class="time"><h6>' + time + '</h6><div class="rightback"><span class="mui-icon iconfont icon-xuexi"></span><span class="answer_two">回答</span></div></div></div>'
+				return li;
+			}
+
+			function getNowFormatDate() {
+				var date = new Date();
+				var seperator1 = "-";
+				var seperator2 = ":";
+				var month = date.getMonth() + 1;
+				var strDate = date.getDate();
+				if (month >= 1 && month <= 9) {
+					month = "0" + month;
+				}
+				if (strDate >= 0 && strDate <= 9) {
+					strDate = "0" + strDate;
+				}
+				var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate + " " + date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
+				return currentdate;
+			}
+			//获取当前系统时间的函数
+//			(function() {
+//				var screenWidth = document.body.offsetWidth;
+//				var title = screenWidth - 70 + "px";
+//				$(".talkback").width(title);
+//			}());
+		</script>
+	</body>
+
+</html>

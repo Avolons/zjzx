@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			body .mui-bar-nav {
+				background-color: #e93f32;
+			}
+			
+			.mui-bar h1 {
+				color: #FFFFFF;
+				font-family: "微软雅黑";
+				font-size: 20px;
+			}
+			
+			.mui-bar-nav a {
+				color: #FFFFFF;
+			}
+			
+			li {
+				list-style: none;
+			}
+			
+			#new_list {
+				padding: 0 16px;
+				margin: 0;
+			}
+			
+			#new_list li {
+				box-sizing: border-box;
+				font-family: "微软雅黑";
+				height: 80px;
+				padding: 20px 0;
+				border-bottom: 1px dashed #f2b928;
+			}
+			
+			#new_list li p {
+				margin: 0;
+			}
+			
+			#new_list li p:nth-of-type(1) {
+				color: #262626;
+				margin-bottom: 7px;
+				font-size: 15px;
+				height: 20px;
+				width: 100%;
+				white-space: pre;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			
+			#new_list li p:nth-of-type(1):before {
+				display: block;
+				content: "";
+				height: 5px;
+				width: 5px;
+				background-color: #f2b928;
+				border-radius: 50%;
+				float: left;
+				margin-top: 7px;
+			}
+			
+			#new_list li p b {
+				color: #f2b928;
+			}
+			
+			#new_list li p:nth-of-type(2) {
+				padding-left: 5px;
+				font-size: 11px;
+				height: 13px;
+				color: #939393;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">热点新闻</h1>
+		</header>
+		<div class="mui-content">
+			<ul id="new_list">
+			</ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			var newsList = [{
+				id: "news_12",
+				type: "培训介绍",
+				title: "工信部NTC职业技能证书",
+				time: "2016-04-21",
+				master: "人民日报"
+			}, {
+				id: "news_12",
+				type: "培训介绍",
+				title: "工信部NTC职业技能证书",
+				time: "2016-04-21",
+				master: "人民日报"
+			}, {
+				id: "news_12",
+				type: "培训介绍",
+				title: "工信部NTC职业技能证书",
+				time: "2016-04-21",
+				master: "人民日报"
+			}, {
+				id: "news_12",
+				type: "培训介绍",
+				title: "工信部NTC职业技能证书",
+				time: "2016-04-21",
+				master: "人民日报"
+			}, {
+				id: "news_12",
+				type: "培训介绍",
+				title: "工信部NTC职业技能证书",
+				time: "2016-04-21",
+				master: "人民日报"
+			}, {
+				id: "news_12",
+				type: "培训介绍",
+				title: "工信部NTC职业技能证书",
+				time: "2016-04-21",
+				master: "人民日报"
+			}, {
+				id: "news_12",
+				type: "培训介绍",
+				title: "工信部NTC职业技能证书",
+				time: "2016-04-21",
+				master: "人民日报"
+			}]
+			var createFragment = function(courseList) {
+				var fragment = document.createDocumentFragment();
+				var li;
+				for (var i = 0; i < courseList.length; i++) {
+					li = document.createElement('li');
+					li.id = courseList[i].id;
+					li.innerHTML = "<p><b>【" + courseList[i].type + "】</b>" + courseList[i].title + "</p><p>" + courseList[i].time + "&nbsp;&nbsp;&nbsp;" + courseList[i].master + "</p>"
+					fragment.appendChild(li);
+				}
+				return fragment;
+			};
+				mui.ajax('http://server-name/login.php',{
+						data:{
+							user:'username',
+							school:'password',
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'get',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；
+						success:function(data){
+							document.getElementById("new_list").appendChild(createFragment(data));
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							console.log(type);
+						}
+					});
+			document.getElementById("new_list").appendChild(createFragment(newsList));
+			
+			mui('#new_list').on('tap', 'li', function() {
+				var li_id = this.id;
+				mui.openWindow({
+					url: 'newsInformation.html',
+					id: 'newsInformation.html',
+					style: {
+						scrollIndicator: "none"
+					},
+					extras: {
+						name: li_id,
+					}
+				})
+			})
+		</script>
+	</body>
+
+</html>

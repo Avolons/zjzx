@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<style type="text/css">
+			body,
+			html {
+				height: 100%;
+				font-family: "微软雅黑";
+				background-color: #FFFFFF
+			}
+			
+			.mui-content {
+				background-color: #FFFFFF
+			}
+			
+			ul {
+				padding: 0;
+				margin: 0;
+			}
+			
+			li {
+				width: 100%;
+				box-sizing: border-box;
+				padding: 7.5px 16.5px;
+				list-style: none;
+				height: 86px;
+			}
+			li:after{
+				content: "";
+				display: block;
+				clear: both;
+			}
+			h1 {
+				font-size: 14px;
+				color: #6c6c6c;
+			}
+			
+			
+			
+			img {
+				height: 100%;
+				float: left;
+				display: block;
+				margin-right: 10px;
+			}
+			
+			.title {
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-box-pack: justify;
+				box-sizing: border-box;
+				float: left;
+				height: 100%;
+				width: calc(100% - 140px);
+			}
+			
+			.title p {
+				font-size: 11px;
+				color: #c3c3c3;
+				margin-bottom: 0;
+			}
+			
+			.title p span {
+				margin-right: 5px;
+			}
+			
+			.check {
+				display: block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<ul id="recodeList">
+				<li>
+					<img src="images/center/center (5).gif" />
+					<div class="title">
+						<h1>制造型企业生产主管实践训练成品</h1>
+						<p><span class="mui-icon iconfont icon-shizhong"></span>02:28/45:56</p>
+					</div>
+				</li>
+				<li>
+					<img src="images/center/center (5).gif" />
+					<div class="title">
+						<h1>制造型企业生产主管实践训练成品</h1>
+						<p><span class="mui-icon iconfont icon-shizhong"></span>02:28/45:56</p>
+					</div>
+				</li>
+				<li>
+					<img src="images/center/center (5).gif" />
+					<div class="title">
+						<h1>制造型企业生产主管实践训练成品</h1>
+						<p><span class="mui-icon iconfont icon-shizhong"></span>02:28/45:56</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			
+		     var learingRecode=[{
+		     	id:"course_124",
+		     	img_src:"images/home/hot_three.png",
+		     	title:"制造型企业生产主管实践训练成品",
+		     	haveTime:"02:28",
+		     	time:"45:56"
+		     },{
+		     	id:"course_124",
+		     	img_src:"images/home/hot_three.png",
+		     	title:"制造型企业生产主管实践训练成品",
+		     	haveTime:"02:28",
+		     	time:"45:56"
+		     },{
+		     	id:"course_124",
+		     	img_src:"images/home/hot_three.png",
+		     	title:"制造型企业生产主管实践训练成品",
+		     	haveTime:"02:28",
+		     	time:"45:56"
+		     },{
+		     	id:"course_124",
+		     	img_src:"images/home/hot_three.png",
+		     	title:"制造型企业生产主管实践训练成品",
+		     	haveTime:"02:28",
+		     	time:"45:56"
+		     },{
+		     	id:"course_124",
+		     	img_src:"images/home/hot_three.png",
+		     	title:"制造型企业生产主管实践训练成品",
+		     	haveTime:"02:28",
+		     	time:"45:56"
+		     },{
+		     	id:"course_124",
+		     	img_src:"images/home/hot_three.png",
+		     	title:"制造型企业生产主管实践训练成品",
+		     	haveTime:"02:28",
+		     	time:"45:56"
+		     }
+		     ]
+		     var lists=document.getElementById("recodeList");
+             	var createFragment = function(learingRecode) {
+				var fragment = document.createDocumentFragment();
+				var li;
+				for (var i = 0; i < learingRecode.length; i++) {
+					li = document.createElement('li');
+					li.id=learingRecode[i].id;
+					li.innerHTML ='<img src='+learingRecode[i].img_src+' /><div class="title"><h1>'+learingRecode[i].title+'</h1><p><span class="mui-icon iconfont icon-shizhong"></span>'+learingRecode[i].haveTime+'/'+learingRecode[i].time+'</p></div>'
+					fragment.appendChild(li);
+				}
+				return fragment;
+			};
+			lists.appendChild(createFragment(learingRecode));
+		     mui.ajax('http://127.0.0.1:3000',{
+				data:{
+					user:'124578',
+					school:'中教在线'
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					lists.appendChild(createFragment(data));
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					console.log(type);
+				}
+			});
+			
+		</script>
+	</body>
+
+</html>

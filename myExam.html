@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+     <link href="css/mui.min.css" rel="stylesheet"/>
+    <style type="text/css">
+    body{
+    	font-family: "微软雅黑";
+    	font-size: 15px;
+    	color: #5e5e5e;
+    }
+    ul{
+    	padding: 0;
+    	margin: 0;
+    	margin-top: 14px;
+    	background-color: #FFFFFF
+    }
+       li{
+       	list-style: none;
+       	height: 35px;
+       	padding: 0 16px;
+       	margin: 0;
+       	line-height: 35px;
+       	border-bottom: 1px solid #e8e8e7;
+       }
+       li a{
+       	font-size: 14px;
+       	color: #9a9a9a;
+       }
+       .name{
+       	color: #e9827a;
+       }
+       .name a{
+       	color: #e9827a;
+       }
+       .pass a{
+       	color: #ff8400;
+       }
+       .score a:nth-of-type(1){
+       	color: #ff8400;
+       }
+    </style>
+</head>
+<body>
+	<div class="mui-content">
+	    <!--<ul>
+	    	<li>考试名称:<a href="javascript:void(0);"></a> </li>
+	    	<li>考试时间:<a href="javascript:void(0);"></a> </li>
+	    	<li>个人考试状态:<a href="javascript:void(0);"></a> </li>
+	    	<li>是否通过:<a href="javascript:void(0);"></a> </li>
+	    	<li>考试次数:<a href="javascript:void(0);"></a> </li>
+	    	<li>得分/通过分数/总分:<a href="javascript:void(0);"></a>/<a href="javascript:void(0);"></a>/<a href="javascript:void(0);"></a> </li>
+	    </ul>-->
+	</div>
+	<script src="js/mui.min.js"></script>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	var myExam=[{
+      		name:"测试",
+      		time:"2016-01-22 17:10-2016-01-24 17:05",
+      		state:"已结束",
+      		pass:"否	",
+      		changce:"2",
+      		score:"50",
+      		passscore:"60",
+      		allscore:"100"
+      	},{
+      		name:"测试",
+      		time:"2016-01-22 17:10-2016-01-24 17:05",
+      		state:"已结束",
+      		pass:"否	",
+      		changce:"2",
+      		score:"50",
+      		passscore:"60",
+      		allscore:"100"
+      	}]
+      	function creatExam (myExam) {
+      	   var farmate=document.createDocumentFragment();
+      	   var ul;
+      	   for (var i=0;i<myExam.length;i++) {
+      	   	ul=document.createElement("ul")
+      	   	ul.innerHTML='<li class="name">考试名称：<a href="javascript:void(0);">'+myExam[i].name+'</a> </li><li>考试时间：<a href="javascript:void(0);">'+myExam[i].time+'</a> </li><li>个人考试状态：<a href="javascript:void(0);">'+myExam[i].state+'</a> </li><li class="pass">是否通过：<a href="javascript:void(0);">'+myExam[i].pass+'</a> </li><li>考试次数：<a href="javascript:void(0);">'+myExam[i].changce+'</a> </li><li class="score">得分/通过分数/总分：<a href="javascript:void(0);">'+myExam[i].score+'</a>/<a href="javascript:void(0);">'+myExam[i].passscore+'</a>/<a href="javascript:void(0);">'+myExam[i].allscore+'</a> </li>'
+      	   farmate.appendChild(ul)
+      	   }
+      	   return farmate;
+      	}
+      	mui.ajax('http://server-name/login.php',{
+						data:{
+							user:'username',
+							school:'password',
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'get',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；
+						success:function(data){
+							document.getElementsByClassName("mui-content")[0].appendChild(creatExam (data));
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							console.log(type);
+						}
+					});
+					
+      	
+      	document.getElementsByClassName("mui-content")[0].appendChild(creatExam (myExam));
+    </script>
+</body>
+</html>

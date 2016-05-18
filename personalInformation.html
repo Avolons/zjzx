@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/app.css" />
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<style type="text/css">
+			body .mui-bar-nav {
+				background-color: #e93f32;
+			}
+			
+			.mui-bar h1 {
+				color: #FFFFFF;
+				font-family: "微软雅黑";
+				font-size: 20px;
+			}
+			
+			.mui-bar-nav a {
+				color: #FFFFFF;
+			}
+			
+			.hearder {
+				box-sizing: border-box;
+				height: 67px;
+				padding: 12.5px 16.5px;
+				background-color: #FFFFFF;
+				margin-bottom: 14px;
+			}
+			
+			.hearder>h1 {
+				font-weight: 500;
+				height: 42px;
+				line-height: 42px;
+				margin: 0;
+				font-family: "微软雅黑";
+				font-size: 15px;
+				color: #676767;
+				float: left;
+			}
+			
+			.hearder>img {
+				display: block;
+				border-radius: 50%;
+				height: 42px;
+				float: right;
+				margin-right: 10px;
+			}
+			
+			.mui-table-view>li {
+				font-family: "微软雅黑";
+				font-size: 15px;
+				color: #676767;
+				position: relative;
+				height: 45px;
+			}
+			
+			.mui-table-view>li>a {}
+			
+			.mui-table-view>li>input {
+				font-family: "微软雅黑";
+				font-size: 15px;
+				padding: 0;
+				margin: 0;
+				border-radius: 0;
+				border: none;
+				position: absolute;
+				left: 30%;
+				top: 0;
+				width: 60%;
+				height: 43px;
+				line-height: 43px;
+			}
+			
+			#showCityPicker3 {
+				text-align: left;
+				font-size: 15px;
+				color: #c7c7c7;
+				padding: 0;
+				margin: 0;
+				border: none;
+				position: absolute;
+				left: 30%;
+				top: 0;
+				width: 60%;
+				transform: translateY(0);
+				height: 43px;
+				line-height: 43px;
+			}
+			
+			#cityResult3 {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">个人信息</h1>
+		</header>
+		<div class="mui-content">
+			<div class="hearder">
+				<h1>头像设置</h1><img src="images/water.jpg" />
+			</div>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						昵称
+					</a>
+					<input type="text" name="" id="name" placeholder="未设置" />
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						地区
+					</a>
+					<button id='showCityPicker3' class="mui-btn mui-btn-block" type='button'>请填写所在地区</button>
+					<div id='cityResult3' class="ui-alert"></div>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						性别
+					</a>
+					<input type="text" name="" id="sex" placeholder="未设置" />
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						个性签名
+					</a>
+					<input type="text" name="" id="signature" placeholder="未填写" />
+				</li>
+			</ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script src="js/city.data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="UTF-8">
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					var cityPicker3 = new $.PopPicker({
+						layer: 3
+					});
+					cityPicker3.setData(cityData3);
+					//获取所有需要发送ajax的元素
+					var personlInformation = {};
+					var name = document.getElementById("name");
+					name.addEventListener('focus', function() {
+						this.addEventListener('input', function() {
+							this.onblur = function() {
+								personlInformation.name = this.value;
+								mui.ajax('http://server-name/login.php', {
+									data: {
+										username: 'username',
+										school: 'password',
+										name: personlInformation.name
+									},
+									dataType: 'json', //服务器返回json格式数据
+									type: 'post', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) {
+									},
+									error: function(xhr, type, errorThrown) {
+										//异常处理；
+										mui.alert('连接失败，请稍后重试', '网络错误', "确定");
+									}
+								});
+								this.onblur = null;
+							}
+						})
+					})
+					var sex = document.getElementById("sex");
+					sex.addEventListener('focus', function() {
+						this.addEventListener('input', function() {
+							this.onblur = function() {
+								personlInformation.sex = this.value;
+								mui.ajax('http://server-name/login.php', {
+									data: {
+										username: 'username',
+										school: 'password',
+										sex: personlInformation.sex
+									},
+									dataType: 'json', //服务器返回json格式数据
+									type: 'post', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) {
+									},
+									error: function(xhr, type, errorThrown) {
+										//异常处理；
+										mui.alert('连接失败，请稍后重试', '网络错误', "确定");
+									}
+								});
+								this.onblur = null;
+							}
+						})
+					})
+					var signature = document.getElementById("signature");
+					signature.addEventListener('focus', function() {
+							this.addEventListener('input', function() {
+								this.onblur = function() {
+									personlInformation.sign = this.value;
+									mui.ajax('http://server-name/login.php', {
+										data: {
+											username: 'username',
+											school: 'password',
+											sign: personlInformation.sign
+										},
+										dataType: 'json', //服务器返回json格式数据
+										type: 'post', //HTTP请求类型
+										timeout: 10000, //超时时间设置为10秒；
+										success: function(data) {
+										},
+										error: function(xhr, type, errorThrown) {
+											//异常处理；
+											mui.alert('连接失败，请稍后重试', '网络错误', "确定");
+										}
+									});
+									this.onblur = null;
+								}
+							})
+						})
+						//选择地区
+					var showCityPickerButton = doc.getElementById('showCityPicker3');
+					var cityResult3 = doc.getElementById('cityResult3');
+					showCityPickerButton.addEventListener('tap', function(event) {
+						cityPicker3.show(function(items) {
+							showCityPickerButton.innerText = "" + (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+							personlInformation.adress = this.value;
+							mui.ajax('http://server-name/login.php', {
+								data: {
+									username: 'username',
+									school: 'password',
+									adress: personlInformation.adress
+								},
+								dataType: 'json', //服务器返回json格式数据
+								type: 'post', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(data) {
+								},
+								error: function(xhr, type, errorThrown) {
+									//异常处理；
+									mui.alert('连接失败，请稍后重试', '网络错误', "确定");
+								}
+							});
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+							//此处后期应该添加ajax，将其发送
+							console.log(personlInformation);
+						});
+					}, false);
+				});
+			})(mui, document);
+		</script>
+	</body>
+
+</html>

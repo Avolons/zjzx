@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<!--<link rel="stylesheet" type="text/css" href="css/app.css" />-->
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<style type="text/css">
+			html {
+				height: 100%;
+			}
+			
+			body {
+				height: 100%;
+				font-family: "微软雅黑";
+				background-color: #FFFFFF
+			}
+			
+			body .mui-bar-nav {
+				background-color: #e93f32;
+			}
+			
+			.mui-bar>h1 {
+				color: #FFFFFF;
+				font-family: "微软雅黑";
+				font-size: 20px;
+			}
+			
+			.mui-bar>a {
+				color: #FFFFFF;
+			}
+			
+			.mui-content {
+				padding-left: 17px;
+				padding-right: 17px;
+				background-color: #FFFFFF;
+				margin-bottom: 42px;
+			}
+			
+			.mui-content .course {
+				padding: 21px 0;
+				background-color: #FFFFFF;
+			}
+			
+			.mui-content .course:after {
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			.mui-content .course img {
+				display: block;
+				width: 37%;
+				float: left;
+			}
+			
+			.mui-content .course h5 {
+				box-sizing: border-box;
+				padding-left: 20px;
+				font-size: 15px;
+				color: #5c5c5c;
+				width: 62%;
+				float: left;
+				font-weight: 500;
+				overflow: hidden;
+				white-space: pre;
+				text-overflow: ellipsis;
+			}
+			
+			.mui-content .course p {
+				margin-top: 25px;
+				box-sizing: border-box;
+				padding-left: 20px;
+				width: 62%;
+				float: left;
+				margin-bottom: 0;
+			}
+			
+			.mui-content .course p:after {
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			.mui-content .course p b {
+				font-size: 11px;
+				font-weight: 500;
+				color: #E93F32;
+				float: left;
+			}
+			
+			.mui-content .course p a {
+				color: #b3b3b3;
+				font-size: 11px;
+				font-weight: 500;
+				float: right;
+			}
+			
+			.mui-content .mui-input-row {
+				box-sizing: border-box;
+				height: 38px;
+				line-height: 38px;
+				border-bottom: 1px solid #e3e3e3;
+			}
+			
+			.mui-checkbox input[type=checkbox]:checked:before,
+			.mui-radio input[type=radio]:checked:before {
+				color: #E93F32;
+			}
+			
+			.mui-input-row label {
+				font-family: "微软雅黑";
+				padding: 0;
+				font-size: 14px;
+				color: #5e5e5e;
+				height: 37px;
+				line-height: 37px;
+			}
+			
+			.mui-checkbox.mui-left label,
+			.mui-radio.mui-left label {
+				margin-left: 70px;
+				padding-left: 10px;
+				position: relative;
+			}
+			
+			.mui-content .mui-input-row {
+				box-sizing: content-box;
+			}
+			
+			.mui-checkbox label,
+			.mui-radio label {
+				float: left;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				height: 20px;
+				width: 20px;
+				top: 9px;
+			}
+			
+			.mui-checkbox input[type=checkbox]:before,
+			.mui-radio input[type=radio]:before {
+				font-size: 20px;
+			}
+			
+			footer {
+				width: 100%;
+				height: 42px;
+				line-height: 42px;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				padding-left: 17px;
+				background-color: #F3F3F3;
+				z-index: 999;
+			}
+			
+			footer b {
+				font-weight: 500;
+			}
+			
+			footer b:nth-of-type(1) {
+				font-size: 15px;
+				color: #5C5C5C;
+			}
+			
+			footer b:nth-of-type(2) {
+				font-size: 15px;
+				color: #E93F32;
+			}
+			
+			footer b:nth-of-type(3) {
+				float: right;
+				height: 42px;
+				padding: 0 13px;
+				color: #FFFFFF;
+				background-color: #E93F32
+			}
+			
+			.studyCard {
+				font-family: "微软雅黑";
+				margin: 0;
+				padding: 0;
+				margin-bottom: 13px;
+				background-color: #FFFFFF
+			}
+			
+			.studyCard>li {
+				list-style: none;
+				height: 35px;
+				line-height: 35px;
+				padding: 0 20px;
+			}
+			
+			ul h5 {
+				font-size: 15px;
+				color: #333333;
+				height: 40px;
+				line-height: 40px;
+				padding-left: 20px;
+				border-bottom: 1px solid #e8e8e8;
+			}
+			
+			li a {
+				font-size: 13px;
+				color: #737373;
+			}
+			
+			.right {
+				float: right;
+			}
+			
+			.address {
+				font-family: "微软雅黑";
+				background-color: #FFFFFF;
+				padding: 15px 45px 20px 20px;
+			}
+			
+			.bodys h1 {
+				font-size: 15px;
+				color: #333333;
+				height: 33px;
+				background-color: #f3f3f3;
+				line-height: 33px;
+				padding-left: 17px;
+				margin: 0;
+			}
+			
+			.addresslist {
+				height: 25px;
+				margin-bottom: 13px;
+			}
+			
+			.addresslist:after {
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			.addresslist i {
+				float: left;
+				text-align: center;
+				display: block;
+				color: #ffa759;
+				height: 25px;
+				line-height: 25px;
+				width: 5%;
+			}
+			
+			.addresslist h3 {
+				float: left;
+				text-align: left;
+				margin: 0;
+				font-size: 13px;
+				color: #333333;
+				height: 25px;
+				line-height: 25px;
+				width: 30%;
+				box-sizing: border-box;
+				padding-left: 8px;
+			}
+			
+			.addresslist input {
+				float: left;
+				text-align: center;
+				font-family: "微软雅黑";
+				font-size: 13px;
+				height: 25px;
+				border-radius: 0;
+				padding: 0;
+				margin: 0;
+				width: 55%;
+			}
+			
+			.addresslist button {
+				float: left;
+				width: 55%;
+				height: 25px;
+				border-radius: 0;
+				padding: 0;
+				margin: 0;
+				text-align: center;
+				font-family: "微软雅黑";
+				font-size: 13px;
+				color: #c4c4c4;
+			}
+			
+			.addresslist span {
+				float: left;
+				text-align: center;
+				display: block;
+				color: #76d872;
+				width: 10%;
+			}
+			
+			.detail textarea {
+				width: 85%;
+				margin-left: 5%;
+				border-radius: 0;
+				padding: 0;
+				height: 50px;
+				text-align: left;
+				font-family: "微软雅黑";
+				font-size: 13px;
+			}
+			
+			.detail {
+				height: 50px;
+			}
+			
+			.ui-alert {
+				text-align: center;
+				padding: 20px 10px;
+				font-size: 16px;
+				display: none;
+			}
+			
+			.bodys {
+				margin: 0 -17px;
+			}
+			
+			.address>h1 {
+				margin: -10px -45px 20px -20px;
+			}
+			
+			.mui-input-group:before {
+				height: 0;
+			}
+			
+			.mui-input-group:after {
+				height: 0;
+			}
+			
+			.mui-input-group .mui-input-row:after {
+				height: 0;
+			}
+			
+			#select {}
+			
+			#show {
+				/*display: none;*/
+			}
+			
+			#select .mui-radio .selects:before {
+				color: #E93F32;
+				content: '\e441';
+			}
+			
+			#select .mui-input-row {
+				margin: 0;
+				padding-right: 30px;
+			}
+			
+			#select .mui-checkbox.mui-left label {
+				margin-left: 40px;
+			}
+			
+			.mui-checkbox label {
+				width: auto;
+			}
+			
+			.mui-checkbox span {
+				float: right;
+				font-family: "微软雅黑";
+				font-size: 14px;
+				color: #E93F32;
+			}
+			
+			.mui-input-group .mui-input-row:after {
+				height: 0;
+			}
+			
+			.mui-content .mui-input-row {
+				border: none;
+			}
+			
+			#submit_address {
+				display: block;
+				border-radius: 0;
+				background-color: #f2b928;
+				border: none;
+				color: #FFFFFF;
+				font-size: 15px;
+				margin: 0 auto;
+				width: 50px;
+				height: 25px;
+				line-height: 25px;
+				padding: 0;
+			}
+			
+			#bodys {
+				display: none;
+			}
+			
+			.mui-content .pursePerson {
+				display: none;
+			}
+			
+			.mui-content .content {
+				display: none;
+			}
+			
+			.mui-content .showCityPicker3 {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">购买课程</h1>
+		</header>
+		<footer>
+			<b>应付金额:</b>
+			<b id="foot_price"></b>
+			<b id="confirm">确认订单</b>
+		</footer>
+		<div class="mui-content">
+			<div class="course">
+				<img src="images/center/center (1).png" id="img" />
+				<h5 id="title"></h5>
+				<p><b id="price"></b>
+					<a href="javascript:voide(0);" id="time"></a>
+				</p>
+			</div>
+			<div class="bodys" id="bodys">
+				<form class="mui-input-group" id="select">
+					<h1>教材选择</h1>
+					<!--<div class="mui-input-row mui-checkbox mui-left">
+						<label>世界地理教材</label>
+						<span>￥200</span>
+						<input name="checkbox" type="checkbox">
+					</div>
+					<div class="mui-input-row mui-checkbox mui-left">
+						<label>中国近代史 </label>
+						<span>￥200</span>
+						<input name="checkbox" type="checkbox">
+					</div>
+					<div class="mui-input-row mui-checkbox mui-left mui-disabled">
+						<label>艺术论坛教程</label>
+						<span>￥200</span>
+						<input name="checkbox" type="checkbox" disabled="disabled">
+					</div>-->
+				</form>
+				<div class="show" id="show">
+					<div class="address">
+						<h1>请填写收货地址</h1>
+						<div class="addresslist">
+							<i>*</i>
+							<h3>收货人:</h3><input type="text" name="" id="pursePerson" placeholder="请填写收货人姓名" /><span class="pursePerson">√</span>
+						</div>
+						<div class="addresslist">
+							<i>*</i>
+							<h3>联系方式：</h3><input type="text" name="" id="content" placeholder="请填写联系方式" /><span class="content">√</span>
+						</div>
+						<div class="addresslist">
+							<i>*</i>
+							<h3>所在地区：</h3><button id='showCityPicker3' class="mui-btn mui-btn-block" type='button'>请填写所在地区</button>
+							<div id='cityResult3' class="ui-alert"></div><span class='showCityPicker3'>√</span>
+						</div>
+						<div class="addresslist  detail">
+							<textarea name="" rows="" cols="" placeholder="请输入具体地址" id="specificAddress"></textarea>
+						</div>
+					</div>
+					<button type="button" id="submit_address">确认</button>
+				</div>
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+			</div>
+		</div>
+
+		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script src="js/city.data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			var data = {
+				img: "images/center/center (1).png",
+				title: "高效能人士必修的7堂心理课",
+				time: 265,
+				price: 200,
+				book: [{
+					name: '世界地理教材',
+					price: 200,
+				}, {
+					name: '中国近代史',
+					price: 200,
+				}, {
+					name: '艺术论坛教程',
+					price: 200,
+					onlyReady: true
+				}]
+			}
+			var createbooks = function(data) {
+				var fragment = document.createDocumentFragment();
+				var div;
+				for (var i = 0; i < data.length; i++) {
+					div = document.createElement('div');
+					if (data[i].onlyReady) {
+						div.className = 'mui-input-row mui-checkbox mui-left mui-disabled';
+						div.innerHTML = '<label>' + data[i].name + '</label><span>￥' + data[i].price + '</span><input name="checkbox" type="checkbox" disabled="disabled" checked>';
+					} else {
+						div.className = 'mui-input-row mui-checkbox mui-left';
+						div.innerHTML = '<label>' + data[i].name + '</label><span>￥' + data[i].price + '</span><input name="checkbox" type="checkbox" >';
+					}
+					fragment.appendChild(div);
+				}
+				return fragment;
+			};
+			var prices = data.price;
+			//定义一个全局的价格变量
+			var addInformation = document.getElementById("bodys");
+			var img = document.getElementById("img");
+			var title = document.getElementById("title");
+			var time = document.getElementById("time");
+			var price = document.getElementById("price");
+			var foot_price = document.getElementById("foot_price");
+			var bookselects = document.getElementById("select");
+			//数据渲染
+			bookselects.appendChild(createbooks(data.book));
+			//最后将其注释
+			addInformation.style.display = 'block';
+			img.style.src = data.img;
+			title.innerHTML = data.title;
+			price.innerHTML = "￥" + data.price;
+			time.innerHTML = "购买后" + data.time + "天有效"
+			foot_price.innerHTML = "￥" + data.price;
+			//最后将其注释
+			mui.plusReady(function() {
+				//课程数据的初始化
+				var thisPage = plus.webview.currentWebview();
+				var courseid = thisPage.courseid;
+				//上册目录获取到课程数据
+				mui.getJSON('http://server-name/list.php', {
+					courseid: courseid
+				}, function(data) {
+					if (data.book) {
+						addInformation.style.display = 'block';
+					}
+					img.style.src = data.img;
+					title.innerHTML = data.title;
+					price.innerHTML = "￥" + data.price;
+					time.innerHTML = "购买后" + data.time + "天有效"
+					foot_price.innerHTML = "￥" + data.price;
+					bookselects.appendChild(createbooks(data.book));
+				});
+				var checkboxs = document.getElementsByName("checkbox");
+				//获取所有的input按钮，添加监听事件
+				for (var i = 0; i < checkboxs.length; i++) {
+					(function(i) {
+						checkboxs[i].addEventListener('change', function() {
+							if (this.checked) {
+								prices += data.book[i].price;
+							} else {
+								prices -= data.book[i].price;
+							}
+							foot_price.innerHTML = '￥' + prices;
+							return false;
+						})
+					}(i))
+				}
+				//价格增减的函数判断
+				//插件初始化
+				var cityPicker3 = new $.PopPicker({
+					layer: 3
+				});
+				cityPicker3.setData(cityData3);
+				//插件初始化
+				var showCityPickerButton = doc.getElementById('showCityPicker3');
+				//地区
+				var cityResult3 = doc.getElementById('cityResult3');
+				var area_data;
+				var consignee = document.getElementById("pursePerson");
+				var consignee_data;
+				//收货人
+				var content = document.getElementById("content");
+				var content_data;
+				//联系方式
+				var specificAddress = document.getElementById("specificAddress");
+				var specificAddress_data;
+				//具体地址，这三个数据都会使用正则匹配
+				//所在地区
+				var show_pursePerson=document.getElementsByClassName('pursePerson')[0];
+				var show_content=document.getElementsByClassName('content')[0];
+				var show_showCityPicker3=document.getElementsByClassName("showCityPicker3")[0];
+				//3个对勾
+				var local = localStorage;
+				//取出本地存储；
+				local.getItem("consignee_data") && (function() {
+					consignee.value = local.getItem("consignee_data");
+					show_pursePerson.style.display = 'block';
+				}());
+				local.getItem("content_data") && (function() {
+					content.value = local.getItem("content_data");
+					show_content.style.display = 'block';
+				}());
+				local.getItem("area_data") && (function() {
+					showCityPickerButton.innerText = local.getItem("area_data");
+					show_showCityPicker3.style.display = 'block';
+				}());
+				local.getItem("specificAddress_data") && (specificAddress.value = local.getItem("specificAddress_data"))
+				//本地存储数据的判断
+				showCityPickerButton.addEventListener('tap', function(event) {
+					cityPicker3.show(function(items) {
+						area_data = "" + (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+						showCityPickerButton.innerText = area_data;
+						local.setItem('area_data', area_data);
+						//更换内容，在页面显示
+						show_showCityPicker3.style.display = 'block';
+						mui.ajax('http://server-name/login.php', {
+							data: {
+								areas: area_data
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								
+							},
+							error: function(xhr, type, errorThrown) {}
+						});
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+					});
+				}, false);
+				//选择地区
+				consignee.addEventListener('input', function() {
+					this.onblur = function() {
+						this.onblur = null;
+						var re = new RegExp('^[\\u4e00-\\u9fa5]{0,}$');
+						if (re.test(this.value)) {
+							mui.ajax('http://server-name/login.php', {
+								data: {
+									consignee_data: this.value
+								},
+								dataType: 'json', //服务器返回json格式数据
+								type: 'post', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(data) {
+									show_pursePerson.style.display = 'block';
+								},
+								error: function(xhr, type, errorThrown) {
+									mui.alert('请稍后重试', '网络错误', '确定')
+								}
+							});
+							consignee_data = this.value;
+							local.setItem('consignee_data', this.value);
+						} else {
+							mui.alert('请输入汉字', '格式错误', '确定')
+						}
+					}
+				})
+				//选择收件人
+				content.addEventListener('input', function() {
+					this.onblur = function() {
+						this.onblur = null;
+						var isPhone = /^([0-9]{3,4}-)?[0-9]{7,8}$/;
+						var isMob = /^((\+?86)|(\(\+86\)))?(13[012356789][0-9]{8}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8}|1349[0-9]{7})$/;
+						if (isMob.test(this.value) || isPhone.test(this.value)) {
+							mui.ajax('http://server-name/login.php', {
+								data: {
+									content_data: this.value
+								},
+								dataType: 'json', //服务器返回json格式数据
+								type: 'post', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(data) {
+									show_content.style.display = 'block';
+								},
+								error: function(xhr, type, errorThrown) {
+									mui.alert('请稍后重试', '网络错误', '确定')
+								}
+							});
+							content_data = this.value;
+							local.setItem('content_data', this.value);
+						} else {
+							mui.alert('请输入正确的联系方式', '格式错误', '确定')
+						}
+					}
+				})
+				//选择联系方式
+				specificAddress.addEventListener('input', function() {
+					this.onblur = function() {
+						this.onblur = null;
+						if (this.value) {
+							mui.ajax('http://server-name/login.php', {
+								data: {
+									specificAddress_data: this.value
+								},
+								dataType: 'json', //服务器返回json格式数据
+								type: 'post', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(data) {
+									
+								},
+								error: function(xhr, type, errorThrown) {
+									mui.alert('请稍后重试', '网络错误', '确定')
+								}
+							});
+						}
+						specificAddress_data = this.value;
+						local.setItem('specificAddress_data', this.value);
+					}
+				})
+				//选择具体地址
+				
+				document.getElementById("submit_address").addEventListener("tap",function  () {
+					if (show_pursePerson.style.display == 'block') {
+						if (show_content.style.display == 'block') {
+							if (show_showCityPicker3.style.display == 'block') {
+								addconfirm();
+							} else{
+								mui.alert('请确认输入正确的联系方式','补充信息','是');
+							}
+						} else{
+							mui.alert('请确认输入正确的地址','补充信息','是');
+						}
+					} else{
+						mui.alert('请确认输入正确的姓名','补充信息','是');
+					}
+					
+				})
+				//信息确认，完全正确才能激活确定订单按钮；
+				
+				function addconfirm () {
+					document.getElementById("confirm").addEventListener('tap', function() {
+						var bookindex=[];
+						//此处最好添加一个最终的价格确认
+						for (var i=0;i<checkboxs;i++) {
+							checkboxs[i].checked&&bookindex.push(i);
+						}
+					mui.ajax('http://server-name/login.php', {
+						data: {
+							area_data: area_data,
+							//收货地区
+							consignee_data: consignee_data,
+							//收货人
+							content_data: content_data,
+							//联系方式
+							specificAddress_data: specificAddress_data,
+							//具体地址
+							price:prices,
+							//价格
+							bookindex:bookindex,
+							//具体书本
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							var btnArray = ['否', '是'];
+							mui.confirm('是否确认订单？', '确认订单', btnArray, function(e) {
+								if (e.index == 1) {
+									mui.openWindow({
+										url: 'payment.html',
+										styles: {
+											scrollIndicator: 'none'
+										},
+										extras: {
+											payment: data,
+										}
+									})
+								} else {
+									mui.alert('你取消了订单', '订单确认');
+								}
+							})
+						},
+						error: function(xhr, type, errorThrown) {
+							mui.alert('请稍后重试', '网络错误', '确定');
+						}
+					});
+				})
+				//确认订单
+				}
+				
+			});
+		</script>
+	</body>
+
+</html>

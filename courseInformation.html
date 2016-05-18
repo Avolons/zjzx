@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script src="libs/easymob-webim-sdk/jquery-1.11.1.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			body {
+				font-family: "微软雅黑";
+				font-size: 14px;
+				color: #333333;
+				background-color: #FFFFFF
+			}
+			
+			body .mui-bar-nav {
+				background-color: #e93f32;
+			}
+			
+			.mui-bar>h1 {
+				color: #FFFFFF;
+				font-family: "微软雅黑";
+				font-size: 20px;
+			}
+			
+			.mui-bar>a {
+				color: #FFFFFF;
+			}
+			
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				font-weight: 400;
+			}
+			
+			li {
+				list-style: none;
+			}
+			
+			.mui-content {
+				padding: 0 10px;
+				background-color: #FFFFFF;
+			}
+			
+			.mui-content>header {
+				padding: 15px 0;
+				box-sizing: content-box;
+			}
+			
+			.mui-content>header:after {
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			.mui-content>header>img {
+				width: 55%;
+				display: block;
+				float: left;
+			}
+			
+			.mui-content>header>div {
+				box-sizing: border-box;
+				width: 45%;
+				height: 100%;
+				float: right;
+				padding-left: 10px;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-box-pack: center;
+			}
+			
+			.mui-content>header>div>h1 {
+				font-weight: 600;
+				font-size: 16px;
+			}
+			
+			.mui-content>header>div>p {
+				font-size: 13px;
+				margin: 0;
+			}
+			
+			.mui-content>header>div>h4 {
+				font-size: 14px;
+				color: #ea5f00;
+			}
+			
+			.mui-content>header>div>button {
+				font-size: 13px;
+				color: white;
+				background-color: #0FC8C0;
+				border-radius: 0;
+				border: none;
+			}
+			
+			.mui-content>article>p {
+				margin: 10px 0;
+				font-size: 16px;
+				color: #333;
+				font-weight: 500;
+			}
+			
+			.mui-content>article>p:nth-of-type(4) {
+				font-size: 13px;
+				color: #999999;
+			}
+			
+			.mui-content>article>h1 {
+				width: 100%;
+				font-size: 20px;
+				color: #0FC8C0;
+				font-weight: 500px;
+				margin-top: 20px;
+				position: relative;
+				padding-left: 10px;
+			}
+			
+			.mui-content>article>h1:before {
+				content: "";
+				display: block;
+				height: 100%;
+				width: 2px;
+				position: absolute;
+				left: 0;
+				background-color: #0FC8C0
+			}
+			
+			.mui-content>article ul {
+				padding-left: 10px;
+			}
+			
+			.mui-content>article #course_list {
+				height: 52px;
+				overflow: hidden;
+			}
+			
+			.mui-content>article li {
+				font-size: 16px;
+				margin: 0 0 10px 0;
+				color: #555555;
+			}
+			
+			.mui-content>article h6 {
+				font-size: 14px;
+				color: #0FC8C0;
+			}
+			
+			.mui-content>article ul li a {
+				color: #222222;
+			}
+			
+			.mui-content>article ul li button {
+				border-radius: 0;
+				background-color: #0FC8C0;
+				color: #FFFFFF;
+				padding: 1px 10px;
+				float: right;
+				border: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">课程详情</h1>
+		</header>
+		<div class="mui-content">
+			<header>
+				<img src="images/course_IN.png" />
+				<div>
+					<h1 id="title">管控突破</h1>
+					<p id="teacher"></p>
+					<h4 id="price">￥200</h4>
+					<button id="buy">购买课程</button>
+				</div>
+			</header>
+			<article>
+				<p id="sign_time"></p>
+				<p id="study_time"></p>
+				<p id="effective_time"></p>
+				<p id="intrdouce"></p>
+				<h1>课件列表</h1>
+				<ul id="course_list">
+
+				</ul>
+				<h6 id="unfold">【展开】</h6>
+				<h1>资料下载</h1>
+				<ul id="data_list">
+				</ul>
+				<h1>配套教材</h1>
+				<ul id="teaching_list">
+
+				</ul>
+			</article>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init({});
+			var course_information = {
+					title: "管控突破",
+					teacher: ["李涛", 200],
+					price: "200",
+					sign_time: "2016-03-11-2020-03-11",
+					study_time: [0, 0],
+					effective_time: 365,
+					intrdouce: "本课程包含一门课件，要求学习时长不少于526分钟",
+					course_list: [
+						["品牌与营销策划", "01"],
+						["品牌与营销策划", "02"],
+						["品牌与营销策划", "03"],
+						["品牌与营销策划", "04"],
+						["品牌与营销策划", "05"]
+					],
+					data_list: [
+						["管控突破", "01"]
+					],
+					teaching_list: ["好员工的十大心态", "服务人员的12项修炼"]
+				}
+				//    	定义伪数据
+			var createcourse = function(courseList) {
+				var fragment = document.createDocumentFragment();
+				var li;
+				for (var i = 0; i < courseList.course_list.length; i++) {
+					li = document.createElement('li');
+					li.innerHTML = "<li>" + courseList.course_list[i][0] + "&nbsp;" + course_information.course_list[i][1] + "</li>";
+					fragment.appendChild(li);
+				}
+				return fragment;
+			};
+			var createteaching = function(courseList) {
+				var fragment = document.createDocumentFragment();
+				var li;
+				for (var i = 0; i < courseList.teaching_list.length; i++) {
+					li = document.createElement('li');
+					li.innerHTML = "<li>" + courseList.teaching_list[i] + "</li>";
+					fragment.appendChild(li);
+				}
+				return fragment;
+			};
+			var createdata = function(courseList) {
+				var fragment = document.createDocumentFragment();
+				var li;
+				for (var i = 0; i < courseList.data_list.length; i++) {
+					li = document.createElement('li');
+					li.innerHTML = "<li><a href='#'>" + courseList.data_list[i][0] + "&nbsp;&nbsp;" + courseList.data_list[i][1] + "</a><button>下载</button></li>";
+					fragment.appendChild(li);
+				}
+				return fragment;
+			};
+			mui.plusReady(function() {
+				var thispage = plus.webview.currentWebview();
+				//获取当前页面的对象
+				var courseid = thispage.courseid;
+				mui.getJSON('http://server-name/list.php', {
+					courseid: courseid
+				}, function(data) {
+					var title = document.getElementById("title");
+					var teacher = document.getElementById("teacher");
+					var price = document.getElementById("price");
+					var sign_time = document.getElementById("sign_time");
+					var study_time = document.getElementById("study_time");
+					var effective_time = document.getElementById("effective_time");
+					var intrdouce = document.getElementById("intrdouce");
+					var course_list = document.getElementById("course_list");
+					var data_list = document.getElementById("data_list");
+					var teaching_list = document.getElementById("teaching_list");
+					//将所有需要动态修改的数据全部获取到
+					title.innerHTML = data.title;
+					teacher.innerHTML = "讲师：" + data.teacher[0] + "&nbsp;浏览量：" + data.teacher[1];
+					price.innerHTML = data.price;
+					sign_time.innerHTML = "报名时间：" + data.sign_time;
+					study_time.innerHTML = "学时：" + data.study_time[0] + "&nbsp;&nbsp;&nbsp;学分：" + data.study_time[1];
+					effective_time.innerHTML = "学习有效期：" + data.effective_time + "天";
+					intrdouce.innerHTML = data.intrdouce;
+					data_list.appendChild(createdata(data.course_list));
+					course_list.appendChild(createcourse(data.data_list));
+					teaching_list.appendChild(createteaching(data.teaching_list));
+				});
+				//直接获取所有数据
+				$("#unfold").bind("tap", function() {
+						if ($(this).html() == "【展开】") {
+							$("#course_list").animate({
+								height: "145px"
+							}, 300);
+							$(this).html("【收起】");
+						} else {
+							$("#course_list").animate({
+								height: "52px"
+							}, 300);
+							$(this).html("【展开】");
+						}
+					})
+					//展开收起效果的切换
+				window.addEventListener('newsId', function(event) {
+					//获得事件参数
+					var id = event.detail.id;
+					//根据id向服务器请求新闻详情
+				});
+				document.getElementById("buy").addEventListener('tap', function() {
+					//向后台传输自带的id值,将id值传递进去
+					//打开详情页面          
+					mui.openWindow({
+						url: 'coursePurchase.html',
+						styles: {
+							scrollIndicator: 'none'
+						},
+						extras: {
+							id: id,
+						}
+					});
+				})
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>course</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<script src="libs/easymob-webim-sdk/jquery-1.11.1.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			html {
+				height: 100%;
+			}
+			
+			body {
+				height: 100%;
+				font-family: "微软雅黑";
+				color: #333333;
+			}
+			
+			li {
+				list-style: none;
+			}
+			
+			body .mui-bar-nav {
+				background-color: #e93f32;
+			}
+			
+			.mui-bar-nav~.mui-content {
+				padding: 0 15px;
+				padding-top: 84px;
+				background-color: #FFFFFF
+			}
+			
+			.course-nav {
+				position: absolute;
+				top: 44px;
+				left: 0;
+				width: 100%;
+			}
+			
+			.mui-bar>h1 {
+				color: #FFFFFF;
+				font-family: "微软雅黑";
+				font-size: 20px;
+			}
+			
+			.mui-search .mui-placeholder {
+				color: #FFFFFF;
+			}
+			
+			.mui-search .mui-placeholder .mui-icon {
+				color: #FFFFFF;
+			}
+			
+			.mui-bar button {
+				font-size: 16px;
+				position: absolute;
+				height: 27px;
+				line-height: 27px;
+				top: 7px;
+				right: 15px;
+				padding: 0;
+				display: block;
+				width: 50px;
+				background-color: #ed645a;
+				color: #FFFFFF;
+				border: none;
+			}
+			
+			li {
+				list-style: none;
+			}
+			
+			#nav {
+				padding: 0;
+				margin: 0;
+				height: 30px;
+				background-color: #ffffff;
+				position: relative;
+				display: -webkit-box;
+				border-bottom: 1px solid #D8D8D8;
+			}
+			
+			#nav>li {
+				box-sizing: border-box;
+				-webkit-box-flex: 1;
+				text-align: center;
+				line-height: 30px;
+			}
+			
+			#nav>li:after {
+				display: block;
+				content: '';
+				height: 16px;
+				width: 1px;
+				background-color: #D8D8D8;
+				float: right;
+				margin-right: -1px;
+				margin-top: 7px;
+			}
+			
+			#nav>li>a {
+				color: #3d3d3d;
+				font-size: 13px;
+			}
+			
+			#nav>li>a>span {
+				color: #d8d8d8;
+				-webkit-transform: rotate(180deg);
+				font-size: 12px;
+				margin-left: 3px;
+			}
+			
+			#nav_two {
+				position: absolute;
+				margin: 0;
+				padding: 0;
+				left: 0;
+				top: 30px;
+				background-color: #FFFFFF;
+				width: 30%;
+				height: 240px;
+				overflow-y: scroll;
+				display: none;
+				padding-right: 5px;
+			}
+			
+			#nav_two>li {
+				height: 40px;
+				line-height: 40px;
+				width: 100%;
+				font-size: 15px;
+				text-align: center;
+				background-color: #f3f3f3;
+				border-bottom: 1px solid #D8D8D8;
+				box-sizing: border-box;
+			}
+			
+			#nav>li>h1 {
+				background-color: #FFFFFF;
+				height: 20px;
+				line-height: 20px;
+				position: absolute;
+				top: 270px;
+				left: 0;
+				width: 100%;
+				margin: 0;
+				font-size: 10px;
+				color: #E93F32;
+				border-top: 1px solid #D8D8D8;
+				display: none;
+			}
+			
+			.nav_three {
+				position: fixed;
+				left: 30%;
+				top: 74px;
+				width: 70%;
+				background-color: #FFFFFF;
+				height: 240px;
+				margin: 0;
+				padding: 0;
+				display: none;
+				z-index: 999;
+				padding-right: 20px;
+				overflow-y: auto;
+			}
+			
+			.nav_three>h1 {
+				box-sizing: border-box;
+				text-align: left;
+				padding-left: 25px;
+				font-size: 15px;
+				height: 40px;
+				line-height: 40px;
+				margin: 0;
+				border-bottom: 1px solid #D8D8D8;
+				background-color: #FFFFFF;
+				font-weight: 500;
+				color: #a9a9a9;
+			}
+			
+			.nav_three>ul>li {
+				height: 40px;
+				display: inline-block;
+				float: left;
+				padding-right: 15px;
+				line-height: 40px;
+				color: #a9a9a9;
+			}
+			
+			.nav_three>ul>li:after {
+				height: 10px;
+				width: 1px;
+				background-color: #D8D8D8;
+				display: block;
+				content: "";
+				float: right;
+				margin-top: 15px;
+				margin-right: -8px;
+			}
+			
+			.nav_three>ul {
+				height: 200px;
+				background-color: #FFFFFF;
+				padding-left: 25px;
+			}
+			
+			.select_two {
+				position: absolute;
+				height: 100%;
+				display: none;
+				background-color: #FFFFFF;
+				width: 100%;
+				top: 30px;
+				left: 0;
+				padding: 0;
+			}
+			
+			.select_two>li {
+				height: 40px;
+				line-height: 40px;
+				box-sizing: border-box;
+				font-size: 15px;
+				color: #484848;
+				font-family: "微软雅黑";
+				text-align: left;
+				padding-left: 15%;
+				border-bottom: 1px solid #D8D8D8;
+				background-color: #FFFFFF
+			}
+			
+			.select_two .select {
+				color: #E93F32;
+			}
+			
+			.select_two .select:before {
+				content: '√';
+				display: block;
+				float: left;
+				color: #E93F32;
+				height: 40px;
+				line-height: 40px;
+				margin-left: -10%;
+			}
+			
+			#nav_two .taped {
+				border-left: 2px solid #E93F32;
+				background-color: #FFFFFF;
+				color: #E93F32;
+			}
+			
+			#nav_two .taped .nav_three {
+				display: block;
+			}
+			
+			#nav .show>a {
+				color: #E93F32;
+			}
+			
+			#nav .show>a>span {
+				-webkit-transform: rotate(0);
+			}
+			
+			#nav .show #nav_two {
+				display: block;
+			}
+			
+			#nav .show>h1 {
+				display: block;
+			}
+			
+			#nav .show .checked {
+				color: #E93F32;
+			}
+			
+			.mui-backdrop {
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				z-index: 2;
+				background-color: rgba(0, 0, 0, .3);
+			}
+			
+			.show .select_two {
+				display: block;
+			}
+			
+			.course-list {
+				height: 100%;
+				width: 25%;
+				margin: 0;
+				padding: 0;
+				border: none;
+				float: left;
+				box-sizing: border-box;
+				border-radius: 0;
+			}
+			
+			.mui-content>.mui-table-view:first-child {
+				margin-top: 40px;
+			}
+			
+			.mui-table-view-cell {
+				height: 85px;
+				padding: 0;
+				/*border-bottom: 3px solid rgba(0,0,0,.2);*/
+			}
+			
+			.mui-table-view-cell>a:not(.mui-btn) {
+				margin: 0;
+			}
+			
+			.mui-table-view .mui-media-object {
+				display: block;
+				height: 85px;
+				width: 145px;
+				max-width: 145px;
+			}
+			
+			.mui-table-view-cell:after {
+				background-color: transparent;
+				height: 0;
+			}
+			
+			.mui-table-view-chevron .mui-table-view-cell {
+				padding: 0;
+				height: 36px;
+			}
+			
+			.mui-table-view-chevron .mui-table-view-cell>a:not(.mui-btn) {
+				margin: 0;
+			}
+			
+			#moreCourse li p {
+				font-size: 10px;
+				color: #333;
+			}
+			
+			#moreCourse li .last {
+				overflow-wrap: break-word
+			}
+			
+			#moreCourse li {
+				padding-right: 20px;
+				border-bottom: 5px solid rgba(0, 0, 0, .1);
+			}
+			
+			#moreCourse li a {
+				margin: 0;
+			}
+			
+			#moreCourse li a div {
+				white-space: normal;
+			}
+			
+			#moreCourse li a img {
+				height: 80px;
+				max-width: 125px;
+			}
+			
+			.mui-table-view-cell:after {
+				height: 0;
+			}
+			
+			.course-list a {
+				font-size: 12px;
+				height: 35px;
+				line-height: 35px;
+				width: 100%;
+				text-indent: 10px;
+			}
+			
+			#courseCenter {
+				padding-top: 10px;
+			}
+			
+			#courseCenter li {
+				margin-bottom: 15px;
+			}
+			
+			#courseCenter li:after {
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			#courseCenter li img {
+				box-sizing: border-box;
+				display: block;
+				float: left;
+				border: 1px solid #F7F7F7;
+			}
+			
+			#courseCenter li div {
+				padding-left: 10px;
+				box-sizing: border-box;
+				width: 60%;
+				float: left;
+				padding-top: 3px;
+			}
+			
+			#courseCenter li div h1 {
+				font-weight: 500;
+				color: #333;
+				width: 100%;
+				white-space: pre;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				font-size: 13px;
+				margin-bottom: 25px;
+			}
+			
+			#courseCenter li div h3 {
+				font-weight: 500;
+				color: #999;
+				width: 100%;
+				white-space: pre;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				font-size: 10px;
+				margin-bottom: 12px;
+			}
+			
+			#courseCenter li div h4 {
+				font-weight: 500;
+				color: #e93f32;
+				width: 100%;
+				white-space: pre;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				font-size: 11px;
+			}
+			
+			.mui-content {
+				position: relative;
+				height: 100%;
+				background-color: #FFFFFF
+			}
+			
+			#search {
+				font-family: "微软雅黑";
+				color: #FFFFFF;
+				font-size: 11px;
+				display: block;
+				width: 80%;
+				border-radius: 0;
+				height: 26px;
+				margin-top: 9px;
+				background-color: #ed645a;
+				padding: 0;
+				float: left;
+			}
+			
+			.mui-bar:after {
+				content: "搜索课程、分类、讲师";
+				display: block;
+				color: #FFFFFF;
+				font-size: 13px;
+				position: absolute;
+				left: 60px;
+				top: 11px;
+			}
+			
+			#message {
+				float: right;
+				color: #FFFFFF;
+				font-weight: 400;
+				font-size: 30px;
+				margin: 7px 0;
+				padding: 0;
+			}
+			
+			#message>i {
+				display: block;
+				/*border: 1px solid #FFFFFF;*/
+				height: 7px;
+				width: 7px;
+				border-radius: 50%;
+				background-color: #FFFFFF;
+				position: absolute;
+				top: 3px;
+				right: 0px;
+			}
+			
+			.mui-bar .mui-icon-search {
+				color: #ffffff;
+				font-size: 20px;
+				position: absolute;
+				left: 35px;
+			}
+			
+			.mui-bar .mui-icon-search {
+				padding-top: 4px;
+			}
+			
+			.mui-table-view:after {
+				height: 0px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding:0 30px;">
+
+			<div id="search">
+				<span class="mui-icon mui-icon-search"></span>
+			</div>
+			<span id="message" class="mui-icon mui-icon-email"><i></i></span>
+			<div class="course-nav">
+				<ul id="nav">
+					<li class=" level_one" id="level_one"><a href="javascript:void(0);">全部类别<span class="mui-icon iconfont icon-down-copy-copy"></span></a>
+						<h1>收起</h1>
+						<ul id="nav_two">
+							<li>全部类别
+							</li>
+							<!--<li class="taped">财务管理
+								<div class="nav_three">
+									<h1>全部财务管理</h1>
+									<ul>
+										<li>采购管理</li>
+										<li>财税管控</li>
+										<li>金融资本</li>
+										<li>市场营销</li>
+										<li>销售类</li>
+									</ul>
+								</div>
+							</li>
+							<li>个人发展规划
+								<div class="nav_three">
+									<h1>全部个人发展规划</h1>
+									<ul>
+										<li>人际关系</li>
+										<li>创业讲堂</li>
+										<li>口才技巧</li>
+										<li>人脉管理</li>
+										<li>自我提升</li>
+									</ul>
+								</div>
+							</li>
+							<li>国学讲座
+								<div class="nav_three">
+									<h1>全部国学讲座</h1>
+									<ul>
+										<li>百家讲坛</li>
+										<li>中国文化</li>
+										<li>孙子兵法</li>
+										<li>百家讲坛</li>
+										<li>中国文化</li>
+										<li>孙子兵法</li>
+									</ul>
+								</div>
+							</li>
+							<li>领导艺术
+								<div class="nav_three">
+									<h1>全部领导艺术</h1>
+									<ul>
+										<li>员工管理</li>
+										<li>处世技巧</li>
+										<li>目标结果</li>
+										<li>技能提升</li>
+										<li>职场必备</li>
+										<li>管理类</li>
+										<li>团队管理类</li>
+										<li>沟通类</li>
+									</ul>
+								</div>
+							</li>
+							<li>情绪管理专家
+								<div class="nav_three">
+									<h1>全部情绪管理专家</h1>
+									<ul>
+										<li>自我情绪</li>
+										<li>员工情绪</li>
+										<li>情绪专家</li>
+										<li>自我情绪</li>
+										<li>员工情绪</li>
+										<li>情绪专家</li>
+									</ul>
+								</div>
+							</li>
+							<li>商务礼仪
+								<div class="nav_three">
+									<h1>全部商务礼仪</h1>
+									<ul>
+										<li>礼仪作用</li>
+										<li>握手礼仪</li>
+										<li>仪表礼仪</li>
+										<li>举止礼仪</li>
+										<li>谈吐礼仪</li>
+										<li>交谈礼仪</li>
+										<li>会面礼仪</li>
+										<li>西餐礼仪</li>
+										<li>交谈礼仪</li>
+										<li>会面礼仪</li>
+										<li>西餐礼仪</li>
+									</ul>
+								</div>
+							</li>
+							<li>人力资源
+								<div class="nav_three">
+									<h1>全部人力资源</h1>
+									<ul>
+										<li>员工培训</li>
+										<li>人力资本</li>
+										<li>薪酬管理</li>
+										<li>人力资源管控</li>
+									</ul>
+								</div>
+							</li>
+							<li>生产管理
+								<div class="nav_three">
+									<h1>全部生产管理</h1>
+									<ul>
+										<li>供应管理</li>
+										<li>成本管理</li>
+										<li>管理实践</li>
+										<li>供应管理</li>
+										<li>成本管理</li>
+										<li>管理实践</li>
+									</ul>
+								</div>
+							</li>-->
+						</ul>
+					</li>
+					<li class="level_one"><a href="javascript:void(0);">最新<span class="mui-icon iconfont icon-down-copy-copy"></span></a>
+						<ul class="select_two">
+							<li class="select">最新</li>
+							<li>最热</li>
+						</ul>
+					</li>
+					<li class="level_one"><a href="javascript:void(0);">类型<span class="mui-icon iconfont icon-down-copy-copy"></span></a>
+						<ul class="select_two">
+							<li>类型</li>
+							<li class="select">知识精讲</li>
+							<li>实战项目</li>
+						</ul>
+					</li>
+					<li class="level_one"><a href="javascript:void(0);">等级<span class="mui-icon iconfont icon-down-copy-copy"></span></a>
+						<ul class="select_two">
+							<li class="select">初级</li>
+							<li>中级</li>
+							<li>高级</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</header>
+
+		<div class="mui-content">
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" id="courseCenter">
+
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				preloadPages: [{
+					id: 'courseInformation.html',
+					url: 'courseInformation.html',
+					styles: {
+						scrollIndicator: "none"
+					}
+				}],
+				pullRefresh: {
+					container: "#pullrefresh", //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+					up: {
+						contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+						contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+						callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+					}
+				}
+			});
+			var nav_list = [{
+					title: "财务管理",
+					list: ["全部", "采购管理", "金融资本", "市场营销", "市场营销", "销售类"]
+				}, {
+					title: "个人发展规划",
+					list: ["全部", "人际关系", "创业讲堂", "口才技巧", "人脉管理", "自我提升"]
+				}, {
+					title: "国学讲座",
+					list: ["全部", "百家讲坛", "中国文化", "孙子兵法"]
+				}, {
+					title: "领导艺术",
+					list: ["全部", "员工管理", "处世技巧", "目标结果", "技能提升", "职场必备", "管理类", "团队管理类"]
+				}, {
+					title: "情绪管理专家",
+					list: ["全部", "自我情绪", "员工情绪", "情绪专家"]
+				}, {
+					title: "商务礼仪",
+					list: ["全部", "礼仪作用", "握手礼仪", "仪表礼仪", "举止礼仪", "谈吐礼仪", "交谈礼仪", "会面礼仪", "西餐礼仪", "电话礼仪", "传真礼仪", "国外礼仪"]
+				}, {
+					title: "人力资源",
+					list: ["全部", "员工培训", "人力资本", "薪酬管理", "人力资源管控"]
+				}, {
+					title: "生产管理",
+					list: ["供应管理", "成本管理", "管理实践"]
+				}]
+				//定义导航栏伪数据
+			var createChiNav = function(navList) {
+				var fragment = "";
+				var li;
+				for (var i = 0; i < navList.length; i++) {
+					fragment += "<li>" + navList[i] + "</li>";
+				}
+				return fragment;
+			};
+			var createNav = function(navList) {
+				var fragment = document.createDocumentFragment();
+				var li;
+				for (var i = 0; i < navList.length; i++) {
+					li = document.createElement('li');
+					if (i == 0) {
+						li.className = 'taped';
+					}
+					li.innerHTML = navList[i].title + '<div class="nav_three"><h1>' + '全部' + navList[i].title + '</h1><ul>' + createChiNav(navList[i].list) + '</ul></div>'
+					fragment.appendChild(li);
+				}
+				return fragment;
+			};
+			mui.getJSON('http://server-name/list.php', {
+				category: 'news'
+			}, function(data) {
+				document.getElementById("nav_two").appendChild(createNav(data));
+			});
+			//初始化获得的数据       
+			document.getElementById("nav_two").appendChild(createNav(nav_list));
+			//对课程列表使上拉加载
+			var courseList = [{
+				id: "course_118",
+				src: "images/home/hot_four.png",
+				title: "成功人士的准则",
+				introduce: "成功人士的五项自我管理成功人",
+				price: 200
+			}, {
+				id: "course_118",
+				src: "images/home/hot_one.png",
+				title: "成功人士的准则",
+				introduce: "成功人士的五项自我管理成功人",
+				price: 200
+			}, {
+				id: "course_118",
+				src: "images/home/hot_three.png",
+				title: "成功人士的准则",
+				introduce: "成功人士的五项自我管理成功人",
+				price: 200
+			}, {
+				id: "course_118",
+				src: "images/home/hot_two.png",
+				title: "成功人士的准则",
+				introduce: "成功人士的五项自我管理成功人",
+				price: 200
+			}, {
+				id: "course_118",
+				src: "images/home/hot_four.png",
+				title: "成功人士的准则",
+				introduce: "成功人士的五项自我管理成功人",
+				price: 200
+			}, {
+				id: "course_118",
+				src: "images/home/hot_four.png",
+				title: "成功人士的准则",
+				introduce: "成功人士的五项自我管理成功人",
+				price: 200
+			}, {
+				id: "course_118",
+				src: "images/home/hot_four.png",
+				title: "成功人士的准则",
+				introduce: "成功人士的五项自我管理成功人",
+				price: 200
+			}, {
+				id: "course_118",
+				src: "images/home/hot_four.png",
+				title: "成功人士的准则",
+				introduce: "成功人士的五项自我管理成功人",
+				price: 200
+			}, {
+				id: "course_118",
+				src: "images/home/hot_four.png",
+				title: "成功人士的准则",
+				introduce: "成功人士的五项自我管理成功人",
+				price: 200
+			}];
+			var count = 0;
+			var courses = document.getElementById("courseCenter");
+			//课程列表
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui.ajax('http://server-name/login.php', {
+						data: {
+							type: this.innerText,
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if (data.residue) {
+								course.appendChild(createCourseList(data.list));
+							} else {
+								mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。	
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							mui.alert('请稍后重试', '网络错误', '确定');
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+						}
+					});
+				}, 1500);
+			}
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+			//模板渲染，课程列表页面	
+			var createFragment = function(courseList) {
+				var fragment = document.createDocumentFragment();
+				var li;
+				for (var i = 0; i < courseList.length; i++) {
+					li = document.createElement('li');
+					li.id = courseList[i].id;
+					li.innerHTML = "<img   width='40%' src=" + courseList[i].src + " /><div><h1>名称：" + courseList[i].title + "</h1><h3>简介：" + courseList[i].introduce + "</h3><h4>￥" + courseList[i].price + "</h4></div>"
+					fragment.appendChild(li);
+				}
+				return fragment;
+			};
+			//搜索事件，由于搜索页面已经经过初始化
+			document.getElementById("search").addEventListener("tap", function() {
+				mui.openWindow({
+					url: 'courseSearch.html',
+					show: {
+						aniShow: "slide-in-right",
+						duration: 200
+					}
+				});
+			})
+			document.getElementById("message").addEventListener("tap", function() {
+					mui.openWindow({
+						url: 'messageNotification.html',
+						show: {
+							duration: 200
+						}
+					})
+				})
+				//初始化mui
+			mui.ready(function() {
+				var mask = mui.createMask(function() {
+					$(".level_one").removeClass('show');
+				});
+				$(".level_one").on("tap", function() {
+						if ($(this).hasClass("show")) {
+							$(this).removeClass("show");
+							mask.close();
+						} else {
+							$(this).addClass("show").siblings().removeClass("show");
+							mask.show();
+						}
+					})
+					//点击导航栏一级列表切换class类并且移除同类型其他标签的class类
+				$(".level_one>ul>li").on("tap", function() {
+						if ($(this).parent().parent()[0] != $(".level_one>ul>li").parents().children(".level_one")[0]) {
+							$(this).parents(".level_one").children("a").html($(this).html() + '<span class="mui-icon iconfont icon-down-copy-copy"></span>');
+							$(this).addClass("select").siblings().removeClass("select");
+							mask.close();
+							courses.innerHTML = '';
+							setTimeout(function() {
+								mui('#pullrefresh').pullRefresh().pullupLoading();
+							}, 1000);
+							return false;
+						}
+						//						mask.close();
+					})
+					//点击导航栏二级列表进行class类的切换，并且通过事件冒泡，关闭标签，使用判断，隔离开第一个与众不同的标签,进行列表内容的切换
+				$("#level_one>ul>li").on("tap", function() {
+						if ($(this)[0] == $("#level_one>ul>li")[0]) {
+							$("#level_one").removeClass("show");
+							mask.close();
+							return false;
+						} else {
+							$(this).addClass("taped").siblings().removeClass("taped");
+							return false;
+						}
+					})
+					//特殊导航栏二级列表点击进行class类的切换，阻止冒泡，防止关闭标签
+				$("#level_one>ul>li>div>ul>li").on("tap", function() {
+						$(this).toggleClass("checked").siblings().removeClass("checked");
+						$(this).parents(".level_one").children("a").html($(this).html() + '<span class="mui-icon iconfont icon-down-copy-copy"></span>');
+						$(this).parents(".level_one").removeClass("show");
+						mask.close();
+						//关闭遮罩
+						courses.innerHTML = '';
+						//清空数据
+						setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+					})
+					//第一行第三列表的点击效果，更改一级列表内，更换样式
+					//需要进行筛选，定义ajax发送数据给后台，返回json数据通过模板进行封装，渲染完显示在页面中
+					//设置课程跳转函数，首先进行课程详情页面的预加载
+				var detailPage = null;
+				//添加列表项的点击事件
+				mui('#courseCenter').on('tap', 'li', function(e) {
+					var courseid = this.getAttribute('id');
+					//向后台传输自带的id值,将id值传递进去
+					//打开详情页面          
+					mui.openWindow({
+						url: 'coursePurchase.html',
+						styles: {
+							scrollIndicator: 'none'
+						},
+						extras: {
+							courseid: courseid,
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+
+</html>

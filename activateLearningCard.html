@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <style type="text/css">
+    html{
+    	height: 100%;
+    }
+    body{
+    	height: 100%;
+    	background-color: #FFFFFF;
+    }
+     .mui-content{
+     	background-color: #FFFFFF;
+     	font-family: "微软雅黑";
+     }
+     .mui-content h1{
+     	margin: 0;
+     	padding-left: 18px;
+     	height: 43px;
+     	line-height: 43px;
+     	font-size: 11px;
+     	color: #787878;
+     	background-color: #f3f3f3;
+     }
+     .mui-content img{
+     	display: block;
+     	margin: 0 auto;
+     }
+     .mui-content form{
+     	display: block;
+     	height: 127px;
+     	padding: 25px 44px 0 44px;
+     	background-color: #f3f3f3
+     }
+     .mui-content form input{
+     	font-family: "微软雅黑";
+     	border: 1px solid #e9afab;
+     	height: 34px;
+     	margin-bottom: 17.5px;
+     }
+      .mui-content form button{
+      	display: block;
+      	border-radius: 0;
+      	background-color: #F2B928;
+      	color: #FFFFFF;
+      	border: none;
+      	margin: 0 auto;
+      }
+      .mui-content p{
+      	font-size: 13px;
+      	color: #dfdfdf;
+      	position: fixed;
+      	z-index: -999;
+      	bottom: 5px;
+      	left: 50%;
+      	-webkit-transform: translateX(-50%);
+      	-moz-transform: translateX(-50%);
+      	-ms-transform: translateX(-50%);
+      }
+    </style>
+</head>
+<body>
+	
+	<div class="mui-content">
+	    <h1>温馨提示：激活学习卡只需三步骤</h1>
+	    <img src="images/card/studyCard.png" height="217"/>
+	    <form >
+	            <input type="text" class="mui-input-clear" placeholder="请输入学习卡卡密" id="cardsNumber">
+	            	<button type="button" id="submits">激活学习卡</button>
+	    </form>
+	    <p>欢迎激活学习卡</p>
+	</div>
+	<script src="js/mui.min.js"></script>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init(); 
+      	var submits=document.getElementById("submits");
+      	//最好能够提前使用正则表达式
+      	var number=document.getElementById("cardsNumber");
+      	submits.addEventListener('tap',function  () {
+      		//在函数当中对value进行正则匹配
+      		var numberData=number.value;
+      		
+      		//将数据传输到后台ajax，根据返回的数据打开学习卡的具体信息页面
+      		mui.ajax('http://server-name/login.php',{
+				data:{
+					studyCard:'numberData'
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；返回的数据类型是url，传递到详情页面，作为地址直接获取所需的静态数据
+					if (data.use==1) {
+						mui.openWindow({
+		      			url:'activateLearningCardInformation.html',
+		      			styles:{
+		      				scrollIndicator: "none"
+		      			},
+		      			extras:{
+                         information:data.url
+                          },
+		      		})
+					} else if (data.use==2) {
+						mui.alert('无效的卡密','卡密错误',"确定");
+					}else{
+						mui.alert('该卡密已被使用','卡密错误',"确定");
+					}
+					
+				},
+				error:function(xhr,type,errorThrown){
+					mui.alert('连接失败，请稍后重试','网络错误',"确定");
+				}
+			});
+			
+      		
+      	})
+    </script>
+</body>
+</html>

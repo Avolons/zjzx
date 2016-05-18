@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+     <link href="css/mui.min.css" rel="stylesheet"/>
+     <style type="text/css">
+     	.mui-table-view-cell:after{
+     		left: 0;
+     		    transform: scaleY(1);
+     	}
+     	.mui-table-view-cell{
+     		margin-top: 10px;
+     		border-top: 1px solid #c8c7cc;
+     		background-color: #FFFFFF;
+     	}
+     	.mui-table-view{
+     		background-color: transparent;
+     		font-family: "微软雅黑";
+     		font-size: 15px;
+     		color: #515151;
+     	}
+     	.mui-table-view:before{
+     		height: 0;
+     	}
+     </style>
+</head>
+<body>
+	<div class="mui-content">
+	  <ul class="mui-table-view" id="list">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right">
+					激活学习卡遇到的问题
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right">
+					证书查询遇到的问题
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right">
+					联系客服
+				</a>
+			</li>
+	  </ul>
+	</div>
+	<script src="js/mui.min.js"></script>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+      	function creatList (data) {
+      		var framement=document.createDocumentFragment();
+      		var li;
+      		for (var i=0;i<data.length;i++) {
+      			li=document.createElement("li");
+      			li.className='mui-table-view-cell';
+      			li.innerHTML='<a class="mui-navigate-right">'+data[i]+'</a>';
+      			framement.appendChild(li);
+      		}
+      		return framement;
+      	}
+      	
+      	var list=document.getElementById("list");
+      	
+      	mui.get('http://server-name/list.php',{category:'news'},function(data){
+		//获得服务器响应
+		      list.appendChild(creatList(data));
+			},'json'
+		);
+    </script>
+</body>
+</html>

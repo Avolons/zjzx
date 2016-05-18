@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			body {
+				font-family: "微软雅黑";
+			}
+			
+			.mui-content {
+				font-size: 0;
+			}
+			
+			.mui-content button {
+				width: 50%;
+				border-radius: 0;
+				border: none;
+				display: inline-block;
+				height: 38px;
+				padding: 0;
+			}
+			
+			.mui-content button a {
+				font-size: 14px;
+				color: #808080;
+				height: 38px;
+				line-height: 38px;
+				display: inline-block;
+				border-bottom: 1px solid #FFFFFF;
+			}
+			.mui-content .btn a{
+				border-bottom: 1px solid #E93F32;
+			}
+			
+			.mui-content button:nth-of-type(1):after {
+				content: "";
+				display: block;
+				height: 20px;
+				width: 1px;
+				background-color: #c2c2c2;
+				float: right;
+				margin-top: 9px;
+			}
+			
+			ul {
+				display: none;
+				position: absolute;
+				top: 39px;
+				left: 0;
+				padding: 0;
+				z-index: 999;
+				width: 100%;
+			}
+			
+			h3 {
+				margin: 0;
+				padding: 0 16px;
+				font-size: 14px;
+				color: #474747;
+				height: 30px;
+				line-height: 30px;
+				border-bottom: 1px solid #C2C2C2;
+			}
+			
+			li {
+				margin-top: 10px;
+				list-style: none;
+				font-size: 15px;
+				color: #a6a6a6;
+				background-color: #FFFFFF;
+				padding-bottom: 5px;
+			}
+			
+			li p {
+				margin: 5px 0;
+				width: 100%;
+				padding: 0 16px;
+			}
+			
+			li p span {
+				float: right;
+				color: #e93f32;
+				font-size: 12px;
+			}
+			#purchasebook{
+				display: block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<button class="btn"><a href="javascript:void(0);">我订购的教材</a></button>
+			<button><a href="javascript:void(0);">我激活的学习卡</a></button>
+			<ul id="purchasebook">
+				<li>
+					<h3>已完成</h3>
+					<p>订单号：dd00000022</p>
+					<p>订购教材：跨部门协作专项训练</p>
+					<p>订购时间： 2016-04-21 10:3025 <span>￥200.00</span></p>
+				</li>
+				<li>
+					<h3>已完成</h3>
+					<p>订单号：dd00000022</p>
+					<p>订购教材：跨部门协作专项训练</p>
+					<p>订购时间： 2016-04-21 10:3025 <span>￥200.00</span></p>
+				</li>
+				<li>
+					<h3>已完成</h3>
+					<p>订单号：dd00000022</p>
+					<p>订购教材：跨部门协作专项训练</p>
+					<p>订购时间： 2016-04-21 10:3025 <span>￥200.00</span></p>
+				</li>
+
+			</ul>
+			<ul id="purchasecard">
+				<li>
+					<h3>已完成</h3>
+					<p>学习卡卡密：cd19287a7a2d37d90e0ec</p>
+					<p>包含课程：优秀员工的十大心态</p>
+					<p>包含教材：迈向成功之路<span>￥10.01</span></p>
+				</li>
+				<li>
+					<h3>已完成</h3>
+					<p>学习卡卡密：cd19287a7a2d37d90e0ec</p>
+					<p>包含课程：优秀员工的十大心态</p>
+					<p>包含教材：迈向成功之路<span>￥10.01</span></p>
+				</li>
+				<li>
+					<h3>已完成</h3>
+					<p>学习卡卡密：cd19287a7a2d37d90e0ec</p>
+					<p>包含课程：优秀员工的十大心态</p>
+					<p>包含教材：迈向成功之路<span>￥10.01</span></p>
+				</li>
+			</ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+			
+			var list={
+				book:[{
+				  state:"已完成",
+				  number:"订单号：dd00000022",
+				  book:"订购教材：跨部门协作专项训练",
+				  time:"订购时间： 2016-04-21 10:3025",
+				  price:"￥200.00"
+				},{
+				  state:"已完成",
+				  number:"订单号：dd00000022",
+				  book:"订购教材：跨部门协作专项训练",
+				  time:"订购时间： 2016-04-21 10:3025",
+				  price:"￥200.00"
+				},{
+				  state:"已完成",
+				  number:"订单号：dd00000022",
+				  book:"订购教材：跨部门协作专项训练",
+				  time:"订购时间： 2016-04-21 10:3025",
+				  price:"￥200.00"
+				},],
+				card:[{
+				  state:"已完成",
+				  number:"学习卡卡密：cd19287a7a2d37d90e0ec",
+				  book:"包含课程：优秀员工的十大心态",
+				  time:"包含教材：迈向成功之路",
+				  price:"￥10.01"
+				},{
+				  state:"已完成",
+				  number:"学习卡卡密：cd19287a7a2d37d90e0ec",
+				  book:"包含课程：优秀员工的十大心态",
+				  time:"包含教材：迈向成功之路",
+				  price:"￥10.01"
+				},{
+				  state:"已完成",
+				  number:"学习卡卡密：cd19287a7a2d37d90e0ec",
+				  book:"包含课程：优秀员工的十大心态",
+				  time:"包含教材：迈向成功之路",
+				  price:"￥10.01"
+				},]
+			}
+			//定义虚拟数据结构，本页面主要为展示页面，只需要将数据从服务器取出进行真实即可
+			function creatFrame (list) {
+				var frame=document.createDocumentFragment();
+				var li;
+				for (var i=0;i<list.length;i++) {
+					li=document.createElement("li");
+					li.innerHTML='<h3>'+list[i].state+'</h3><p>'+list[i].number+'</p><p>'+list[i].book+'</p><p>'+list[i].time+'<span>'+list[i].price+'</span></p>'
+				    frame.appendChild(li);
+				}
+				return frame;
+			}
+			mui.ajax('http://server-name/login.php',{
+						data:{
+							user:'username',
+							school:'password',
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'get',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；
+						success:function(data){
+							document.getElementById("purchasebook").appendChild(creatFrame(data.book));
+							document.getElementById("purchasecard").appendChild(creatFrame(data.card));
+						},
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							console.log(type);
+						}
+					});
+			document.getElementById("purchasebook").appendChild(creatFrame(list.book));
+			document.getElementById("purchasecard").appendChild(creatFrame(list.card));
+			
+			
+			
+			$("button").on("tap",function  () {
+				$(this).addClass("btn").siblings().removeClass("btn");
+				if ($(this).children("a").html()=="我订购的教材") {
+					$("#purchasebook").show();
+					$("#purchasecard").hide();
+				}else{
+					$("#purchasebook").hide();
+					$("#purchasecard").show();
+				}
+			})
+		    
+		</script>
+	</body>
+
+</html>

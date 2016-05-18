@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>cloud</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<style type="text/css">
+			body {
+				font-family: "微软雅黑";
+			}
+			
+			li {
+				list-style: none;
+			}
+			
+			nav {
+				position: absolute;
+				top: 44px;
+				left: 0;
+				width: 100%;
+			}
+			
+			nav>ul {
+				width: 100%;
+				padding: 0;
+				margin: 0;
+				height: 30px;
+				background-color: white;
+				border-bottom: 1px solid #DDDDDD;
+			}
+			
+			nav>ul>li {
+				font-size: 13px;
+				width: 50%;
+				height: 30px;
+				line-height: 30px;
+				float: left;
+				display: -webkit-box;
+				-webkit-box-pack: center;
+			}
+			
+			nav>ul>li:after {
+				height: 15px;
+				width: 1px;
+				display: block;
+				content: "";
+				position: absolute;
+				right: -1px;
+				top: 10px;
+				background-color: #DADADA;
+			}
+			
+			.mui-bar-nav {
+				background-color: #e93f32;
+			}
+			
+			.mui-bar-nav h1 {
+				font-size: 20px;
+				color: #FFFFFF;
+			}
+			
+			.mui-content>.mui-table-view:first-child {
+				margin-top: 40px;
+			}
+			
+			.mui-table-view-cell {
+				padding: 0;
+				/*border-bottom: 3px solid rgba(0,0,0,.2);*/
+			}
+			
+			.mui-table-view-cell>a:not(.mui-btn) {
+				margin: 0;
+			}
+			
+			.mui-table-view .mui-media-object {
+				display: block;
+			}
+			
+			.mui-table-view-cell:after {
+				background-color: transparent;
+				height: 0;
+			}
+			
+			.mui-table-view-chevron .mui-table-view-cell {
+				padding: 0;
+				height: 36px;
+			}
+			
+			.mui-table-view-chevron .mui-table-view-cell>a:not(.mui-btn) {
+				margin: 0;
+			}
+			
+			#moreCourse {
+				background-color: transparent
+			}
+			
+			#moreCourse li p {
+				font-size: 10px;
+				color: #333;
+			}
+			
+			#moreCourse li .last {
+				overflow-wrap: break-word
+			}
+			
+			#moreCourse li {
+				padding: 0 8px;
+				height: 80px;
+				box-sizing: border-box;
+				background-color: #FFFFFF;
+				margin-bottom: 5px;
+			}
+			
+			#moreCourse li:after {
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			#moreCourse li a {
+				margin: 0;
+				height: 100%;
+			}
+			
+			#moreCourse li a div {
+				height: 100%;
+				margin-left: 10px;
+				float: left;
+				white-space: normal;
+			}
+			
+			#moreCourse li a img {
+				margin-right: 10px;
+				display: block;
+				max-width: 90%;
+				height: 100%;
+			}
+			
+			#moreCourse li a div p {
+				color: #999999;
+			}
+			
+			#moreCourse li a div p span {
+				color: #999999;
+				font-size: 10px;
+				display: block;
+				height: 21px;
+				line-height: 21px;
+				width: 10px;
+				float: left;
+				margin-right: 2px;
+			}
+			
+			#moreCourse li a div h3 {
+				margin: 0;
+				line-height: 2;
+				height: calc(100% / 2);
+				color: #5d5d5d;
+				font-size: 17px;
+			}
+			
+			.mui-table-view-cell:after {
+				height: 0;
+			}
+			
+			.course-list a {
+				font-size: 12px;
+				height: 35px;
+				line-height: 35px;
+				width: 100%;
+				text-indent: 10px;
+			}
+			
+			nav>ul>li>a {
+				color: #333333;
+				font-size: 13px;
+			}
+			
+			#nav .level_one>a>span {
+				color: #d8d8d8;
+				-webkit-transform: rotate(180deg);
+				font-size: 12px;
+				margin-left: 3px;
+			}
+			
+			#nav .touch>a>span {
+				-webkit-transform: rotate(0);
+			}
+			
+			nav>ul>li ul {
+				display: none;
+				font-size: 13px;
+				padding: 0;
+				width: 100%;
+				position: absolute;
+				top: 30px;
+				left: 0;
+				background-color: #f7f7f7
+			}
+			
+			nav>ul .touch>ul .select:before {
+				content: '√';
+				display: block;
+				float: left;
+				color: #E93F32;
+				height: 40px;
+				line-height: 40px;
+				margin-left: -10%;
+			}
+			
+			nav>ul>li>ul>li {
+				height: 40px;
+				line-height: 40px;
+				box-sizing: border-box;
+				padding-left: 15%;
+				font-size: 15px;
+				width: 100%;
+				box-sizing: border-box;
+				border-bottom: 1px solid #DDDDDD;
+			}
+			
+			nav>ul>li>ul .select {
+				background-color: white
+			}
+			
+			nav>ul .level_one>a {
+				color: #333333;
+			}
+			
+			nav>ul .touch>ul .select {
+				color: #e93f32;
+			}
+			
+			nav>ul .level_one>ul>li {
+				color: #333333;
+			}
+			
+			nav>ul .touch>a {
+				color: #e93f32;
+			}
+			
+			nav>ul .touch>ul {
+				display: block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">云课堂</h1>
+			<nav>
+				<ul id="nav">
+					<li class="level_one">
+						<a href="#">最近学习<span class="mui-icon iconfont icon-down-copy-copy"></span></a>
+						<ul>
+							<li class="">最近学习</li>
+							<li>最新课程</li>
+						</ul>
+					</li>
+					<li class="level_one">
+						<a href="#">全部<span class="mui-icon iconfont icon-down-copy-copy"></span></a>
+						<ul>
+							<li>全部</li>
+							<li>未学习</li>
+							<li>学习中</li>
+							<li>已暂定</li>
+							<li>已完成</li>
+							<li>已过期</li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view" id="moreCourse">
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:void(0);" class="">
+						<img class=" mui-pull-left" src="images/center/center (1).png">
+						<div class="title">
+							<h3>情商与影响力</h3>
+							<p><span class="mui-icon iconfont icon-shizhong"></span>上次学习时间：11月16日</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+
+		</div>
+		<script src="libs/easymob-webim-sdk/jquery-1.11.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/logined.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			//伪造后台课程信息数据
+			urlopenwindow(main);
+
+			function main() {
+				var courselist = [{
+						id: "course_118",
+						src: "images/home/home_new1.png",
+						title: "情商与影响力",
+						time: "11月16日"
+					}, {
+						id: "course_118",
+						src: "images/home/home_new2.png",
+						title: "情商与影响力",
+						time: "11月16日"
+					}, {
+						id: "course_118",
+						src: "images/home/home_new3.png",
+						title: "情商与影响力",
+						time: "11月16日"
+					}, {
+						id: "course_118",
+						src: "images/home/home_new4.png",
+						title: "情商与影响力",
+						time: "11月16日"
+					}, {
+						id: "course_118",
+						src: "images/home/home_new2.png",
+						title: "情商与影响力",
+						time: "11月16日"
+					}, {
+						id: "course_118",
+						src: "images/home/home_new4.png",
+						title: "情商与影响力",
+						time: "11月16日"
+					}, {
+						id: "course_118",
+						src: "images/home/home_new2.png",
+						title: "情商与影响力",
+						time: "11月16日"
+					}, {
+						id: "course_118",
+						src: "images/home/home_new3.png",
+						title: "情商与影响力",
+						time: "11月16日"
+					}, {
+						id: "course_118",
+						src: "images/home/home_new4.png",
+						title: "情商与影响力",
+						time: "11月16日"
+					}, {
+						id: "course_118",
+						src: "images/home/home_new1.png",
+						title: "情商与影响力",
+						time: "11月16日"
+					}]
+					//进行后台数据的获取，并且进行dom渲染
+				var createCourseList = function(courselist) {
+					var fragment = document.createDocumentFragment();
+					var li;
+					for (var i = 0; i < courselist.length; i++) {
+						li = document.createElement('li');
+						li.className = 'mui-table-view-cell mui-media';
+						li.id = courselist[i].id;
+						li.innerHTML = "<a href='javascript:void(0);' class=''><img  class='mui-pull-left' src=" + courselist[i].src + "><div class='title'><h3>" + courselist[i].title + "</h3><p><span class='mui-icon iconfont icon-shizhong'></span>上次学习时间：" + courselist[i].time + "</p></div></a>"
+						fragment.appendChild(li);
+					}
+					return fragment;
+				};
+				mui.getJSON('http://server-name/list.php', {
+					category: 'news'
+				}, function(data) {
+					course.appendChild(createCourseList(data));
+				});
+				//初始化的格式页面
+				var course = document.getElementById("moreCourse")
+				course.appendChild(createCourseList(courselist));
+			}
+			//切换时会对列表进行刷新操作
+			mui.ready(function() {
+				$(".level_one").bind("tap", function() {
+						$(this).toggleClass("touch").siblings().removeClass("touch");
+					})
+					//一级列表的点击切换
+				$(".level_one>ul>li").bind("tap", function() {
+						$(this).parents(".level_one").children("a").html($(this).html() + '<span class="mui-icon iconfont icon-down-copy-copy"></span>');
+						$(this).toggleClass("select").siblings().removeClass("select");
+						course.innerHTML = '';
+						mui.ajax('http://server-name/login.php', {
+							data: {
+								type: this.innerText,
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								course.appendChild(createCourseList(courselist));
+							},
+							error: function(xhr, type, errorThrown) {
+								mui.alert('请稍后重试', '网络错误', '确定');
+							}
+						});
+					})
+					//二级列表的点击切换，并且将当前值传给一级列表
+			});
+			var detailPage = null;
+			mui.ready(function() {
+				mui('#moreCourse').on('tap', 'li', function(e) {
+					var courseid = this.getAttribute('id');
+					//向后台传输自带的id值,将id值传递进去
+					//打开详情页面          
+					mui.openWindow({
+						url: 'learningCourse.html',
+						styles: {
+							scrollIndicator: 'none'
+						},
+						extras: {
+							courseid: courseid,
+						}
+					});
+				});
+			})
+		</script>
+	</body>
+
+</html>
