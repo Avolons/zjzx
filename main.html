@@ -12,7 +12,6 @@
 				font-size: 14px;
 				color: #8f8f94;
 			}
-			
 			.mui-btn {
 				padding: 10px;
 			}
@@ -76,9 +75,11 @@
 					//	预加载页面：1.课程搜索页面 2.证书查询页面 3.激活学习卡页面  4.我的任务页面 5.我的考试页面 6.课程信息页面 7.热点新闻目录页 8.热点新闻阅读页面
 			});
 			var subpages = ['home.html', 'course.html', 'cloud.html', 'mine.html'];
+			/*定义配置属性*/
 			var subpage_style = {
 				top: '0px',
 				bottom: '50px',
+				/*无滑动条*/
 				scrollIndicator:"none"
 			};
 			var aniShow = {};
@@ -89,17 +90,20 @@
 				//获取本页面，指主体父页面
 				for (var i = 0; i < 4; i++) {
 					var temp = {};
+					/*WebviewObject plus.webview.create( url, id, styles, extras );*/
 					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
-//					创建原生的webview窗口
+                    //创建原生的webview窗口
 					if (i > 0) {
 						sub.hide();
-//						创建完，首先隐藏
+                       //创建完，首先隐藏
 					}else{
 						temp[subpages[i]] = "true";
+						//保存已经显示的页面
 						mui.extend(aniShow,temp);
 					}
+					//成为主页面的附属子页面
 					self.append(sub);
-				}
+				    }
 				
 				    mui.oldBack = mui.back;
 				    //存储原始back函数，重写新的back函数
@@ -123,10 +127,15 @@
 //			var title = document.getElementById("title");
 			 //选项卡点击事件
 			mui('.mui-bar-tab').on('tap', 'a', function(e) {
+				//使用自定义事件告诉当前页面被点击
 				var targetTab = this.getAttribute('href');
 				if (targetTab == activeTab) {
 					return;
 				}
+				var  detailPage = plus.webview.getWebviewById(targetTab);
+				 mui.fire(detailPage,'clicked',{
+				    click:true
+				 });
 				//更换标题
 //				title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
 				//显示目标选项卡

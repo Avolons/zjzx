@@ -258,31 +258,48 @@
 		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
 			(function($, doc) {
-				$.init();
 				$.plusReady(function() {
+				$.init();
 					var presentWebview = plus.webview.currentWebview();
 					var informationUrl = presentWebview.information;
+					var header = plus.storage.getItem('header');
+					mui.ajax('http://server-name/login.php', {
+							data: {
+								Header: header,
+								Body: {
+									Code:informationUrl,
+								}
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'get', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								if (data.Body.TotalCount>0) {
+									newList.appendChild(createFragment(data.Body.Items));
+								    count++;
+								} else{
+									mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								//异常处理；
+								console.log(type);
+							}
+						});
 					$.getJSON(informationUrl, {
 						category: 'news'
 					}, function(data) {
 						//获取到所要显示在页面的静态数据
-						var courseIncloud = [
-							'kc000050',
-							'新商务礼仪',
-							'100'
-						]
-						var bookIncloud = [
-							'jc000000',
-							'地理',
-							'教材',
-							'----'
-						]
+						//取出数据对应数组
 						var courses = document.getElementById("courseIncloud").getElementsByClassName('right');
+						//取出数据对应数组
 						var books = document.getElementById("bookIncloud").getElementsByClassName('right');
+						
 						//获取了数据之后，通过js进行渲染。
 						for (var i = 0; i < courses.length; i++) {
 							courses[i].innerHTML = courseIncloud[i];
 						}
+						
 						for (var i = 0; i < books.length; i++) {
 							books[i].innerHTML = bookIncloud[i];
 						}

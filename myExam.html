@@ -44,7 +44,7 @@
     </style>
 </head>
 <body>
-	<div class="mui-content">
+	<div class="mui-content" id="examList">
 	    <!--<ul>
 	    	<li>考试名称:<a href="javascript:void(0);"></a> </li>
 	    	<li>考试时间:<a href="javascript:void(0);"></a> </li>
@@ -55,8 +55,22 @@
 	    </ul>-->
 	</div>
 	<script src="js/mui.min.js"></script>
+	<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="UTF-8">
-      	mui.init();
+    mui.plusReady(function  () {
+    	mui.init({
+					//下拉刷新
+					pullRefresh: {
+						container: '#examList', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+						up: {
+							height: 50, //可选.默认50.触发上拉加载拖动距离
+							auto: true, //可选,默认false.自动上拉加载一次
+							contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+							contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+							callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+						}
+					}
+				});
       	var myExam=[{
       		name:"测试",
       		time:"2016-01-22 17:10-2016-01-24 17:05",
@@ -86,25 +100,53 @@
       	   }
       	   return farmate;
       	}
-      	mui.ajax('http://server-name/login.php',{
-						data:{
-							user:'username',
-							school:'password',
-						},
-						dataType:'json',//服务器返回json格式数据
-						type:'get',//HTTP请求类型
-						timeout:10000,//超时时间设置为10秒；
-						success:function(data){
-							document.getElementsByClassName("mui-content")[0].appendChild(creatExam (data));
-						},
-						error:function(xhr,type,errorThrown){
-							//异常处理；
-							console.log(type);
-						}
-					});
-					
-      	
+        //定义分页
+      	var count=1;
+      	//定义
+      	(function  () {
+      		var header = JSON.parse(plus.storage.getItem('header'));
+			var data = JSON.stringify({
+				Header: header,
+				Body: {
+				    PageIndex: count,
+				    PageSize: 20
+				  }
+			});
+			sendAjax('http://192.168.1.112/api/User/GetMyExam',data,function  (data) {
+				document.getElementsByClassName("mui-content")[0].appendChild(creatExam (data));
+			})
+      	})();
+      	function pullupRefresh() {
+					var header = JSON.parse(plus.storage.getItem('header'));
+					var data=JSON.stringify({
+								Header: header,
+								Body: {
+									PageIndex: count,
+									PageSize: 20
+								}
+						});
+					setTimeout(function() {
+						sendAjax('http://192.168.1.112/api/User/GetMyExam',data,function  (data) {
+							if(data.Body.TotalCount > 0) {
+									document.getElementById("examList").appendChild(creatExam(data.Body.Items));
+									count++;
+								} else {
+									mui('#examList').pullRefresh().endPullupToRefresh(true);
+								}
+						},function  () {
+							mui('#examList').pullRefresh().endPullupToRefresh(true);
+						})
+					}, 500);
+				};
+				if(mui.os.plus) {
+					setTimeout(function() {
+						mui('#examList').pullRefresh().pullupLoading();
+					}, 1000);
+				} else {
+					mui('#examList').pullRefresh().pullupLoading();
+				};
       	document.getElementsByClassName("mui-content")[0].appendChild(creatExam (myExam));
+    })
     </script>
 </body>
 </html>

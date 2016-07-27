@@ -708,6 +708,8 @@
 					list: ["供应管理", "成本管理", "管理实践"]
 				}]
 				//定义导航栏伪数据
+				
+			//创建导航栏
 			var createChiNav = function(navList) {
 				var fragment = "";
 				var li;
@@ -716,6 +718,7 @@
 				}
 				return fragment;
 			};
+			//创建二级菜单
 			var createNav = function(navList) {
 				var fragment = document.createDocumentFragment();
 				var li;
@@ -729,13 +732,17 @@
 				}
 				return fragment;
 			};
+			//初始化获得的数据  
+			
 			mui.getJSON('http://server-name/list.php', {
 				category: 'news'
 			}, function(data) {
 				document.getElementById("nav_two").appendChild(createNav(data));
 			});
-			//初始化获得的数据       
+			
+			
 			document.getElementById("nav_two").appendChild(createNav(nav_list));
+
 			//对课程列表使上拉加载
 			var courseList = [{
 				id: "course_118",
@@ -792,9 +799,11 @@
 				introduce: "成功人士的五项自我管理成功人",
 				price: 200
 			}];
+			//定义分页
 			var count = 0;
-			var courses = document.getElementById("courseCenter");
 			//课程列表
+			var courses = document.getElementById("courseCenter");
+			
 			function pullupRefresh() {
 				setTimeout(function() {
 					mui.ajax('http://server-name/login.php', {
@@ -816,18 +825,14 @@
 							mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
 						}
 					});
-				}, 1500);
+				}, 500);
 			}
 			if (mui.os.plus) {
-				mui.plusReady(function() {
 					setTimeout(function() {
 						mui('#pullrefresh').pullRefresh().pullupLoading();
 					}, 1000);
-				});
 			} else {
-				mui.ready(function() {
 					mui('#pullrefresh').pullRefresh().pullupLoading();
-				});
 			}
 			//模板渲染，课程列表页面	
 			var createFragment = function(courseList) {

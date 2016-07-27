@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link href="css/mui.min.css" rel="stylesheet" />
-		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
 			body,
 			html {
@@ -134,92 +134,110 @@
 			</ul>
 		</div>
 		<script src="js/mui.min.js"></script>
+		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
-			mui.init({
-				preloadPages: [{
-					id: 'messageInformation.html',
-					url: 'messageInformation.html'
-				}]
-			});
-			var message = [{
-				noneread: 'true',
-				id: 'sadfas',
-				imgsrc: "images/message/system.png",
-				title: "系统通知",
-				time: "16/04/25",
-				innertext: "为适应职业资格证书制度改革工作需要，我部对"
-			}, {
-				noneread: 'false',
-				id: 'sadfas',
-				imgsrc: "images/message/logo.png",
-				title: "通知消息",
-				time: "16/04/25",
-				innertext: "您订购的教材《地理》等，已发货"
-			}, {
-				noneread: 'true',
-				id: 'sadfas',
-				imgsrc: "images/message/charster.png",
-				title: "系统通知",
-				time: "16/04/25",
-				innertext: "为适应职业资格证书制度改革工作需要，我部对"
-			}]
-			
-            
-			function creatMessage(message_list) {
-				var farme = document.createDocumentFragment();
-				var li;
-				for (var i = 0; i < message_list.length; i++) {
-					li = document.createElement("li");
-					if (message_list[i].noneread == "true") {
-						li.innerHTML = '<div class="img_outer noneRead"><img src=' + message_list[i].imgsrc + ' /></div><div class="intrdouce"><div class="title"><h6>' + message_list[i].title + '</h6><b>' + message_list[i].time + '</b></div><p>' + message_list[i].innertext + '</p></div>';
-					} else {
-						li.innerHTML = '<div class="img_outer"><img src=' + message_list[i].imgsrc + ' /></div><div class="intrdouce"><div class="title"><h6>' + message_list[i].title + '</h6><b>' + message_list[i].time + '</b></div><p>' + message_list[i].innertext + '</p></div>';
+			mui.plusReady(function() {
+				mui.init({
+					preloadPages: [{
+						id: 'messageInformation.html',
+						url: 'messageInformation.html'
+					}],
+					pullRefresh: {
+						container: '#message_list', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+						up: {
+							height: 50, //可选.默认50.触发上拉加载拖动距离
+							auto: true, //可选,默认false.自动上拉加载一次
+							contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+							contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+							callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+						}
 					}
-					li.newsid=message_list[i].id;
-					farme.appendChild(li);
+				});
+
+				function creatMessage(data) {
+					var farme = document.createDocumentFragment();
+					var li;
+					for(var i = 0; i < data.length; i++) {
+						li = document.createElement("li");
+						//0是未读，1是已读
+						if(data.Status == 0) {
+							li.innerHTML = '<div class="img_outer noneRead"><img src=' + data[i].Src + ' /></div><div class="intrdouce"><div class="title"><h6>' + data[i].Title + '</h6><b>' + data[i].Time + '</b></div><p>' + data[i].Innertext + '</p></div>';
+						} else {
+							li.innerHTML = '<div class="img_outer"><img src=' + data[i].Src + ' /></div><div class="intrdouce"><div class="title"><h6>' + data[i].Title + '</h6><b>' + data[i].Time + '</b></div><p>' + data[i].Innertext + '</p></div>';
+						}
+						li.id = data[i].Id;
+						farme.appendChild(li);
+					}
+					return farme;
 				}
-				return farme;
-			}
-			document.getElementById("message_list").appendChild(creatMessage(message));
-			mui.ajax('http://server-name/login.php',{
-				data:{
-					user:'username',
-					school:'password'
-				},
-				dataType:'json',//服务器返回json格式数据
-				type:'get',//HTTP请求类型
-				timeout:10000,//超时时间设置为10秒；
-				success:function(data){
-					document.getElementById("message_list").appendChild(creatMessage(data));
-				},
-				error:function(xhr,type,errorThrown){
-					//异常处理；
-					console.log(type);
+				//定义分页数
+				var count = 1;
+				var msg_list = document.getElementById("message_list")
+
+				function pullupRefresh() {
+					var header = plus.storage.getItem('header');
+					var data=JSON.stringify({
+								Header: header,
+								Body: {
+									PageIndex: count,
+									PageSize: 20
+								}
+						});
+					setTimeout(function() {
+						sendAjax('http://192.168.1.112/api/User/GetMessageList',data,function(data){
+							if (data.Body.TotalCount>0) {
+									msg_list.appendChild(creatMessage(data));
+							    	count++;
+								} else{
+									mui('#message_list').pullRefresh().endPullupToRefresh(true);
+								}
+								
+						},function  () {
+							mui('#message_list').pullRefresh().endPullupToRefresh(true);
+						});
+					}, 500);
 				}
-			});
-			var detailPage = null;
-			//定义下级目录
-			$("li").on('tap', function() {
-				var imgouter = $(this).children('.img_outer');
-				if (imgouter.hasClass('noneRead')) {
-					imgouter.removeClass("noneRead");
+				if (mui.os.plus) {
+					setTimeout(function() {
+						mui('#message_list').pullRefresh().pullupLoading();
+					}, 1000);
+				} else {
+						mui('#message_list').pullRefresh().pullupLoading();
 				}
-				if (!detailPage) {
-					detailPage = plus.webview.getWebviewById('messageInformation.html');
-				}
-				//触发详情页面的newsId事件
-				var newsid=this.newsid;
+				var detailPage = null;
+				//定义下级目录
+				$("li").on('tap', function() {
+					var imgouter = $(this).children('.img_outer');
+					var Id= $(this).id;
+					if(imgouter.hasClass('noneRead')) {
+						imgouter.removeClass("noneRead");
+					}
+					if(!detailPage) {
+						detailPage = plus.webview.getWebviewById('messageInformation.html');
+					}
+					var header = plus.storage.getItem('header');
+					var data=JSON.stringify({
+								Header: header,
+								Body: {
+									Id:Id,
+								}
+						});
+				    //后台发送改消息的已读信息
+					sendAjax('http://192.168.1.112/api/User/SetMessageRead',data,function  (data) {
+						return false;
+					})
+					//触发详情页面的newsId事件
 					mui.fire(detailPage, 'messageId', {
-						id: newsid
+						id: Id,
 					});
-				mui.openWindow({
+					mui.openWindow({
 						id: 'messageInformation.html',
 						styles: {
 							scrollIndicator: "none"
 						}
 					})
-					//发送ajax；
-					//重新刷新页面,
+
+				})
 			})
 		</script>
 	</body>

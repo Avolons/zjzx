@@ -5,7 +5,7 @@
 		"iPad"
 	],
 	"id": "mui_template_login",/*应用的标识，创建应用时自动生成，勿手动修改*/
-	"name": "mui登录模板",/*应用名称，程序桌面图标名称*/
+	"name": "中教在线",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "1.0.0",/*应用版本名称*/
 		"code": "83"
@@ -14,7 +14,7 @@
 	"icons": {
 		"72": "icon.png"
 	},
-	"launch_path": "coursePurchase.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+	"launch_path": "main.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
 	"developer": {
 		"name": "",/*开发者名称*/
 		"email": "",/*开发者邮箱地址*/
@@ -82,7 +82,7 @@
 		"Webview": {},
 		"NativeUI": {},
 		"Navigator": {},
-		"NativeObj": {},"Share":{},"OAuth":{},"Device":{},"Barcode":{}
+		"NativeObj": {},"Device":{},"Barcode":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -167,9 +167,7 @@
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
 					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "C:/Users/Administrator/Desktop/startpage.png", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": "C:/Users/Administrator/Desktop/startpage.png"
+					"hdpi": ""
 				}
 			}
 		}
@@ -286,7 +284,8 @@
 					"libs/easymob-webim-sdk/jquery-1.11.1.js",
 					"images/startpage.png",
 					"images/help/logo.png",
-					"js/jquery-2.1.0.js"
+					"js/jquery-2.1.0.js",
+					"js/extra.js"
 				],
 				"refer": [
 					"unlock.html",
@@ -329,7 +328,11 @@
 					"images/home/home_new3.png",
 					"images/home/home_new4.png",
 					"images/home/home_new1.png",
-					"images/60x60.gif"
+					"images/60x60.gif",
+					"js/getDevice.js",
+					"js/sendAjax.js",
+					"js/extra.js",
+					"js/jquery-2.1.0.min.js"
 				],
 				"refer": [
 					"newsInformation.html",
@@ -368,10 +371,14 @@
 					"images/home/home_new2.png",
 					"images/home/home_new3.png",
 					"css/iconfont.css",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/logined.js",
+					"js/extra.js",
+					"js/jquery-2.1.0.min.js"
 				],
 				"refer": [
-					"learningCourse.html"
+					"learningCourse.html",
+					"login.html"
 				],
 				"priority": 0
 			},
@@ -443,10 +450,13 @@
 					"css/mui.min.css",
 					"libs/easymob-webim-sdk/jquery-1.11.1.js",
 					"images/center/center (1).gif",
-					"images/course_IN.png"
+					"images/course_IN.png",
+					"js/jquery-2.1.0.min.js",
+					"js/extra.js"
 				],
 				"refer": [
-					"coursePurchase.html"
+					"coursePurchase.html",
+					"learningCourse.html"
 				],
 				"priority": 0
 			},
@@ -462,9 +472,13 @@
 					"images/home/hot_three.png",
 					"images/home/hot_two.png",
 					"images/home/hot_four.png",
-					"images/60x60.gif"
+					"images/60x60.gif",
+					"js/jquery-2.1.0.min.js",
+					"js/extra.js"
 				],
-				"refer": [],
+				"refer": [
+					"coursePurchase.html"
+				],
 				"priority": 0
 			},
 			"newsInformation.html": {
@@ -590,7 +604,10 @@
 					"js/webjwplayer.html5.js",
 					"libs/easymob-webim-sdk/jquery-1.11.1.js",
 					"js/zepto.min.js",
-					"images/course/weixin.png"
+					"images/course/weixin.png",
+					"js/jquery-2.1.0.min.js",
+					"js/extra.js",
+					"js/videojs-contrib-hls.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -650,7 +667,8 @@
 					"css/iconfont.css",
 					"fonts/iconfont.ttf",
 					"js/mui.min.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/extra.js"
 				],
 				"refer": [
 					"getInformation.html"
@@ -692,7 +710,8 @@
 				"resources": [
 					"js/mui.min.js",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/extra.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -732,6 +751,8 @@
 		}
 	},
 	"unpackage":[
-	  "README.md"
+	  "README.md",
+	  "images/user-photo.png",
+	  "libs/easymob-webim-sdk/quickstart.md"
 	]
 }

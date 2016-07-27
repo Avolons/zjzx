@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link href="css/mui.min.css" rel="stylesheet" />
-		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
 			body {
 				font-family: "微软雅黑";
@@ -140,7 +140,9 @@
 			</ul>
 		</div>
 		<script src="js/mui.min.js"></script>
+		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
+		mui.plusReady(function  () {
 			mui.init();
 			
 			var list={
@@ -182,39 +184,48 @@
 				  time:"包含教材：迈向成功之路",
 				  price:"￥10.01"
 				},]
-			}
+			};
 			//定义虚拟数据结构，本页面主要为展示页面，只需要将数据从服务器取出进行真实即可
-			function creatFrame (list) {
+			
+			function creatCourse (data) {
 				var frame=document.createDocumentFragment();
 				var li;
-				for (var i=0;i<list.length;i++) {
+				for (var i=0;i<data.length;i++) {
 					li=document.createElement("li");
-					li.innerHTML='<h3>'+list[i].state+'</h3><p>'+list[i].number+'</p><p>'+list[i].book+'</p><p>'+list[i].time+'<span>'+list[i].price+'</span></p>'
+					li.innerHTML='<h3>'+data[i].StateStr+'</h3><p>'+data[i].Number+'</p><p>'+data[i].BookNames+'</p><p>'+data[i].Time+'<span>'+data[i].Price+'</span></p>';
 				    frame.appendChild(li);
 				}
 				return frame;
-			}
-			mui.ajax('http://server-name/login.php',{
-						data:{
-							user:'username',
-							school:'password',
-						},
-						dataType:'json',//服务器返回json格式数据
-						type:'get',//HTTP请求类型
-						timeout:10000,//超时时间设置为10秒；
-						success:function(data){
-							document.getElementById("purchasebook").appendChild(creatFrame(data.book));
-							document.getElementById("purchasecard").appendChild(creatFrame(data.card));
-						},
-						error:function(xhr,type,errorThrown){
-							//异常处理；
-							console.log(type);
-						}
-					});
-			document.getElementById("purchasebook").appendChild(creatFrame(list.book));
-			document.getElementById("purchasecard").appendChild(creatFrame(list.card));
+			};
 			
+			function creatCard (data) {
+				var frame=document.createDocumentFragment();
+				var li;
+				for (var i=0;i<data.length;i++) {
+					li=document.createElement("li");
+					li.innerHTML='<h3>'+data[i].StateStr+'</h3><p>'+data[i].Number+'</p><p>'+data[i].CourseNames+'</p><p>'+data[i].BookName+'<span>'+data[i].Price+'</span></p>'
+				    frame.appendChild(li);
+				}
+				return frame;
+			};
 			
+			(function  () {
+				var header = JSON.parse(plus.storage.getItem('header'));
+				var data = JSON.stringify({
+								Header: header,
+								Body: {
+									PageIndex: 1,
+									PageSize: 100
+								}
+							});
+				sendAjax('http://192.168.1.112/api/User/GetMyTransaction',data,function  (data) {
+					document.getElementById("purchasebook").appendChild(creatFrame(data.Body.Books));
+					document.getElementById("purchasecard").appendChild(creatFrame(data.Body.Cards));
+				})
+			})()
+			
+//			document.getElementById("purchasebook").appendChild(creatFrame(list.book));
+//			document.getElementById("purchasecard").appendChild(creatFrame(list.card));
 			
 			$("button").on("tap",function  () {
 				$(this).addClass("btn").siblings().removeClass("btn");
@@ -226,7 +237,7 @@
 					$("#purchasecard").show();
 				}
 			})
-		    
+		})
 		</script>
 	</body>
 

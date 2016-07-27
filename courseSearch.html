@@ -5,11 +5,12 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
-		<script src="libs/easymob-webim-sdk/jquery-1.11.1.js" type="text/javascript" charset="utf-8"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.lazyload.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.lazyload.img.js" type="text/javascript" charset="utf-8"></script>
-		<link href="css/mui.min.css" rel="stylesheet" />
+		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
 			.mui-content {
 				color: #333;
@@ -216,10 +217,12 @@
 				font-family: "微软雅黑";
 				color: #FFFFFF;
 			}
-			.mui-content>.mui-table-view:first-child{
+			
+			.mui-content>.mui-table-view:first-child {
 				margin: 0;
 			}
-			.mui-table-view:after{
+			
+			.mui-table-view:after {
 				height: 0;
 			}
 		</style>
@@ -246,15 +249,7 @@
 			<div id="hot">
 				<h3>热门搜索</h3></div>
 			<ul class="hot" id="hotSearch">
-				<!--<li><span style="background: #ff5757;">1</span>
-					<a href="javascript:void(0);"></a>
-				</li>
-				<li><span style="background: #f1904c;">2</span>
-					<a href="javascript:void(0);"></a>
-				</li>
-				<li><span style="background: #48bc97;">3</span>
-					<a href="javascript:void(0);"></a>
-				</li>-->
+				<!--热门搜索区域-->
 			</ul>
 		</div>
 		<div class="mui-content" id="search_course" style="padding-left: 15px;padding-right: 15px">
@@ -268,153 +263,205 @@
 			</ul>
 		</div>
 		<script type="text/javascript" charset="UTF-8">
-			mui.init();
-			var storage = localStorage;
-			//自定义本地存储
-			if (!storage.getItem("hist")) {
-				var historys = ["", "", "", ""];
-				storage.setItem("hist", historys);
-			}
-			//自定义监听input数值变化的函数：valuechange;
-			var mb = document.getElementById("search_hist")
-			//搜索历史主体部分
-			var list = document.getElementById("search_course")
-			//搜索结果主体部分
-			var course_list = document.getElementById("search_list");
-			//搜索结果课程列表
-			var searchIput=document.getElementById("search");
-			//input输入框
-			//模拟数据
-			var courseList = [{
-				id:'course_165',
-				src: "images/home/hot_four.png",
-				title: "成功人士的准则",
-				introduce: "成功人士的五项自我管理成功人",
-				price: 200
-			}, {
-				id:'course_165',
-				src: "images/home/hot_one.png",
-				title: "成功人士的准则",
-				introduce: "成功人士的五项自我管理成功人",
-				price: 200
-			}, {
-				id:'course_165',
-				src: "images/home/hot_three.png",
-				title: "成功人士的准则",
-				introduce: "成功人士的五项自我管理成功人",
-				price: 200
-			}, {
-				id:'course_165',
-				src: "images/home/hot_two.png",
-				title: "成功人士的准则",
-				introduce: "成功人士的五项自我管理成功人",
-				price: 200
-			}, {
-				id:'course_165',
-				src: "images/home/hot_four.png",
-				title: "成功人士的准则",
-				introduce: "成功人士的五项自我管理成功人",
-				price: 200
-			}];
-			//定义模板函数 课程显示部分
-			var createFragment = function(courseList) {
-				var fragment = document.createDocumentFragment();
-				var li;
-				for (var i = 0; i < courseList.length; i++) {
-					li = document.createElement('li');
-					li.id=courseList[i].id;
-					li.innerHTML = "<img   width='40%' data-lazyload=" + courseList[i].src + " /><div><h1>名称：" + courseList[i].title + "</h1><h3>简介：" + courseList[i].introduce + "</h3><h4>￥" + courseList[i].price + "</h4></div>"
-					fragment.appendChild(li);
-				}
-				return fragment;
-			};
-			
-			function noneAndBlock (values) {
-				mb.style.display = "none";
-						//主体部分隐藏
-						for (var i = 3; i > 0; i--) {
-							historys[i].innerHTML = historys[i - 1].innerHTML;
-							//当点击搜索，也就是搜索按钮时，触发历史记录更替效果，从最后开始往前更替，使用父子页面传值，子页面进行ajax请求
-						}
-						historys[0].innerHTML = values;
-						mui.ajax('http://server-name/login.php',{
-								data:{
-									keyWards:values
-								},
-								dataType:'json',//服务器返回json格式数据
-								type:'post',//HTTP请求类型
-								timeout:10000,//超时时间设置为10秒；
-								success:function(data){
-									//开始调用模板渲染函数
-									course_list.appendChild(createFragment(data));
-									//懒加载
-									mui(document).imageLazyload({
-										placeholder: 'images/60x60.gif'
-									});
-											},
-								error:function(xhr,type,errorThrown){
-									//异常处理；
-									console.log(type);
-								}
-							});
-						list.style.display = "block";
-			}
-			
-			
-			function  resetHStyle () {
-				for (var i = 0; i < historys.length; i++) {
-							his_list[i] = historys[i].innerHTML;
-							if (historys[i].innerHTML) {
-								historys[i].style.opacity = 1;
-							}
-						}
-			}
-			//重置样式函数
-			
-			function localstyle () {
-				resetHStyle ();
-						//进行历史更新后需要再次判断，显示出有内容的li标签
-						storage.setItem("hist", his_list);
-						//重置本地历史
-			}
-			//重置样式代码,更改本地记录函数
-			
 			mui.plusReady(function() {
+				mui.init({
+					pullRefresh: {
+						container: '#search_list', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+						up: {
+							height: 50, //可选.默认50.触发上拉加载拖动距离
+							auto: true, //可选,默认false.自动上拉加载一次
+							contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+							contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+							callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+						}
+					}
+				});
+				var storage = plus.storage;
+				//自定义本地存储
+				if(storage.getItem("hist")==null) {
+					var historys = JSON.stringify(["", "", "", ""]);
+					storage.setItem("hist", historys);
+				};
+				//自定义监听input数值变化的函数：valuechange;
+				var mb = document.getElementById("search_hist");
+				//搜索历史主体部分
+				var list = document.getElementById("search_course");
+				//搜索结果主体部分
+				var course_list = document.getElementById("search_list");
+				//搜索结果课程列表
+				var searchIput = document.getElementById("search");
+				//input输入框
+				var header = storage.getItem('header');
+				//定义搜索值
+				var values = null;
+				//定义分页数
+				var count = 1;
+				//模拟数据
+
+				/*var courseList = [{
+					id:'course_165',
+					src: "images/home/hot_four.png",
+					title: "成功人士的准则",
+					introduce: "成功人士的五项自我管理成功人",
+					price: 200
+				}, {
+					id:'course_165',
+					src: "images/home/hot_one.png",
+					title: "成功人士的准则",
+					introduce: "成功人士的五项自我管理成功人",
+					price: 200
+				}, {
+					id:'course_165',
+					src: "images/home/hot_three.png",
+					title: "成功人士的准则",
+					introduce: "成功人士的五项自我管理成功人",
+					price: 200
+				}, {
+					id:'course_165',
+					src: "images/home/hot_two.png",
+					title: "成功人士的准则",
+					introduce: "成功人士的五项自我管理成功人",
+					price: 200
+				}, {
+					id:'course_165',
+					src: "images/home/hot_four.png",
+					title: "成功人士的准则",
+					introduce: "成功人士的五项自我管理成功人",
+					price: 200
+				}];*/
+
+				//定义模板函数 课程显示部分
+				var createFragment = function(courseList) {
+					var fragment = document.createDocumentFragment();
+					var li;
+					for(var i = 0; i < courseList.length; i++) {
+						li = document.createElement('li');
+						li.id = courseList[i].Id;
+						li.innerHTML = "<img   width='40%' data-lazyload=" + courseList[i].Src + " /><div><h1>名称：" + courseList[i].Title + "</h1><h3>简介：" + courseList[i].Introduce + "</h3><h4>￥" + courseList[i].Price + "</h4></div>"
+						fragment.appendChild(li);
+					}
+					return fragment;
+				};
+
+				function pullupRefresh() {
+					var header = JSON.parse(plus.storage.getItem('header'));
+					var data = JSON.stringify({
+						body: {
+							PageIndex: count,
+							PageSize: 20,
+							Searchstr: values,
+						},
+						Header: header
+					});
+					/*课程搜索ajax*/
+					sendAjax('http://192.168.1.112/api/Course/GetCourseList', data, function(data) {
+						if(data.Body.TotalCount > 0) {
+							course_list.appendChild(createFragment(data.Body.Items));
+							//懒加载
+							mui(document).imageLazyload({
+								placeholder: 'images/60x60.gif'
+							});
+							count++; //页码增加
+						} else {
+							mui('#search_list').pullRefresh().endPullupToRefresh(true);
+						}
+					}, function() {
+						mui('#search_list').pullRefresh().endPullupToRefresh(true);
+					})
+				}
+				if(mui.os.plus) {
+					setTimeout(function() {
+						mui('#search_list').pullRefresh().pullupLoading();
+					}, 1000);
+				} else {
+					mui('#search_list').pullRefresh().pullupLoading();
+				}
+
+				function noneAndBlock(values) {
+					mb.style.display = "none";
+					//主体部分隐藏
+					for(var i = 3; i > 0; i--) {
+						historys[i].innerHTML = historys[i - 1].innerHTML;
+						//当点击搜索，也就是搜索按钮时，触发历史记录更替效果，从最后开始往前更替，使用父子页面传值，子页面进行ajax请求
+					}
+					historys[0].innerHTML = values;
+					//分页的页码数
+
+					var header = JSON.parse(plus.storage.getItem('header'));
+					var data = JSON.stringify({
+						body: {
+							PageIndex: count,
+							PageSize: 20,
+							Searchstr: values,
+						},
+						Header: header
+					});
+					/*课程搜索ajax*/
+//					sendAjax('http://192.168.1.112/api/Course/GetCourseList', data, function(data) {
+//						course_list.appendChild(createFragment(data.Body.Items));
+//						//懒加载
+//						mui(document).imageLazyload({
+//							placeholder: 'images/60x60.gif'
+//						});
+//						count++; //页码增加
+//					})
+                    pullupRefresh();
+                     
+					list.style.display = "block";
+				}
+
+				function resetHStyle() {
+					for(var i = 0; i < historys.length; i++) {
+						his_list[i] = historys[i].innerHTML;
+						if(historys[i].innerHTML) {
+							historys[i].style.opacity = 1;
+						}
+					}
+				}
+
+				//重置样式函数
+				function localstyle() {
+					resetHStyle();
+					//进行历史更新后需要再次判断，显示出有内容的li标签
+					storage.setItem("hist", his_list);
+					//重置本地历史
+				}
+				
+				//重置样式代码,更改本地记录函数
 				var his_list = storage.getItem("hist").split(",");
-				//    		将本地储存进行字符串分割，获得数组
+				//将本地储存进行字符串分割，获得数组
 				var historys = document.getElementsByClassName("history")[0].getElementsByTagName("li");
 				// 页面历史记录
-				
-                resetHStyle ();
+
+				resetHStyle();
 				//由于本身历史记录是隐藏的，必须初始化时进行判断，得知是否有内容
-				
-				for (var i=0;i<historys.length;i++) {
-					historys[i].addEventListener('tap',function  () {
-						var values=(searchIput.value=this.innerText);
+
+				for(var i = 0; i < historys.length; i++) {
+					historys[i].addEventListener('tap', function() {
+						var values = (searchIput.value = this.innerText);
 						//首先执行括号内
-						noneAndBlock (values);
+						noneAndBlock(values);
 						//封装在外面
-						resetHStyle ();
+						resetHStyle();
 						//样式重置
 					})
 				}
 				//点击历史记录进行搜索操作
-				
+
 				searchIput.addEventListener("keyup", function(e) {
-					if (e.keyCode == 13) { 
-						var values=this.value;
-						noneAndBlock (values);
+					if(e.keyCode == 13) {
+						values = this.value;
+						noneAndBlock(values);
 						//封装在外面
-						resetHStyle ();
+						resetHStyle();
 						//样式重置
 					}
 				})
-				
-				
+
 				//根据input的value值来进行隐藏页面的切换工作，有内容时立马显示，无内容是立马隐藏
 				searchIput.addEventListener("input", function() {
 					var values = searchIput.value;
-					if (values) {
+					if(values) {
 						mb.style.display = "none";
 					} else {
 						mb.style.display = "block";
@@ -422,95 +469,79 @@
 						list.style.display = "none";
 					}
 				})
-				
+
 				//对清除按钮进行监听，清除所有记录
 				document.getElementsByClassName("mui-icon-clear")[0].addEventListener("tap", function() {
 					mb.style.display = "block";
 					course_list.innerHTML = null;
 					list.style.display = "none";
 				})
-				
-				
+
 				document.getElementById("static_search").addEventListener("tap", function() {
 					var values = document.getElementById("search").value;
-					if (values) {
-						noneAndBlock (values);
+					if(values) {
+						noneAndBlock(values);
 						//封装在外面
-						resetHStyle ();
+						resetHStyle();
 						//样式重置
 					} else {
 						return;
 					}
 				})
-				
-				document.getElementById("clear").addEventListener("tap", function() {
-						his_list = ["", "", "", ""];
-						storage.setItem("hist", his_list);
-						for (var i = 0; i < historys.length; i++) {
-							historys[i].innerHTML = his_list[i];
-							if (historys[i].innerHTML) {
-								historys[i].style.opacity = 1;
-							} else {
-								historys[i].style.opacity = 0;
-							}
-						};
-					})
+
 				//定义清除历史记录方法
-				
-				
-				var hot_search = [{
-					id: 'search_14',
-					color: '#ff5757',
-					title: "老子大智慧——半善半恶的老子"
-				}, {
-					id: 'search_15',
-					color: '#f1904c',
-					title: "优秀员工培养计划：80、90后员工职业素养提升"
-				}, {
-					id: 'search_16',
-					color: '#48bc97',
-					title: "员工最佳执行力"
-				}];
-				
+				document.getElementById("clear").addEventListener("tap", function() {
+					his_list = ["", "", "", ""];
+					storage.setItem("hist", his_list);
+					for(var i = 0; i < historys.length; i++) {
+						historys[i].innerHTML = his_list[i];
+						if(historys[i].innerHTML) {
+							historys[i].style.opacity = 1;
+						} else {
+							historys[i].style.opacity = 0;
+						}
+					};
+				})
+
 				//  模拟数据，热门搜索
 				function creatHotSearch(list) {
+					var color = ["85c683", "de4343", "883ab2", "207fc6"];
 					var framat = document.createDocumentFragment();
 					var li;
-					for (var i = 0; i < list.length; i++) {
+					for(var i = 0; i < list.length; i++) {
 						li = document.createElement("li");
-						li.id = list[i].id;
-						li.innerHTML='<span style="background:'+list[i].color+'">'+(i+1)+'</span><a href="javascript:void(0);">'+list[i].title+'</a>'
-					    framat.appendChild(li);
+						li.id = list[i].CourseId;
+						li.innerHTML = '<span style="background:' + color[i] + '">' + (i + 1) + '</span><a href="javascript:void(0);">' + list[i].Title + '</a>'
+						framat.appendChild(li);
 					}
 					return framat;
 				}
-				var hotSearch=document.getElementById("hotSearch");
+				var hotSearch = document.getElementById("hotSearch");
+
+				(function() {
+					var header = JSON.parse(plus.storage.getItem('header'));
+					var data = JSON.stringify({
+						Header: header
+					});
+					sendAjax('http://192.168.1.112/api/Course/GetCourseHotsearch', data, function(data) {
+						hotSearch.appendChild(creatHotSearch(Body.hotsearch));
+					})
+				})()
 				//热门搜索列表页最上册dom
-				
-				hotSearch.appendChild(creatHotSearch(hot_search));
-				//渲染热门搜索
-				
-				mui.getJSON('http://server-name/list.php',{category:'news'},function(data){
-							hotSearch.appendChild(creatHotSearch(data));
-							}
-						);
-			    //后台获取并且进行数据渲染
-				
-				var hotSearchList= hotSearch.getElementsByTagName('li');
+
+				var hotSearchList = hotSearch.getElementsByTagName('li');
 				//获取所有热门搜索历史记录
-				for (var i=0;i<hotSearchList.length;i++) {
-					hotSearchList[i].addEventListener('tap',function  () {
-						var values=(searchIput.value=this.getElementsByTagName('a')[0].innerText);
-						
-						noneAndBlock (values);
+				for(var i = 0; i < hotSearchList.length; i++) {
+					hotSearchList[i].addEventListener('tap', function() {
+						var values = (searchIput.value = this.getElementsByTagName('a')[0].innerText);
 						//封装在外面
-						resetHStyle ();
+						noneAndBlock(values);
 						//样式重置
+						resetHStyle();
 					})
 				}
 				//点击热门，直接返回搜索结果
-				
-				mui('#search_list').on("tap",'li',function  () {
+				mui('#search_list').on("tap", 'li', function() {
 					var courseid = this.getAttribute('id');
 					//向后台传输自带的id值,将id值传递进去
 					//打开详情页面          

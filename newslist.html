@@ -87,92 +87,82 @@
 			</ul>
 		</div>
 		<script src="js/mui.min.js"></script>
+		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
-			mui.init();
-			var newsList = [{
-				id: "news_12",
-				type: "培训介绍",
-				title: "工信部NTC职业技能证书",
-				time: "2016-04-21",
-				master: "人民日报"
-			}, {
-				id: "news_12",
-				type: "培训介绍",
-				title: "工信部NTC职业技能证书",
-				time: "2016-04-21",
-				master: "人民日报"
-			}, {
-				id: "news_12",
-				type: "培训介绍",
-				title: "工信部NTC职业技能证书",
-				time: "2016-04-21",
-				master: "人民日报"
-			}, {
-				id: "news_12",
-				type: "培训介绍",
-				title: "工信部NTC职业技能证书",
-				time: "2016-04-21",
-				master: "人民日报"
-			}, {
-				id: "news_12",
-				type: "培训介绍",
-				title: "工信部NTC职业技能证书",
-				time: "2016-04-21",
-				master: "人民日报"
-			}, {
-				id: "news_12",
-				type: "培训介绍",
-				title: "工信部NTC职业技能证书",
-				time: "2016-04-21",
-				master: "人民日报"
-			}, {
-				id: "news_12",
-				type: "培训介绍",
-				title: "工信部NTC职业技能证书",
-				time: "2016-04-21",
-				master: "人民日报"
-			}]
-			var createFragment = function(courseList) {
-				var fragment = document.createDocumentFragment();
-				var li;
-				for (var i = 0; i < courseList.length; i++) {
-					li = document.createElement('li');
-					li.id = courseList[i].id;
-					li.innerHTML = "<p><b>【" + courseList[i].type + "】</b>" + courseList[i].title + "</p><p>" + courseList[i].time + "&nbsp;&nbsp;&nbsp;" + courseList[i].master + "</p>"
-					fragment.appendChild(li);
-				}
-				return fragment;
-			};
-				mui.ajax('http://server-name/login.php',{
-						data:{
-							user:'username',
-							school:'password',
-						},
-						dataType:'json',//服务器返回json格式数据
-						type:'get',//HTTP请求类型
-						timeout:10000,//超时时间设置为10秒；
-						success:function(data){
-							document.getElementById("new_list").appendChild(createFragment(data));
-						},
-						error:function(xhr,type,errorThrown){
-							//异常处理；
-							console.log(type);
+			mui.plusReady(function() {
+				mui.init({
+					//下拉刷新
+					pullRefresh: {
+						container: '#new_list', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+						up: {
+							height: 50, //可选.默认50.触发上拉加载拖动距离
+							auto: true, //可选,默认false.自动上拉加载一次
+							contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+							contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+							callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
 						}
-					});
-			document.getElementById("new_list").appendChild(createFragment(newsList));
-			
-			mui('#new_list').on('tap', 'li', function() {
-				var li_id = this.id;
-				mui.openWindow({
-					url: 'newsInformation.html',
-					id: 'newsInformation.html',
-					style: {
-						scrollIndicator: "none"
-					},
-					extras: {
-						name: li_id,
 					}
-				})
+				});
+				//创建新闻列表页面函数
+				var createFragment = function(data) {
+					var fragment = document.createDocumentFragment();
+					var li;
+					for(var i = 0; i < data.length; i++) {
+						li = document.createElement('li');
+						li.id = data[i].Id;
+						li.innerHTML = "<p><b>【" + data[i].sortName + "】</b>" + courseList[i].Title + "</p><p>" + courseList[i].Time + "&nbsp;&nbsp;&nbsp;" + courseList[i].Source + "</p>"
+						fragment.appendChild(li);
+					}
+					return fragment;
+				};
+				var newList = document.getElementById("new_list");
+				//分页
+				var count = 1;
+				
+				
+				//刷新函数，使用500毫秒延时加载
+				function pullupRefresh() {
+					var header = JSON.parse(plus.storage.getItem('header'));
+					var data=JSON.stringify({
+								Header: header,
+								Body: {
+									PageIndex: count,
+									PageSize: 20
+								}
+						});
+					setTimeout(function() {
+						sendAjax('http://192.168.1.112/api/System/GetNewsList',data,function  (data) {
+							if(data.Body.TotalCount > 0) {
+									newList.appendChild(createFragment(data.Body.Items));
+									count++;
+								} else {
+									mui('#new_list').pullRefresh().endPullupToRefresh(true);
+								}
+						},function  () {
+							mui('#new_list').pullRefresh().endPullupToRefresh(true);
+						})
+					}, 500);
+				};
+				if(mui.os.plus) {
+					setTimeout(function() {
+						mui('#new_list').pullRefresh().pullupLoading();
+					}, 1000);
+				} else {
+					mui('#new_list').pullRefresh().pullupLoading();
+				};
+				mui('#new_list').on('tap', 'li', function() {
+					var li_id = this.id;
+					mui.openWindow({
+						url: 'newsInformation.html',
+						id: 'newsInformation.html',
+						style: {
+							scrollIndicator: "none"
+						},
+						extras: {
+							name: li_id,
+						}
+					})
+				});
 			})
 		</script>
 	</body>

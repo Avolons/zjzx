@@ -62,7 +62,8 @@
 						break;
 				}
 				result = result.replace(/\n/g, '');
-				localStorage.setItem("ajaxCode", result);
+				//设置本地存储，存储施教机构信息；
+				localStorage.setItem("local_barcode", result);
 				mui.openWindow({
 					url: "login.html"
 				});

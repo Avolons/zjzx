@@ -9,9 +9,13 @@
 	 **/
 	owner.login = function(loginInfo, callback) {
 		callback = callback || $.noop;
+		//登陆账号密码对象集合
 		loginInfo = loginInfo || {};
+		//账号
 		loginInfo.account = loginInfo.account || '';
+		//密码
 		loginInfo.password = loginInfo.password || '';
+		//账号小于5个字符返回最短为5个字符
 		if (loginInfo.account.length < 5) {
 			return callback('账号最短为 5 个字符');
 		}
@@ -19,6 +23,7 @@
 		if (loginInfo.password.length < 6) {
 			return callback('密码最短为 6 个字符');
 		}
+		//登陆函数，ajax发送
 		$.ajax('http://server-name/login.php', {
 			data: {
 				username: loginInfo.account,
@@ -46,14 +51,19 @@
 //			return callback('用户名或密码错误');
 //		}
 	};
-
+	
+    //创建状态
 	owner.createState = function(name, callback) {
+        //获取状态函数
 		var state = owner.getState();
+		
 		state.account = name;
 		//设置本地id
 		state.token = "token123456789";
 		state.logined=true;
+		//设置状态，返执行回调函数
 		owner.setState(state);
+		
 		return callback();
 	};
 
@@ -84,7 +94,7 @@
 	 * 获取当前状态
 	 **/
 	owner.getState = function() {
-		var stateText = localStorage.getItem('$state') || "{}";
+		var stateText = plus.storage.getItem('$state') || "{}";
 		return JSON.parse(stateText);
 	};
 
@@ -93,12 +103,12 @@
 	 **/
 	owner.setState = function(state) {
 		state = state || {};
-		localStorage.setItem('$state', JSON.stringify(state));
-		//var settings = owner.getSettings();
-		//settings.gestures = '';
-		//owner.setSettings(settings);
+		plus.storage.setItem('$state', JSON.stringify(state));
 	};
-
+    
+    /**
+     *检测用户邮箱的格式正确性
+     */
 	var checkEmail = function(email) {
 		email = email || '';
 		return (email.length > 3 && email.indexOf('@') > -1);
@@ -120,19 +130,21 @@
 	 **/
 	owner.setSettings = function(settings) {
 		settings = settings || {};
-		localStorage.setItem('$settings', JSON.stringify(settings));
+		plus.storage.setItem('$settings', JSON.stringify(settings));
 	}
 
 	/**
 	 * 设置应用本地配置
 	 **/
 	owner.getSettings = function() {
-			var settingsText = localStorage.getItem('$settings') || "{}";
+			var settingsText = plus.storage.getItem('$settings') || "{}";
 			return JSON.parse(settingsText);
 		}
+	
 		/**
 		 * 获取本地是否安装客户端
 		 **/
+		//三方登陆
 	owner.isInstalled = function(id) {
 		if (id === 'qihoo' && mui.os.plus) {
 			return true;

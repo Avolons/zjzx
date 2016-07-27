@@ -505,6 +505,7 @@
 					onlyReady: true
 				}]
 			}
+			//创建页面信息
 			var createbooks = function(data) {
 				var fragment = document.createDocumentFragment();
 				var div;
@@ -548,6 +549,7 @@
 				mui.getJSON('http://server-name/list.php', {
 					courseid: courseid
 				}, function(data) {
+					//如果拥有教材，显示教材的出现
 					if (data.book) {
 						addInformation.style.display = 'block';
 					}

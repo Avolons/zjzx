@@ -63,86 +63,140 @@
 			</ul>
 		</div>
 		<script src="js/mui.min.js"></script>
+		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
-			mui.init();
-			var getList = [{
-				id:"talk_11",
-				title: "成功人际关系",
-				time: "04-29   10:03:01 ",
-				number: "3"
-			}, {
-				id:"talk_11",
-				title: "国际商务成品",
-				time: "04-23  10:03:15   ",
-				number: "4"
-			}, {
-				id:"talk_11",
-				title: "轻松搞定大客户",
-				time: "04-23    03:02:01 ",
-				number: "5"
-			}, {
-				id:"talk_11",
-				title: "魅力口才与沟通艺术",
-				time: "04-22  03:02:01  ",
-				number: "6"
-			}, {
-				id:"talk_11",
-				title: "演讲技巧",
-				time: "03-23     01:02:03 ",
-				number: "7"
-			}, {
-				id:"talk_11",
-				title: "感恩·责任·忠诚",
-				time: "05-23      05:02:03    ",
-				number: "8"
-			}, {
-				id:"talk_11",
-				title: "职业化员工的12项修炼 ",
-				time: "02-23    05:06:03 ",
-				number: "2"
-			}, ]
-
-			function creatList(list) {
-				var framt = document.createDocumentFragment();
-				var li;
-				for (var i = 0; i < list.length; i++) {
-					li = document.createElement("li");
-					li.id=list[i].id;
-					li.innerHTML = '<h5>' + list[i].title + '</h5><div><span>' + list[i].time + '</span><span>' + list[i].number + '</span><span class="mui-icon iconfont icon-taolun"></span></div>'
-					framt.appendChild(li);
-				}
-				return framt;
-			}
-			mui.ajax('http://server-name/login.php',{
-						data:{
-							user:'username',
-							school:'password',
-						},
-						dataType:'json',//服务器返回json格式数据
-						type:'get',//HTTP请求类型
-						timeout:10000,//超时时间设置为10秒；
-						success:function(data){
-							document.getElementById("get_list").appendChild(creatList(getList));
-						},
-						error:function(xhr,type,errorThrown){
-							//异常处理；
-							console.log(type);
+			mui.plusReady(function() {
+				//触发首页的点击事件，凡是需要登录的都要进行验证
+				window.addEventListener('clicked', function(event) {
+					//获得事件参数
+					urlopenwindow(Initialization);
+					//根据id向服务器请求新闻详情
+				});
+				
+                //触发登陆页的回调事件，登陆成功后将会触发此事件
+                window.addEventListener('token', function(event) {
+					//获得事件参数
+					urlopenwindow(Initialization);
+					//根据id向服务器请求新闻详情
+				});
+				//*****初始化函数
+				function Initialization() {
+					mui.init({
+						//下拉刷新
+						pullRefresh: {
+							container: '#get_list', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+							up: {
+								height: 50, //可选.默认50.触发上拉加载拖动距离
+								auto: true, //可选,默认false.自动上拉加载一次
+								contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+								contentnomore: '没有新内容', //可选，请求完毕若没有更多数据时显示的提醒内容；
+								callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+							}
 						}
 					});
-			document.getElementById("get_list").appendChild(creatList(getList));
-			
-			mui('#get_list').on('tap', 'li', function() {
-				var li_id=this.id;
-				mui.openWindow({
-					url:'getInformation.html',
-					id:'getInformation.html',
-					styles:{
-						scrollIndicator: "none"
-					},
-					extras:{
-					        name:li_id,
-					    }
-				})
+					var getList = [{
+						id: "talk_11",
+						title: "成功人际关系",
+						time: "04-29   10:03:01 ",
+						number: "3"
+					}, {
+						id: "talk_11",
+						title: "国际商务成品",
+						time: "04-23  10:03:15   ",
+						number: "4"
+					}, {
+						id: "talk_11",
+						title: "轻松搞定大客户",
+						time: "04-23    03:02:01 ",
+						number: "5"
+					}, {
+						id: "talk_11",
+						title: "魅力口才与沟通艺术",
+						time: "04-22  03:02:01  ",
+						number: "6"
+					}, {
+						id: "talk_11",
+						title: "演讲技巧",
+						time: "03-23     01:02:03 ",
+						number: "7"
+					}, {
+						id: "talk_11",
+						title: "感恩·责任·忠诚",
+						time: "05-23      05:02:03    ",
+						number: "8"
+					}, {
+						id: "talk_11",
+						title: "职业化员工的12项修炼 ",
+						time: "02-23    05:06:03 ",
+						number: "2"
+					}, ]
+
+					var header = JSON.parse(plus.storage.getItem('header'));
+					//分页数
+					var count = 1;
+
+					function pullupRefresh() {
+						setTimeout(function() {
+							var data = JSON.stringify({
+								Header: header,
+								Body: {
+									PageIndex: 1,
+									PageSize: 20
+								}
+							});
+							sendAjax('http://192.168.1.112/api/Course/GetMyCourseXinDe', data, function(data) {
+								console.log(data);
+								if(data.Code == 200) {
+									if(data.Body.TotalCount > 0) {
+										document.getElementById("get_list").appendChild(creatList(data.Body.Items));
+										count++;
+										mui('#get_list').pullRefresh().endPullupToRefresh(true);
+									} else {
+										mui('#get_list').pullRefresh().endPullupToRefresh(true);
+									}
+								} else {
+
+								}
+							}, function() {
+								mui('#get_list').pullRefresh().endPullupToRefresh(true);
+							})
+						}, 500);
+					}
+					if(mui.os.plus) {
+						setTimeout(function() {
+							mui('#get_list').pullRefresh().pullupLoading();
+						}, 1000);
+					} else {
+						mui('#get_list').pullRefresh().pullupLoading();
+					}
+
+					function creatList(list) {
+						var framt = document.createDocumentFragment();
+						var li;
+						for(var i = 0; i < list.length; i++) {
+							li = document.createElement("li");
+							li.id = list[i].CourseId;
+							li.innerHTML = '<h5>' + list[i].Title + '</h5><div><span>' + list[i].Time + '</span><span>' + list[i].Number + '</span><span class="mui-icon iconfont icon-taolun"></span></div>'
+							framt.appendChild(li);
+						}
+						return framt;
+					}
+
+					//*********点击事件。附加额外属性
+					mui('#get_list').on('tap', 'li', function() {
+						var li_id = this.id;
+						mui.openWindow({
+							url: 'getInformation.html',
+							id: 'getInformation.html',
+							styles: {
+								scrollIndicator: "none"
+							},
+							extras: {
+								name: li_id,
+							}
+						})
+					})
+				}
 			})
 		</script>
 	</body>

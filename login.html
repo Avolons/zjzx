@@ -238,7 +238,6 @@
 				float: right;
 			}
 		</style>
-
 	</head>
 
 	<body>
@@ -269,8 +268,8 @@
 
 		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
+		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.enterfocus.js"></script>
-		<script src="js/app.js"></script>
 		<script>
 			//自执行函数
 			(function($, doc) {
@@ -281,142 +280,180 @@
 				$.plusReady(function() {
 					plus.screen.lockOrientation("portrait-primary");
 					//锁定屏幕为竖屏显示
-					var settings = app.getSettings();
-					//获取本地设置
-					var state = app.getState();
-					//获取本地状态
-					var mainPage = $.preload({
-						"id": 'main',
-						"url": 'main.html'
-					});
+//					var mainPage = $.preload({
+//						"id": 'main',
+//						"url": 'main.html'
+//					});
 					//定义预加载页面,
-					var toMain = function() {
-						$.fire(mainPage, 'show', null);
-						//触发自定义事件
-						setTimeout(function() {
-							$.openWindow({
-								id: 'main',
-								show: {
-									aniShow: 'pop-in'
-								},
-								waiting: {
-									autoShow: false
-								}
-							});
-						}, 0);
-						//						立即打开所设置的预加载页面
-					};
-					//检查 "登录状态/锁屏状态" 开始
-					 if (settings.autoLogin && state.token) {
-						toMain();
-						//						跳转到主页面
-					} else {
-						app.setState(null);
-						//设置状态
-						//第三方登录
-						var authBtns = ['qihoo', 'weixin', 'sinaweibo', 'qq']; //配置业务支持的第三方登录
-						var auths = {};
-						var oauthArea = doc.querySelector('.oauth-area');
-						plus.oauth.getServices(function(services) {
-							for (var i in services) {
-								var service = services[i];
-								auths[service.id] = service;
-								if (~authBtns.indexOf(service.id)) {
-									var isInstalled = app.isInstalled(service.id);
-									var btn = document.createElement('div');
-									//如果微信未安装，则为不启用状态
-									btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
-									btn.authId = service.id;
-									btn.style.backgroundImage = 'url("images/' + service.id + '.png")'
-									oauthArea.appendChild(btn);
-								}
-							}
-							$(oauthArea).on('tap', '.oauth-btn', function() {
-								if (this.classList.contains('disabled')) {
-									plus.nativeUI.toast('您尚未安装微信客户端');
-									return;
-								}
-								var auth = auths[this.authId];
-								var waiting = plus.nativeUI.showWaiting();
-								auth.login(function() {
-									waiting.close();
-									plus.nativeUI.toast("登录认证成功");
-									auth.getUserInfo(function() {
-										plus.nativeUI.toast("获取用户信息成功");
-										var name = auth.userInfo.nickname || auth.userInfo.name;
-										app.createState(name, function() {
-											toMain();
-										});
-									}, function(e) {
-										plus.nativeUI.toast("获取用户信息失败：" + e.message);
-									});
-								}, function(e) {
-									waiting.close();
-									plus.nativeUI.toast("登录认证失败：" + e.message);
-								});
-							});
-						}, function(e) {
-							oauthArea.style.display = 'none';
-							plus.nativeUI.toast("获取登录认证失败：" + e.message);
-						});
-					}
-					// close splash
-					setTimeout(function() {
-						//关闭 splash
-						plus.navigator.closeSplashscreen();
-					}, 600);
-					
-					
+//					var toMain = function() {
+//						$.fire(mainPage, 'show', null);
+//						//触发自定义事件
+//						setTimeout(function() {
+//							$.openWindow({
+//								id: 'main',
+//								show: {
+//									aniShow: 'pop-in'
+//								},
+//								waiting: {
+//									autoShow: false
+//								}
+//							});
+//						}, 0);
+//						//						立即打开所设置的预加载页面
+//					};
+//					toMain();
+//					//检查 "登录状态/锁屏状态" 开始
+//					 if (settings.autoLogin && state.token) {
+//						toMain();
+//						//						跳转到主页面
+//					} else {
+//						app.setState(null);
+//						//设置状态
+//						//第三方登录
+//						var authBtns = ['qihoo', 'weixin', 'sinaweibo', 'qq']; //配置业务支持的第三方登录
+//						var auths = {};
+//						var oauthArea = doc.querySelector('.oauth-area');
+//						plus.oauth.getServices(function(services) {
+//							for (var i in services) {
+//								var service = services[i];
+//								auths[service.id] = service;
+//								if (~authBtns.indexOf(service.id)) {
+//									var isInstalled = app.isInstalled(service.id);
+//									var btn = document.createElement('div');
+//									//如果微信未安装，则为不启用状态
+//									btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
+//									btn.authId = service.id;
+//									btn.style.backgroundImage = 'url("images/' + service.id + '.png")'
+//									oauthArea.appendChild(btn);
+//								}
+//							}
+//							$(oauthArea).on('tap', '.oauth-btn', function() {
+//								if (this.classList.contains('disabled')) {
+//									plus.nativeUI.toast('您尚未安装微信客户端');
+//									return;
+//								}
+//								var auth = auths[this.authId];
+//								var waiting = plus.nativeUI.showWaiting();
+//								auth.login(function() {
+//									waiting.close();
+//									plus.nativeUI.toast("登录认证成功");
+//									auth.getUserInfo(function() {
+//										plus.nativeUI.toast("获取用户信息成功");
+//										var name = auth.userInfo.nickname || auth.userInfo.name;
+//										app.createState(name, function() {
+//											toMain();
+//										});
+//									}, function(e) {
+//										plus.nativeUI.toast("获取用户信息失败：" + e.message);
+//									});
+//								}, function(e) {
+//									waiting.close();
+//									plus.nativeUI.toast("登录认证失败：" + e.message);
+//								});
+//							});
+//						}, function(e) {
+//							oauthArea.style.display = 'none';
+//							plus.nativeUI.toast("获取登录认证失败：" + e.message);
+//						});
+//					}
+//					// close splash
+//					setTimeout(function() {
+//						//关闭 splash
+//						plus.navigator.closeSplashscreen();
+//					}, 600);
 					//检查 "登录状态/锁屏状态" 结束
 					var loginButton = doc.getElementById('login');
+					//账号按钮
 					var accountBox = doc.getElementById('account');
-					//					账号按钮
+					//密码按钮
 					var passwordBox = doc.getElementById('password');
-					//					密码按钮
+					//自动登录按钮
 					var autoLoginButton = document.getElementById("autoLogin");
-					//					自动登录按钮
+					//注册按钮
 					var regButton = document.getElementById('reg');
-					//					注册按钮
+					//忘记密码按钮
 					var forgetButton = document.getElementById('forgetPassword');
-					console.log(autoLoginButton);
-					//					忘记密码按钮
+					
+					window.addEventListener('logined',function(event){
+					  //获得事件参数
+					var webviewId = event.detail.webviewId;
+					  //根据id向服务器请求新闻详情 
+					});
+					//登陆事件
 					loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
-							account: accountBox.value,
-							password: passwordBox.value
+							Account: accountBox.value,
+							Password: passwordBox.value
 						};
-						app.login(loginInfo, function(err) {
-							if (err) {
-								plus.nativeUI.toast(err);
-								return;
-							}
-							//提交错误信息
-							toMain();
-						});
-					});
-					$.enterfocus('#login-form input', function() {
-						$.trigger(loginButton, 'tap');
-					});
-					//					自动执行tap函数，光标控制在13
-					autoLoginButton.classList[settings.autoLogin ? 'add' : 'remove']('checked');
-					
-						//					检测本地是否存在自动登录信息，并且赋予相应的class
-					autoLoginButton.addEventListener('tap', function(event) {
-						console.log(this.className);
-						if (this.className=='checked') {
-							this.className=null;
-							settings.autoLogin=false;
-							app.setSettings(settings);
-						} else{
-							this.className='checked';
+						//******对账号密码进行判断
+//						if (loginInfo.Account.length < 5) {
+//							mui.alert('账号最短为 5 个字符');
+//							return false;
+//						}
+						//自定义的账号格式规则
+						if (loginInfo.Password.length < 6) {
+							mui.alert('密码最短为 6 个字符');
+							return false;
 						}
+						
+						var header = JSON.parse(plus.storage.getItem('header'));
+						
+						var data=JSON.stringify({
+								Header: header,
+								Body:loginInfo 
+						});
+						
+						sendAjax('http://192.168.1.112/api/User/Login',data,function  (data) {
+							if (data.Code==200) {
+								//设置token值
+								header.User.Token=data.Body.Token;
+								plus.storage.setItem("header",JSON.stringify(header));
+								plus.storage.setItem("UserName",data.Body.Name);
+								plus.storage.setItem("Pic",data.Body.Pic);
+								 //添加自定义事件，通知源页面token值以获取到
+								var detailPage = plus.webview.getWebviewById(webviewId);
+							      //触发源页面的token事件
+								  mui.fire(detailPage,'token',{
+								    token:true
+								  });
+							      //打开源页面          
+								  mui.openWindow({
+								    id:webviewId
+								  });
+								  //关闭当前页面
+								  plus.webview.close(plus.webview.currentWebview());
+							} else{
+								mui.alert('账号或密码错误');
+							}
+							
+						},function  () {
+							mui.alert('网络错误，请稍后重试');
+						})
+						
+					});
+//					$.enterfocus('#login-form input', function() {
+//						$.trigger(loginButton, 'tap');
+//					});
+//					//自动执行tap函数，光标控制在13
+//					autoLoginButton.classList[settings.autoLogin ? 'add' : 'remove']('checked');
+//					
+//					//检测本地是否存在自动登录信息，并且赋予相应的class
+//					autoLoginButton.addEventListener('tap', function(event) {
+//						console.log(this.className);
+//						if (this.className=='checked') {
+//							this.className=null;
+//							settings.autoLogin=false;
+//							app.setSettings(settings);
+//						} else{
+//							this.className='checked';
+//						}
 //						setTimeout(function() {
 //							var isActive = this.gete('checked') ? true : false;
 //							console.log(isActive);
 //							settings.autoLogin = isActive;
 //							app.setSettings(settings);
 //						}, 50);
-					}, false);
+//					}, false);
 					
 					
 					
@@ -437,24 +474,24 @@
 						});
 					}, false);
 					//跳转至忘记密码页面
-					window.addEventListener('resize', function() {
-						oauthArea.style.display = document.body.clientHeight > 400 ? 'block' : 'none';
-					}, false);
+//					window.addEventListener('resize', function() {
+//						oauthArea.style.display = document.body.clientHeight > 400 ? 'block' : 'none';
+//					}, false);
 					//浏览器窗口变化时，小于400，不出现第三方登陆
 					var backButtonPress = 0;
 					//重写back函数
-					$.back = function(event) {
-						backButtonPress++;
-						if (backButtonPress > 1) {
-							plus.runtime.quit();
-						} else {
-							plus.nativeUI.toast('再按一次退出应用');
-						}
-						setTimeout(function() {
-							backButtonPress = 0;
-						}, 1000);
-						return false;
-					};
+//					$.back = function(event) {
+//						backButtonPress++;
+//						if (backButtonPress > 1) {
+//							plus.runtime.quit();
+//						} else {
+//							plus.nativeUI.toast('再按一次退出应用');
+//						}
+//						setTimeout(function() {
+//							backButtonPress = 0;
+//						}, 1000);
+//						return false;
+//					};
 				});
 				//				第一次点击一定会弹出再按一次退出的对话框
 			}(mui, document));

@@ -304,7 +304,7 @@
 				}
 			})
 		})
-		var local = localStorage;
+		var local = plus.localStorage;
 		//更换施教机构
 		mui.plusReady(function() {
 			document.getElementById("change").addEventListener("tap", function() {
@@ -378,6 +378,7 @@
 			}, function(event) {
 				var index = event.index;
 				switch (index) {
+					//清除当前登录数据
 					case 1:
 						app.setState({});
 						mui.openWindow({
@@ -392,6 +393,7 @@
 						});
 						break;
 					case 2:
+					//直接关闭当前页面
 						plus.runtime.quit();
 						break;
 				}

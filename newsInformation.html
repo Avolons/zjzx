@@ -57,40 +57,37 @@
 			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
+		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
+		mui.plusReady(function  () {
 			mui.init();
-			var newsInformation = {
-				title: '教育部：拟对高校学术不端情节严重者 开除或解聘',
-				time: '2016年04月14日 19:14   来源：新华社   刘奕湛',
-				texts: '&nbsp; &nbsp;新华社北京４月１３日电（记者刘奕湛）记者13日从教育部获悉，拟对认定为学术不端行为且情节严重的责任人给予降低专业技术职务等级、撤销专业技术职务、行政职务或开除、解聘处理。<br />&nbsp; &nbsp;      为有效预防和严肃查处高等学校发生的学术不端行为，维护学术诚信，促进教学科研和学术研究的健康发展，教育部根据相关法律法规研究起草了《高等学校预防与处理学术不端行为办法》，并向社会公开征求意见。<br /> &nbsp; &nbsp;  征求意见稿还对学术不端情节严重作出了规定：造成恶劣影响的；存在利益输送或者利益交换的；对举报人进行打击报复的；有组织实施学术不端行为的；多次实施学术不端行为的。'
-			}
-			document.getElementById("title").innerHTML = newsInformation.title;
-			document.getElementById("time").innerHTML = newsInformation.time;
-			document.getElementById("texts").innerHTML = newsInformation.texts;
+//			var newsInformation = {
+//				title: '教育部：拟对高校学术不端情节严重者 开除或解聘',
+//				time: '2016年04月14日 19:14   来源：新华社   刘奕湛',
+//				texts: '&nbsp; &nbsp;新华社北京４月１３日电（记者刘奕湛）记者13日从教育部获悉，拟对认定为学术不端行为且情节严重的责任人给予降低专业技术职务等级、撤销专业技术职务、行政职务或开除、解聘处理。<br />&nbsp; &nbsp;      为有效预防和严肃查处高等学校发生的学术不端行为，维护学术诚信，促进教学科研和学术研究的健康发展，教育部根据相关法律法规研究起草了《高等学校预防与处理学术不端行为办法》，并向社会公开征求意见。<br /> &nbsp; &nbsp;  征求意见稿还对学术不端情节严重作出了规定：造成恶劣影响的；存在利益输送或者利益交换的；对举报人进行打击报复的；有组织实施学术不端行为的；多次实施学术不端行为的。'
+//			}
+//			document.getElementById("title").innerHTML = newsInformation.title;
+//			document.getElementById("time").innerHTML = newsInformation.time;
+//			document.getElementById("texts").innerHTML = newsInformation.texts;
+			//监听自定义事件
 			window.addEventListener('newsId', function(event) {
 				//获得事件参数
 				var newsid = event.detail.newsid;
-				//根据id向服务器请求新闻详情
-				mui.ajax('http://server-name/login.php',{
-						data:{
-							user:'username',
-							school:'password',
-							newsid:newsid
-						},
-						dataType:'json',//服务器返回json格式数据
-						type:'get',//HTTP请求类型
-						timeout:10000,//超时时间设置为10秒；
-						success:function(data){
-							document.getElementById("title").innerHTML = newsInformation.title;
-							document.getElementById("time").innerHTML = newsInformation.time;
-							document.getElementById("texts").innerHTML = newsInformation.texts;
-						},
-						error:function(xhr,type,errorThrown){
-							//异常处理；
-							console.log(type);
-						}
+				var header = JSON.parse(plus.storage.getItem('header'));
+				var data=JSON.stringify({
+							Body:{
+								Id:newsid,
+							},
+							Header:header,
 					});
+				//根据id向服务器请求新闻详情
+				sendAjax('http://192.168.1.112/api/System/GetNewsInfo',data,function  (data) {
+					document.getElementById("title").innerHTML = data.Body.Title;
+							document.getElementById("time").innerHTML =data.Body.Time+'来源'+data.Body.Source;
+							document.getElementById("texts").innerHTML = data.Body.Contect;
+				})
 			});
+		})
 		</script>
 	</body>
 
