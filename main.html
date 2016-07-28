@@ -71,6 +71,12 @@
 						styles: {
 							scrollIndicator: "none"
 						}
+					},{
+						id: 'login.html',
+						url: 'login.html',
+						styles: {
+							scrollIndicator: "none"
+						}
 					}]
 					//	预加载页面：1.课程搜索页面 2.证书查询页面 3.激活学习卡页面  4.我的任务页面 5.我的考试页面 6.课程信息页面 7.热点新闻目录页 8.热点新闻阅读页面
 			});
@@ -132,21 +138,25 @@
 				if (targetTab == activeTab) {
 					return;
 				}
-				var  detailPage = plus.webview.getWebviewById(targetTab);
-				 mui.fire(detailPage,'clicked',{
-				    click:true
-				 });
 				//更换标题
 //				title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
 				//显示目标选项卡
 				//若为iOS平台或非首次显示，则直接显示
 				if(mui.os.ios||aniShow[targetTab]){
+					var  detailPage = plus.webview.getWebviewById(targetTab);
+					 mui.fire(detailPage,'clicked',{
+					    click:true
+					 });
 					plus.webview.show(targetTab);
 				}else{
 					//否则，使用fade-in动画，且保存变量
 					var temp = {};
 					temp[targetTab] = "true";
 					mui.extend(aniShow,temp);
+					var  detailPage = plus.webview.getWebviewById(targetTab);
+					 mui.fire(detailPage,'clicked',{
+					    click:true
+					 });
 					plus.webview.show(targetTab,"fade-in",200);
 				}
 				//隐藏当前;

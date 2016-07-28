@@ -373,10 +373,12 @@
 					var regButton = document.getElementById('reg');
 					//忘记密码按钮
 					var forgetButton = document.getElementById('forgetPassword');
+					//源页面id；
+					var webviewId=null;
 					
 					window.addEventListener('logined',function(event){
 					  //获得事件参数
-					var webviewId = event.detail.webviewId;
+				    webviewId = event.detail.webviewId;
 					  //根据id向服务器请求新闻详情 
 					});
 					//登陆事件
@@ -425,7 +427,6 @@
 							} else{
 								mui.alert('账号或密码错误');
 							}
-							
 						},function  () {
 							mui.alert('网络错误，请稍后重试');
 						})

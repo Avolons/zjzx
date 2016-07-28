@@ -72,11 +72,19 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
+	
 		mui.plusReady(function  () {
 			mui.init();
-			window.addEventListener('newsId',function(event){
+			function informationWrite (data) {
+				document.getElementById("title").innerHTML= data.Title;
+				document.getElementById("name").innerHTML= '收件人：'+  data.Name;
+				document.getElementById("time").innerHTML='发布日期：'+  data.Time;
+				document.getElementById("article").innerHTML='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp'+data.Texts;
+			}
+			window.addEventListener('messageId',function(event){
 				  //获得事件参数
-				  var newsid = event.detail.newsid;
+				  var newsid = event.detail.id;
+				  console.log(newsid);
 				  //根据id向服务器请求新闻详情
 				  var header = JSON.parse(plus.storage.getItem('header'));
 				  var data = JSON.stringify({
@@ -88,19 +96,7 @@
 				sendAjax('http://192.168.1.112/api/User/GetMessageInfo',data,function  (data) {
 					informationWrite(data.Body);
 				})
-//			var messageInformation={
-//				title:"您订购的教材《地理》等，已发货",
-//				name:"黄姣姣",
-//				time:"2016-03-16 14:13",
-//				texts:"您订购的教材《地理》，已发货，单号为：26894434312121212（申通）。请您保持手机畅通，查收快递"
-//			}
-			function informationWrite (data) {
-				document.getElementById("title").innerHTML= data.Title;
-				document.getElementById("name").innerHTML= '收件人：'+  data.Name;
-				document.getElementById("time").innerHTML='发布日期：'+  data.Time;
-				document.getElementById("article").innerHTML='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp'+data.Texts;
-			}
-//			informationWrite(messageInformation);
+		})
 		})
 		</script>
 	</body>

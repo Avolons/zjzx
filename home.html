@@ -425,14 +425,16 @@
 		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			//函数开始
-			mui(document).imageLazyload({
+			    mui(document).imageLazyload({
 					placeholder: 'images/home/hot_four.png'
 				});
-				$('#moreCourse div').height($('#moreCourse li').height()); 
-			mui.plusReady(function() {
+				//后期注释
+				$('#moreCourse div').height(parseInt($('#moreCourse>li').width()*0.4/(5/3))-20); 
+			   mui.plusReady(function() {
 				mui.init({
 					swipeBack: true, //启用右滑关闭功能
 					//	预加载页面：1.课程搜索页面 2.证书查询页面 3.激活学习卡页面  4.我的任务页面 5.我的考试页面 6.课程信息页面 7.热点新闻目录页 8.热点新闻阅读页面
+				    
 				});
 
 				/**********************消息通知栏*************************/
@@ -446,22 +448,7 @@
 						message.innerHTML = null;
 					}
 				}
-				//自定义假设轮播图
-				//			var imglist = [{
-				//					id:'course_124',
-				//					src:"images/home/home-slider.png"}
-				//				, {
-				//					id:'course_124',
-				//					src:"images/home/home-slider.png"}
-				//				, {
-				//					id:'course_124',
-				//					src:"images/home/home-slider.png"}
-				//				, {
-				//					id:'course_124',
-				//					src:"images/home/home-slider.png"}
-				//				]
-				/************************轮播图部分*************************/
-				//进行轮播图后台数据拼接
+				//**************创建轮播图渲染
 				var createImgList = function(imglist) {
 					var img = document.getElementById("imglist");
 					var point = document.getElementById("pointlist");
@@ -505,34 +492,6 @@
 						interval: 5000
 					});
 				};
-				//轮播图初始渲染
-				//				mui.getJSON('http://server-name/list.php', {
-				//					category: 'news'
-				//				}, function(data) {
-				//					createImgList(data);
-				//				});
-				//				createImgList(imglist);
-
-				/********************大家热搜栏目*************************/
-				//进行大家热搜的html拼接，由于dom结构固定，只需要更换图片src和下部文字说明
-				var hot_course = [{
-					id: "course_112",
-					title: "如何做一名优秀的中层干部",
-					src: "images/home/home_new1.png"
-				}, {
-					id: "course_113",
-					title: "客户管理关系",
-					src: "images/home/home_new2.png"
-				}, {
-					id: "course_114",
-					title: "向会议要绩效",
-					src: "images/home/home_new3.png"
-				}, {
-					id: "course_115",
-					title: "轻松搞定大客户",
-					src: "images/home/home_new4.png"
-				}]
-
 				//大家热搜栏目封装函数
 				function createHotCourse(data) {
 					var hot_courses = document.getElementById("hotCourse").getElementsByTagName("li");
@@ -542,33 +501,6 @@
 						hot_courses[i].getElementsByTagName('div')[0].innerHTML = data[i].Title;
 					}
 				}
-				/*************************新闻页面******************************/
-				//自定义一个后台传来的新闻值
-				var newslist = {
-					img: {
-						id: "course_111",
-						img_src: 'images/newsimage.png',
-						texts: '公安部推28项便民举措 解决"奇葩证明"等问题'
-					},
-					list: [{
-						id: "course_115",
-						color: "85c683",
-						content: "人力资源社会保障部公布 《专业技术人员继续教.."
-					}, {
-						id: "course_116",
-						color: "de4343",
-						content: "关于印发《中央和国家机关培训费管理办法》的通知"
-					}, {
-						id: "course_117",
-						color: "883ab2",
-						content: "工信部NTC职业技能证书"
-					}, {
-						id: "course_118",
-						color: "207fc6",
-						content: "全国职工素质建设工程五年规划（2015—2019年）"
-					}]
-				};
-
 				//热点新闻函数封装
 				var createNewsImg = function(data) {
 					var fragment = document.getElementById("news");
@@ -578,8 +510,9 @@
 					img.src = data.Src;
 					img.newsid = data.Id;
 					texts.innerText = data.Title;
-					createNewsList(data.newList, fragment);
+					createNewsList(data.newlist, fragment);
 				};
+				//*********热点新闻列表页渲染
 				var createNewsList = function(data, fragment) {
 					var li;
 					//定义所有的颜色
@@ -587,15 +520,12 @@
 					for(var i = 0; i < data.length; i++) {
 						li = document.createElement('li');
 						li.className = 'mui-table-view-cell';
-						li.newsid = data.newlist[i].Id;
-						li.innerHTML = "<span style='background-color:#" + color[i] + ";'>" + (i + 1) + "</span><a href='#'>" + data.newlist[i].Title + "</a>"
+						li.newsid = data.Id;
+						li.innerHTML = "<span style='background-color:#" + color[i] + ";'>" + (i + 1) + "</span><a href='#'>" + data.Title + "</a>"
 						fragment.appendChild(li);
 					}
 				}
-				createNewsList(newslist);
-				//热点新闻的渲
-
-				//最新课程页面渲染
+				//***********最新课程页面渲染
 				var createNewCourses = function(courseList) {
 					var fragment = document.createDocumentFragment();
 					var li;
@@ -607,7 +537,7 @@
 					}
 					return fragment;
 				};
-
+				//热点新闻的渲		
 				//同一加载页面所有资源
 				(function() {
 					var header = JSON.parse(plus.storage.getItem('header'));
@@ -617,8 +547,6 @@
 					console.log(data); 
 					sendAjax('http://192.168.1.112/api/System/GetMainInfo', data, function(data) {
 
-						console.log(data);
-						
 						messageShow(data.Body.IsSHowReddot);
 						//创建轮播图
 						createImgList(data.Body.slider);
@@ -626,7 +554,6 @@
 						createHotCourse(data.Body.hotsearch);
 						//常见新闻列表 
 						createNewsImg(data.Body.hotnews);
-						
 
 					})
 				})();
@@ -724,7 +651,6 @@
 						//使用父子模板方案打开的页面
 						//获得共用模板组 
 						var template = getTemplate('default'); //getTemplate('default');
-						//alert(template); 
 						//判断是否显示右上角menu图标；
 						//获得共用父模板
 						var headerWebview = template.header;
@@ -755,6 +681,8 @@
 				});
 				//父子页面切换方式初始化
 				initTemplates();
+				
+				
 				//预加载新闻列表页面
 				setTimeout(function() {
 					mui.preload({
@@ -776,6 +704,9 @@
 						}, //窗口参数
 					});
 				}, 400);
+				
+				
+				
 				//search定义获取光标跳转页面的事件
 				document.getElementById("search").addEventListener("tap", function() {
 						mui.openWindow({
@@ -795,7 +726,8 @@
 							}
 						})
 					})
-					//为轮播图绑定事件，需要预加载课程信息页面
+				
+				//为轮播图绑定事件，需要预加载课程信息页面
 				$(".mui-slider-group").on("tap", ".mui-slider-item", function() {
 					var id = this.getAttribute('id');
 					var detailPage = null;
@@ -833,6 +765,7 @@
 					});
 				});
 
+
 				//为更多新闻绑定事件，点击跳转到详情页面，打开了新的webview。
 				document.getElementById("news_more").addEventListener("tap", function() {
 					mui.openWindow({
@@ -843,6 +776,7 @@
 						}
 					})
 				})
+
 
 				//为新闻图片绑定点击事件
 				document.getElementById("news_img").addEventListener('tap', function() {

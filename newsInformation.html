@@ -72,7 +72,7 @@
 			//监听自定义事件
 			window.addEventListener('newsId', function(event) {
 				//获得事件参数
-				var newsid = event.detail.newsid;
+				var newsid = event.detail.id;
 				var header = JSON.parse(plus.storage.getItem('header'));
 				var data=JSON.stringify({
 							Body:{

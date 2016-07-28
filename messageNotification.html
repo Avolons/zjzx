@@ -101,7 +101,7 @@
 				content: "";
 				display: block;
 				height: 7px;
-				width: 7px;
+				width: 7px; 
 				border-radius: 50%;
 				position: absolute;
 				z-index: 9999;
@@ -117,9 +117,10 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">消息通知</h1>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content" id="pullup-container">
+			<div class="mui-scroll">
 			<ul id="message_list">
-				<li>
+				<li id="1">
 					<div class="img_outer noneRead">
 						<img src="images/message/system.png" />
 					</div>
@@ -132,6 +133,7 @@
 					</div>
 				</li>
 			</ul>
+			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
@@ -143,10 +145,9 @@
 						url: 'messageInformation.html'
 					}],
 					pullRefresh: {
-						container: '#message_list', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+						container: '#pullup-container', 
 						up: {
-							height: 50, //可选.默认50.触发上拉加载拖动距离
-							auto: true, //可选,默认false.自动上拉加载一次
+							height: 50, 
 							contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
 							contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
 							callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
@@ -175,7 +176,7 @@
 				var msg_list = document.getElementById("message_list")
 
 				function pullupRefresh() {
-					var header = plus.storage.getItem('header');
+					var header = JSON.parse(plus.storage.getItem('header'));
 					var data=JSON.stringify({
 								Header: header,
 								Body: {
@@ -185,37 +186,41 @@
 						});
 					setTimeout(function() {
 						sendAjax('http://192.168.1.112/api/User/GetMessageList',data,function(data){
+							console.log(JSON.stringify(data));
 							if (data.Body.TotalCount>0) {
-									msg_list.appendChild(creatMessage(data));
+									msg_list.appendChild(creatMessage(data.Body.Items));
 							    	count++;
+							    	mui('#pullup-container').pullRefresh().endPullupToRefresh(false);
 								} else{
-									mui('#message_list').pullRefresh().endPullupToRefresh(true);
+									mui('#pullup-container').pullRefresh().endPullupToRefresh(true);
 								}
 								
 						},function  () {
-							mui('#message_list').pullRefresh().endPullupToRefresh(true);
+							mui('#pullup-container').pullRefresh().endPullupToRefresh(true);
 						});
 					}, 500);
 				}
 				if (mui.os.plus) {
 					setTimeout(function() {
-						mui('#message_list').pullRefresh().pullupLoading();
+						mui('#pullup-container').pullRefresh().pullupLoading();
 					}, 1000);
 				} else {
-						mui('#message_list').pullRefresh().pullupLoading();
+						mui('#pullup-container').pullRefresh().pullupLoading();
 				}
 				var detailPage = null;
+				
 				//定义下级目录
-				$("li").on('tap', function() {
+				$("#message_list>li").on('tap', function() {
 					var imgouter = $(this).children('.img_outer');
-					var Id= $(this).id;
+					var Id= $(this).attr("id");
+					console.log(Id);
 					if(imgouter.hasClass('noneRead')) {
 						imgouter.removeClass("noneRead");
 					}
 					if(!detailPage) {
 						detailPage = plus.webview.getWebviewById('messageInformation.html');
 					}
-					var header = plus.storage.getItem('header');
+					var header =JSON.parse(plus.storage.getItem('header'));
 					var data=JSON.stringify({
 								Header: header,
 								Body: {

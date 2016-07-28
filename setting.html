@@ -292,25 +292,32 @@
 	<script src="libs/easymob-webim-sdk/easemob.im-1.0.5.js"></script>
 	<script src='js/feedback.js'></script>
 	<script src="js/feedback-page.js"></script>
-	<script src="js/app.js"></script>
+	<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 	<script>
 		mui.init();
-		//打开关于我们
-		document.getElementById("aboutus").addEventListener('tap', function() {
-			mui.openWindow({
-				url: 'aboutUs.html',
-				id: 'aboutUs.html',
-				style: {
-				}
-			})
-		})
-		var local = plus.localStorage;
-		//更换施教机构
+
 		mui.plusReady(function() {
+			var local = plus.storage;
+			
+			function  setToken () {
+				var header=JSON.parse(plus.storage.getItem('header'));
+				header.User.Token=null;
+				plus.storage.setItem("header",JSON.stringify(header));
+			}
+			//打开关于我们
+			document.getElementById("aboutus").addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'aboutUs.html',
+					id: 'aboutUs.html',
+					style: {}
+				})
+			})
+
+			//更换施教机构
 			document.getElementById("change").addEventListener("tap", function() {
 				var btnArray = ['否', '是'];
 				mui.confirm('此操作将清除施教机构信息，是否继续？', '更换施教机构', btnArray, function(e) {
-					if (e.index == 1) {
+					if(e.index == 1) {
 						local.setItem("ajaxCode", "");
 						mui.openWindow({
 							url: "barcode.html"
@@ -320,85 +327,94 @@
 					}
 				})
 			})
-		})
-		//监听开关切换，将setting设置存储在本地，每次播放时使用
-		document.getElementById("netType").addEventListener("toggle", function(event) {
-			if (event.detail.isActive) {
-				local.setItem("netType", "true");
-			} else {
-				local.setItem("netType", "false");
-			}
-		})
-		document.getElementById("autoPlay").addEventListener("toggle", function(event) {
-			if (event.detail.isActive) {
-				local.setItem("autoPlay", "true");
-			} else {
-				local.setItem("autoPlay", "false");
-			}
-		})
-		//定义清除缓存事件
-		document.getElementById("clearSsd").addEventListener("tap", function() {
-			setTimeout(function() {
-				mui.alert("已清除所有缓存", '缓存清理', "确定", null, "div");
-			}, 700)
-		})
-		//监听检查更新功能
-		document.getElementById("update").addEventListener("tap", function() {
-			mui.alert("已经是最新版本", '版本检查', "确定", null, "div");
-		})
-		var viewApi = mui('#app').view({
-			defaultPage: '#setting'
-		});
-		//初始化单页的区域滚动
-		mui('.mui-scroll-wrapper').scroll();
-		//退出操作******************
-		document.getElementById('exit').addEventListener('tap', function() {
-			if (mui.os.ios) {
-				app.setState({});
-				mui.openWindow({
-					url: 'login.html',
-					id: 'login',
-					show: {
-						aniShow: 'pop-in'
-					},
-					waiting: {
-						autoShow: false
+
+			//**********允许移动网络状态下播放
+			document.getElementById("netType").addEventListener("toggle", function(event) {
+				if(event.detail.isActive) {
+					local.setItem("netType", "true");
+				} else {
+					local.setItem("netType", "false");
+				}
+			})
+            
+            //********允许自动播放
+			document.getElementById("autoPlay").addEventListener("toggle", function(event) {
+				if(event.detail.isActive) {
+					local.setItem("autoPlay", "true");
+				} else {
+					local.setItem("autoPlay", "false");
+				}
+			})
+
+			//定义清除缓存事件
+			document.getElementById("clearSsd").addEventListener("tap", function() {
+				setTimeout(function() {
+					mui.alert("已清除所有缓存", '缓存清理', "确定", null, "div");
+				}, 700)
+			})
+
+			//监听检查更新功能
+			document.getElementById("update").addEventListener("tap", function() {
+				mui.alert("已经是最新版本", '版本检查', "确定", null, "div");
+			})
+			var viewApi = mui('#app').view({
+				defaultPage: '#setting'
+			});
+
+			//初始化单页的区域滚动
+			mui('.mui-scroll-wrapper').scroll();
+			//退出操作******************
+			document.getElementById('exit').addEventListener('tap', function() {
+				if(mui.os.ios) {
+					//重置token值
+					setToken();
+					mui.openWindow({
+						url: 'home.html',
+						id: 'home.html',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+					return;
+				}
+				var btnArray = [{
+					title: "注销当前账号"
+				}, {
+					title: "直接关闭应用"
+				}];
+				plus.nativeUI.actionSheet({
+					cancel: "取消",
+					buttons: btnArray
+				}, function(event) {
+					var index = event.index;
+					switch(index) {
+						//清除当前登录数据
+						case 1:
+							setToken();
+							mui.openWindow({
+								url: 'home.html',
+								id: 'home.html',
+								show: {
+									aniShow: 'pop-in'
+								},
+								waiting: {
+									autoShow: false
+								}
+							});
+							break;
+						case 2:
+							//直接关闭当前页面
+							plus.runtime.quit();
+							break;
 					}
 				});
-				return;
-			}
-			var btnArray = [{
-				title: "注销当前账号"
-			}, {
-				title: "直接关闭应用"
-			}];
-			plus.nativeUI.actionSheet({
-				cancel: "取消",
-				buttons: btnArray
-			}, function(event) {
-				var index = event.index;
-				switch (index) {
-					//清除当前登录数据
-					case 1:
-						app.setState({});
-						mui.openWindow({
-							url: 'login.html',
-							id: 'login',
-							show: {
-								aniShow: 'pop-in'
-							},
-							waiting: {
-								autoShow: false
-							}
-						});
-						break;
-					case 2:
-					//直接关闭当前页面
-						plus.runtime.quit();
-						break;
-				}
-			});
-		}, false);
+			}, false);
+
+		})
+
 		//************************
 		//		var view = viewApi.view;
 		//		(function($) {

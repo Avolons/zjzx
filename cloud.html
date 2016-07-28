@@ -297,13 +297,22 @@
 			mui.plusReady(function() {
 				mui.init();
 				//伪造后台课程信息数据
-				
 				//监听自定义事件
-				window.addEventListener('clicked',function(event){
-				  //获得事件参数
-				  urlopenwindow(main);
-				  //根据id向服务器请求新闻详情
+				window.addEventListener('clicked', function(event) {
+					//获得事件参数
+					setTimeout(function() {
+						urlopenwindow(main);
+					}, 1000);
+					//根据id向服务器请求新闻详情
 				});
+
+				window.addEventListener('token', function(event) {
+					//获得事件参数
+					alert(1);
+					urlopenwindow(main);
+					//根据id向服务器请求新闻详情
+				});
+
 				function main() {
 					var courselist = [{
 							id: "course_118",
@@ -372,11 +381,6 @@
 						return fragment;
 					};
 					//初次获取数据
-					mui.getJSON('http://server-name/list.php', {
-						category: 'news'
-					}, function(data) {
-						course.appendChild(createCourseList(data));
-					});
 					//初始化的格式页面
 					var course = document.getElementById("moreCourse")
 					course.appendChild(createCourseList(courselist));

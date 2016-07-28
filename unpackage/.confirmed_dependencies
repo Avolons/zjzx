@@ -21,7 +21,8 @@
 			"course.html",
 			"courseInformation.html",
 			"messageNotification.html",
-			"courseSearch.html"
+			"courseSearch.html",
+			"login.html"
 		]
 	},
 	"login.html": {
@@ -65,12 +66,14 @@
 			"js/app.js",
 			"js/mui.min.js",
 			"css/mui.min.css",
-			"css/app.css"
+			"css/app.css",
+			"js/extra.js"
 		],
 		"refer": [
 			"myExam.html",
 			"login.html",
-			"barcode.html"
+			"barcode.html",
+			"main.html"
 		]
 	},
 	"reg.html": {
@@ -311,7 +314,10 @@
 			"images/message/system.png",
 			"js/jquery-2.1.0.js",
 			"images/message/logo.png",
-			"images/message/charster.png"
+			"images/message/charster.png",
+			"fonts/mui.ttf",
+			"js/jquery-2.1.0.min.js",
+			"js/extra.js"
 		],
 		"refer": [
 			"messageInformation.html"
@@ -335,7 +341,10 @@
 	},
 	"newslist.html": {
 		"resources": [
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/extra.js",
+			"css/mui.min.css"
 		],
 		"refer": []
 	},

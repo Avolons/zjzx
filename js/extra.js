@@ -66,22 +66,27 @@ header.Device.IMEI=plus.device.imei//设备的国际移动设备身份码(安卓
 
 header.Device.Mac=plus.device.uuid;//设备的唯一标示（ios使用）;
 
-var getToken=function  () {
+function getToken () {
 	header.User.Token=JSON.parse(plus.storage.getItem('header')).User.Token;//从本地获取到token值，并将其注入  
 	//将header保存到本地数据区中
 	plus.storage.setItem("header",JSON.stringify(header));
-
 }
+
+//清空token值
+
 
 getToken();
 
 })
 
+
+
+
 //判断是否处于登录状态
 function urlopenwindow(callback) {
 	   //获取token值
 		var token=JSON.parse(plus.storage.getItem('header')).User.Token;
-		console.log(token);
+//		console.log(token);
 		if (token) {
              callback();
 		} else {
@@ -89,7 +94,7 @@ function urlopenwindow(callback) {
 				mui.confirm('请登录后继续使用，是否继续？', '请登录', btnArray, function(e) {
 					if (e.index == 1) {
 						//获取当前页面url
-						var thisWebview=plus.webview.currentWebview();
+						var thisWebview=plus.webview.currentWebview().id;
 						//自定义事件触发登陆页面
 						var loginHtml=plus.webview.getWebviewById('login.html');
 						 mui.fire(loginHtml,'logined',{
@@ -98,6 +103,7 @@ function urlopenwindow(callback) {
 						mui.openWindow({
 							url: "login.html"
 						})
+//						mui.alert(JSON.stringify(thisWebview));
 					} else {
 						return;
 					}

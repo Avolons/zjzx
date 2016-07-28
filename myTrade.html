@@ -144,7 +144,6 @@
 		<script type="text/javascript" charset="UTF-8">
 		mui.plusReady(function  () {
 			mui.init();
-			
 			var list={
 				book:[{
 				  state:"已完成",
@@ -186,7 +185,6 @@
 				},]
 			};
 			//定义虚拟数据结构，本页面主要为展示页面，只需要将数据从服务器取出进行真实即可
-			
 			function creatCourse (data) {
 				var frame=document.createDocumentFragment();
 				var li;
@@ -223,10 +221,7 @@
 					document.getElementById("purchasecard").appendChild(creatFrame(data.Body.Cards));
 				})
 			})()
-			
-//			document.getElementById("purchasebook").appendChild(creatFrame(list.book));
-//			document.getElementById("purchasecard").appendChild(creatFrame(list.card));
-			
+				
 			$("button").on("tap",function  () {
 				$(this).addClass("btn").siblings().removeClass("btn");
 				if ($(this).children("a").html()=="我订购的教材") {

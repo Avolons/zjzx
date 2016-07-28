@@ -192,11 +192,13 @@
 					"css/feedback-page.css",
 					"images/iconfont-tianjia.png",
 					"myExam.html",
-					"css/app.css"
+					"css/app.css",
+					"js/extra.js"
 				],
 				"refer": [
 					"login.html",
-					"barcode.html"
+					"barcode.html",
+					"main.html"
 				],
 				"priority": 1
 			},
@@ -222,7 +224,8 @@
 					"course.html",
 					"courseInformation.html",
 					"messageNotification.html",
-					"courseSearch.html"
+					"courseSearch.html",
+					"login.html"
 				],
 				"priority": 1
 			},
@@ -536,7 +539,10 @@
 					"images/message/system.png",
 					"js/jquery-2.1.0.js",
 					"images/message/logo.png",
-					"images/message/charster.png"
+					"images/message/charster.png",
+					"fonts/mui.ttf",
+					"js/jquery-2.1.0.min.js",
+					"js/extra.js"
 				],
 				"refer": [
 					"messageInformation.html"
@@ -563,7 +569,10 @@
 			},
 			"newslist.html": {
 				"resources": [
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/extra.js",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0

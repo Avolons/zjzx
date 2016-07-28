@@ -82,9 +82,11 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">热点新闻</h1>
 		</header>
-		<div class="mui-content">
-			<ul id="new_list">
-			</ul>
+		<div class="mui-content" id="refreshContainer">
+			<div class="mui-scroll">
+				<ul id="new_list">
+				</ul>
+			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
@@ -93,10 +95,10 @@
 				mui.init({
 					//下拉刷新
 					pullRefresh: {
-						container: '#new_list', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+						container: '#refreshContainer', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
 						up: {
-							height: 50, //可选.默认50.触发上拉加载拖动距离
-							auto: true, //可选,默认false.自动上拉加载一次
+//							height: 50, //可选.默认50.触发上拉加载拖动距离
+//							auto: false, //可选,默认false.自动上拉加载一次
 							contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
 							contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
 							callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
@@ -110,7 +112,7 @@
 					for(var i = 0; i < data.length; i++) {
 						li = document.createElement('li');
 						li.id = data[i].Id;
-						li.innerHTML = "<p><b>【" + data[i].sortName + "】</b>" + courseList[i].Title + "</p><p>" + courseList[i].Time + "&nbsp;&nbsp;&nbsp;" + courseList[i].Source + "</p>"
+						li.innerHTML = "<p><b>【" + data[i].SortName + "】</b>" + data[i].Title + "</p><p>" + data[i].Time + "&nbsp;&nbsp;&nbsp;" + data[i].Source + "</p>"
 						fragment.appendChild(li);
 					}
 					return fragment;
@@ -118,10 +120,9 @@
 				var newList = document.getElementById("new_list");
 				//分页
 				var count = 1;
-				
-				
 				//刷新函数，使用500毫秒延时加载
 				function pullupRefresh() {
+					setTimeout(function() {
 					var header = JSON.parse(plus.storage.getItem('header'));
 					var data=JSON.stringify({
 								Header: header,
@@ -130,38 +131,44 @@
 									PageSize: 20
 								}
 						});
-					setTimeout(function() {
-						sendAjax('http://192.168.1.112/api/System/GetNewsList',data,function  (data) {
+						sendAjax('http://192.168.1.112/api/System/GetNewsList',data,function (data) {
 							if(data.Body.TotalCount > 0) {
 									newList.appendChild(createFragment(data.Body.Items));
-									count++;
+									count++; 
+									mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
 								} else {
-									mui('#new_list').pullRefresh().endPullupToRefresh(true);
-								}
+									mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+								} 
 						},function  () {
-							mui('#new_list').pullRefresh().endPullupToRefresh(true);
+							mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
 						})
-					}, 500);
+					}, 1500);
 				};
 				if(mui.os.plus) {
 					setTimeout(function() {
-						mui('#new_list').pullRefresh().pullupLoading();
-					}, 1000);
+						mui('#refreshContainer').pullRefresh().pullupLoading();
+					}, 1000); 
 				} else {
-					mui('#new_list').pullRefresh().pullupLoading();
+					mui('#refreshContainer').pullRefresh().pullupLoading();
 				};
+				
+				
 				mui('#new_list').on('tap', 'li', function() {
 					var li_id = this.id;
+					var detailPage = null;
+					//				  向后台传输自带的id值
+					//获得详情页面
+					if(!detailPage) {
+						detailPage = plus.webview.getWebviewById('newsInformation.html');
+					}
+					//触发详情页面的newsId事件
+					mui.fire(detailPage, 'newsId', {
+						id: li_id
+					});
+					//打开详情页面          
 					mui.openWindow({
-						url: 'newsInformation.html',
-						id: 'newsInformation.html',
-						style: {
-							scrollIndicator: "none"
-						},
-						extras: {
-							name: li_id,
-						}
-					})
+						id: 'newsInformation.html'
+					});
 				});
 			})
 		</script>
