@@ -96,6 +96,11 @@
 	<script src="js/mui.min.js"></script>
 	<script type="text/javascript">
 		//启用双击监听
+		window.addEventListener('clicked', function(event) {
+					//获得事件参数
+					console.log("1");
+					//根据id向服务器请求新闻详情
+				});
 		mui.init({
 			gestureConfig: {
 				doubletap: true
@@ -166,15 +171,7 @@
 			}
 			contentWebview.evalJS('mui.scrollTo(0, 100)');
 		});
-		//		mui.menu = function () {
-		//			console.log(menuElem.style.display);
-		//			if(menuElem.style.display !== "none"){
-		//				if(contentWebview==null){
-		//					contentWebview = plus.webview.currentWebview().children()[0];
-		//				}
-		//				contentWebview.evalJS('mui("#topPopover").popover("toggle")');
-		//			}
-		//		}
+		
 	</script>
 
 </html>

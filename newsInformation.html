@@ -81,7 +81,7 @@
 							Header:header,
 					});
 				//根据id向服务器请求新闻详情
-				sendAjax('http://192.168.1.112/api/System/GetNewsInfo',data,function  (data) {
+				sendAjax('api/System/GetNewsInfo',data,function  (data) {
 					document.getElementById("title").innerHTML = data.Body.Title;
 							document.getElementById("time").innerHTML =data.Body.Time+'来源'+data.Body.Source;
 							document.getElementById("texts").innerHTML = data.Body.Contect;

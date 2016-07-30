@@ -198,7 +198,8 @@
 				"refer": [
 					"login.html",
 					"barcode.html",
-					"main.html"
+					"main.html",
+					"aboutUs.html"
 				],
 				"priority": 1
 			},
@@ -412,10 +413,13 @@
 					"images/home/hot_two.png",
 					"images/home/hot_four.png",
 					"css/iconfont.css",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/jquery-2.1.0.min.js",
+					"js/extra.js"
 				],
 				"refer": [
-					"courseInformation.html"
+					"courseInformation.html",
+					"coursePurchase.html"
 				],
 				"priority": 0
 			},
@@ -488,7 +492,8 @@
 				"resources": [
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/extra.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -507,7 +512,8 @@
 			"myExam.html": {
 				"resources": [
 					"js/mui.min.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/extra.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -630,7 +636,9 @@
 					"images/home/hot_three.png",
 					"css/iconfont.css",
 					"js/jquery-2.1.0.js",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/extra.js",
+					"js/jquery-2.1.0.min.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -653,7 +661,9 @@
 					"fonts/mui.ttf",
 					"js/jquery-2.1.0.js",
 					"js/mui.min.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/jquery-2.1.0.min.js",
+					"js/extra.js"
 				],
 				"refer": [],
 				"priority": 0

@@ -63,6 +63,10 @@
 			#message_list li>div {
 				float: left;
 				height: 40px;
+				
+			}
+			#message_list li>.intrdouce{
+				width: calc(100% - 50px);
 			}
 			
 			#message_list li>div:nth-last-of-type {
@@ -80,6 +84,10 @@
 				color: #5f5f5f;
 				float: left;
 				margin: 0;
+				width: 50%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: pre;
 			}
 			
 			.title b {
@@ -154,12 +162,14 @@
 						}
 					}
 				});
-
+                
+                
+                //********消息渲染函数
 				function creatMessage(data) {
 					var farme = document.createDocumentFragment();
 					var li;
 					for(var i = 0; i < data.length; i++) {
-						li = document.createElement("li");
+						li = document.createElement("li"); 
 						//0是未读，1是已读
 						if(data.Status == 0) {
 							li.innerHTML = '<div class="img_outer noneRead"><img src=' + data[i].Src + ' /></div><div class="intrdouce"><div class="title"><h6>' + data[i].Title + '</h6><b>' + data[i].Time + '</b></div><p>' + data[i].Innertext + '</p></div>';
@@ -184,12 +194,13 @@
 									PageSize: 20
 								}
 						});
+						console.log(data);
 					setTimeout(function() {
-						sendAjax('http://192.168.1.112/api/User/GetMessageList',data,function(data){
-							console.log(JSON.stringify(data));
+						sendAjax('api/User/GetMessageList',data,function(data){
 							if (data.Body.TotalCount>0) {
 									msg_list.appendChild(creatMessage(data.Body.Items));
 							    	count++;
+							    	messageClicked ();
 							    	mui('#pullup-container').pullRefresh().endPullupToRefresh(false);
 								} else{
 									mui('#pullup-container').pullRefresh().endPullupToRefresh(true);
@@ -210,7 +221,8 @@
 				var detailPage = null;
 				
 				//定义下级目录
-				$("#message_list>li").on('tap', function() {
+				function messageClicked () {
+					$("#message_list>li").on('tap', function() {
 					var imgouter = $(this).children('.img_outer');
 					var Id= $(this).attr("id");
 					console.log(Id);
@@ -228,7 +240,7 @@
 								}
 						});
 				    //后台发送改消息的已读信息
-					sendAjax('http://192.168.1.112/api/User/SetMessageRead',data,function  (data) {
+					sendAjax('api/User/SetMessageRead',data,function  (data) {
 						return false;
 					})
 					//触发详情页面的newsId事件
@@ -243,6 +255,7 @@
 					})
 
 				})
+				}
 			})
 		</script>
 	</body>

@@ -5,8 +5,6 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
-		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/mui.min.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<style type="text/css">
 			body {
@@ -147,12 +145,119 @@
 						</li>
 					</ul>
          </div>
+         <script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
          <script type="text/javascript" charset="UTF-8">
 			mui.init();
 			mui.plusReady(function() {
-				var self = plus.webview.currentWebview();
-				var name = self.name;
-				console.log(name);
+				//************创建课程心得
+				
+			function creatgetlist (list) {
+				var frame=document.createDocumentFragment();
+				var li;
+				for (var i=0;i<list.length;i++) {
+					li=document.createElement("li");
+					li.id=list[i].Id;
+					li.innerHTML='<img src='+list[i].Src+' /><div class="talkback"><h3>'+list[i].UserName+'</h3><p>'+list[i].Contect+'</p><h6>'+list[i].Time+'</h6>'
+				    frame.appendChild(li);
+				}
+				return frame;
+			}
+			
+			//**************宽度重置函数
+			function resetWidth () {
+				var screenWidth = document.body.offsetWidth;
+				var title = screenWidth - 70 + "px";
+				$(".talkback").width(title);
+			}
+			
+			//*************创建心得
+			function creatnewget(src, name, texts, time) {
+				var li = document.createElement("li")
+				li.innerHTML = '<img src=' + src + ' /><div class="talkback"><h3>' + name + '</h3><p>' + texts + '</p><h6>' + time + '</h6>'
+				return li;
+			}
+            
+            //*************获取当前时间并且格式化函数
+			function getNowFormatDate() {
+				var date = new Date();
+				var seperator1 = "-";
+				var seperator2 = ":";
+				var month = date.getMonth() + 1;
+				var strDate = date.getDate();
+				if (month >= 1 && month <= 9) {
+					month = "0" + month;
+				}
+				if (strDate >= 0 && strDate <= 9) {
+					strDate = "0" + strDate;
+				}
+				var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate + " " + date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
+				return currentdate;
+			}
+			
+			var self = plus.webview.currentWebview();
+			var name = self.name;
+				
+				//********获取附加的属性,，渲染学习列表页面
+				(function  () {
+					var header = JSON.parse(plus.storage.getItem('header'));
+					var data=JSON.stringify({
+								Header: header,
+								Body: {
+									PageIndex: count,
+									PageSize: 100,
+									CourseId: name
+								}
+						});
+					sendAjax('api/Course/GetMyCourseXinDeInfo',data,function  () {
+						if (data.Body.Code==200) {
+							document.getElementById("get_list").appendChild(creatgetlist(data.Body.Items));
+							//宽度重置
+							resetWidth ();
+						} else{
+							mui.alert(data.Body.Message);
+						}
+					})
+				})();
+				
+			    
+			    document.getElementById("addCourseGet").addEventListener('click',function(e) {
+				//修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
+				var btnArray = ['取消', '确定'];
+				mui.prompt('请输入你的心得：', '很有收获', 'Hello ZJZX', btnArray, function(e) {
+					if (e.index == 1) {
+					//回复的昵称，本人的昵称 	
+					var thisname= plus.storage.getItem()("UserName",data.Body.Name);
+					//获取img的src值
+					var src = plus.storage.getItem()("Pic",data.Body.Pic);
+					//获取内容
+					var content=this.value;
+					var header = JSON.parse(plus.storage.getItem('header'));
+					
+					var data=JSON.stringify({
+								Header: header,
+								Body: {
+								    Contect: content,
+								    Id: name
+								}
+					});	
+					sendAjax('api/Course/AddMyCourseXinDe',data,function  () {
+						if (data.Body.Code==200) {
+							$("#get_list").append(creatnewget(src, thisname,data.Body.Contect,data.Body.Time));
+							//宽度重置
+							resetWidth ();
+						} else{
+							mui.alert(data.Body.Message);
+						}
+					})	
+					
+					
+					}
+				})
+			})
+			  
+			
 			})
 			
 			var getlist=[{
@@ -178,18 +283,6 @@
 			},];
 			
 			
-			function creatgetlist (list) {
-				var frame=document.createDocumentFragment();
-				var li;
-				for (var i=0;i<list.length;i++) {
-					li=document.createElement("li");
-					li.innerHTML='<img src='+list[i].imgsrc+' /><div class="talkback"><h3>'+list[i].name+'</h3><p>'+list[i].p+'</p><h6>'+list[i].time+'</h6>'
-				    frame.appendChild(li);
-				}
-				return frame;
-			}
-			
-			document.getElementById("get_list").appendChild(creatgetlist(getlist));
 			
 			
 			
@@ -197,57 +290,7 @@
 			
 			
 			
-			document.getElementById("addCourseGet").addEventListener('click',function(e) {
-				//修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
-				var btnArray = ['取消', '确定'];
-				mui.prompt('请输入你的心得：', '很有收获', 'Hello ZJZX', btnArray, function(e) {
-					if (e.index == 1) {
-						var src = "images/course/weixin.png";
-						//获取img的src值
-						var time = getNowFormatDate();
-						//获取回复时的时间
-						var thisname = '誓约胜利之剑';
-						//回复的昵称，本人的昵称 
-						$("#get_list").append(creatnewget(src, thisname, e.value, time));	
-						
-						(function() {
-							var screenWidth = document.body.offsetWidth;
-							var title = screenWidth - 70 + "px";
-							$(".talkback").width(title);
-						}());
-					}
-				})
-			})
 			
-			function creatnewget(src, name, texts, time) {
-				var li = document.createElement("li")
-				li.innerHTML = '<img src=' + src + ' /><div class="talkback"><h3>' + name + '</h3><p>' + texts + '</p><h6>' + time + '</h6>'
-				return li;
-			}
-
-			function getNowFormatDate() {
-				var date = new Date();
-				var seperator1 = "-";
-				var seperator2 = ":";
-				var month = date.getMonth() + 1;
-				var strDate = date.getDate();
-				if (month >= 1 && month <= 9) {
-					month = "0" + month;
-				}
-				if (strDate >= 0 && strDate <= 9) {
-					strDate = "0" + strDate;
-				}
-				var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate + " " + date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
-				return currentdate;
-			}
-			
-			
-			(function() {
-				var screenWidth = document.body.offsetWidth;
-				var title = screenWidth - 70 + "px";
-				$(".talkback").width(title);
-				
-			}());
 		</script>
 	</body>
 

@@ -41,7 +41,7 @@ mui.plusReady(function  () {
     User: {
       Token: null//由后台获取
     }
-}
+};
 
 header.App.PackageName='andrics_sdf';//人为设定这个值
 
@@ -66,18 +66,14 @@ header.Device.IMEI=plus.device.imei//设备的国际移动设备身份码(安卓
 
 header.Device.Mac=plus.device.uuid;//设备的唯一标示（ios使用）;
 
-function getToken () {
-	header.User.Token=JSON.parse(plus.storage.getItem('header')).User.Token;//从本地获取到token值，并将其注入  
-	//将header保存到本地数据区中
-	plus.storage.setItem("header",JSON.stringify(header));
-}
-
+if (JSON.parse(plus.storage.getItem('header'))) {
+	header.User.Token=JSON.parse(plus.storage.getItem('header')).User.Token;
+};
+//从本地获取到token值，并将其注入  
+//将header保存到本地数据区中 
+plus.storage.setItem("header",JSON.stringify(header));
 //清空token值
-
-
-getToken();
-
-})
+});
 
 
 
@@ -111,12 +107,17 @@ function urlopenwindow(callback) {
 		}
 	}
 	
+//url 配置
+var url='http://202.108.31.55/';
+
 //ajax封装函数
-function sendAjax (url,data,callback,errors) {
+function sendAjax (urls,data,callback,errors) {
 	errors=errors || function  () {
 		return false;
 	};
-	mui.ajax(url,{
+	urls=url+urls;
+	console.log(urls);
+	mui.ajax(urls,{
 		data:data,
 		dataType:'json',//服务器返回json格式数据
 		type:'post',//HTTP请求类型

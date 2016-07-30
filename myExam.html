@@ -45,14 +45,16 @@
 </head>
 <body>
 	<div class="mui-content" id="examList">
-	    <!--<ul>
-	    	<li>考试名称:<a href="javascript:void(0);"></a> </li>
+		<div class="mui-scroll">
+	    <!--<ul>-->
+	    	<!--<li>考试名称:<a href="javascript:void(0);"></a> </li>
 	    	<li>考试时间:<a href="javascript:void(0);"></a> </li>
 	    	<li>个人考试状态:<a href="javascript:void(0);"></a> </li>
 	    	<li>是否通过:<a href="javascript:void(0);"></a> </li>
 	    	<li>考试次数:<a href="javascript:void(0);"></a> </li>
-	    	<li>得分/通过分数/总分:<a href="javascript:void(0);"></a>/<a href="javascript:void(0);"></a>/<a href="javascript:void(0);"></a> </li>
-	    </ul>-->
+	    	<li>得分/通过分数/总分:<a href="javascript:void(0);"></a>/<a href="javascript:void(0);"></a>/<a href="javascript:void(0);"></a> </li>-->
+	    <!--</ul>-->
+	    </div>
 	</div>
 	<script src="js/mui.min.js"></script>
 	<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
@@ -71,25 +73,7 @@
 						}
 					}
 				});
-      	var myExam=[{
-      		name:"测试",
-      		time:"2016-01-22 17:10-2016-01-24 17:05",
-      		state:"已结束",
-      		pass:"否	",
-      		changce:"2",
-      		score:"50",
-      		passscore:"60",
-      		allscore:"100"
-      	},{
-      		name:"测试",
-      		time:"2016-01-22 17:10-2016-01-24 17:05",
-      		state:"已结束",
-      		pass:"否	",
-      		changce:"2",
-      		score:"50",
-      		passscore:"60",
-      		allscore:"100"
-      	}]
+      	//****************创建我的考试
       	function creatExam (myExam) {
       	   var farmate=document.createDocumentFragment();
       	   var ul;
@@ -102,20 +86,8 @@
       	}
         //定义分页
       	var count=1;
-      	//定义
-      	(function  () {
-      		var header = JSON.parse(plus.storage.getItem('header'));
-			var data = JSON.stringify({
-				Header: header,
-				Body: {
-				    PageIndex: count,
-				    PageSize: 20
-				  }
-			});
-			sendAjax('http://192.168.1.112/api/User/GetMyExam',data,function  (data) {
-				document.getElementsByClassName("mui-content")[0].appendChild(creatExam (data));
-			})
-      	})();
+      	//外部容器
+      	var container=document.getElementById("examList");
       	function pullupRefresh() {
 					var header = JSON.parse(plus.storage.getItem('header'));
 					var data=JSON.stringify({
@@ -126,26 +98,19 @@
 								}
 						});
 					setTimeout(function() {
-						sendAjax('http://192.168.1.112/api/User/GetMyExam',data,function  (data) {
+						sendAjax('api/User/GetMyExam',data,function  (data) {
 							if(data.Body.TotalCount > 0) {
-									document.getElementById("examList").appendChild(creatExam(data.Body.Items));
+									container.appendChild(creatExam(data.Body.Items));
 									count++;
+									mui('#examList').pullRefresh().endPullupToRefresh(false);
 								} else {
 									mui('#examList').pullRefresh().endPullupToRefresh(true);
 								}
 						},function  () {
 							mui('#examList').pullRefresh().endPullupToRefresh(true);
 						})
-					}, 500);
-				};
-				if(mui.os.plus) {
-					setTimeout(function() {
-						mui('#examList').pullRefresh().pullupLoading();
 					}, 1000);
-				} else {
-					mui('#examList').pullRefresh().pullupLoading();
-				};
-      	document.getElementsByClassName("mui-content")[0].appendChild(creatExam (myExam));
+				}; 
     })
     </script>
 </body>

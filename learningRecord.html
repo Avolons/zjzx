@@ -77,88 +77,45 @@
 	</head>
 
 	<body>
-		<div class="mui-content">
-			<ul id="recodeList">
-				<li>
-					<img src="images/center/center (5).gif" />
-					<div class="title">
-						<h1>制造型企业生产主管实践训练成品</h1>
-						<p><span class="mui-icon iconfont icon-shizhong"></span>02:28/45:56</p>
-					</div>
-				</li>
-				<li>
-					<img src="images/center/center (5).gif" />
-					<div class="title">
-						<h1>制造型企业生产主管实践训练成品</h1>
-						<p><span class="mui-icon iconfont icon-shizhong"></span>02:28/45:56</p>
-					</div>
-				</li>
-				<li>
-					<img src="images/center/center (5).gif" />
-					<div class="title">
-						<h1>制造型企业生产主管实践训练成品</h1>
-						<p><span class="mui-icon iconfont icon-shizhong"></span>02:28/45:56</p>
-					</div>
-				</li>
-			</ul>
+		<div class="mui-content" id="pullRefreshs">
+			<div class="mui-scroll">
+				<ul id="recodeList">
+					<li>
+						<img src="images/center/center (5).gif" />
+						<div class="title">
+							<h1>制造型企业生产主管实践训练成品</h1>
+							<p><span class="mui-icon iconfont icon-shizhong"></span>02:28/45:56</p>
+						</div>
+					</li>
+					<li>
+						<img src="images/center/center (5).gif" />
+						<div class="title">
+							<h1>制造型企业生产主管实践训练成品</h1>
+							<p><span class="mui-icon iconfont icon-shizhong"></span>02:28/45:56</p>
+						</div>
+					</li>
+					<li>
+						<img src="images/center/center (5).gif" />
+						<div class="title">
+							<h1>制造型企业生产主管实践训练成品</h1>
+							<p><span class="mui-icon iconfont icon-shizhong"></span>02:28/45:56</p>
+						</div>
+					</li>
+				</ul>
+			</div>
 		</div>
-		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
+		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
 			mui.plusReady(function() {
-				mui.init({
-					//下拉刷新
-					pullRefresh: {
-						container: '#recodeList', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
-						up: {
-							height: 50, //可选.默认50.触发上拉加载拖动距离
-							auto: true, //可选,默认false.自动上拉加载一次
-							contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
-							contentnomore: '', //可选，请求完毕若没有更多数据时显示的提醒内容；
-							callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
-						}
-					}
-				});
-
-//				var learingRecode = [{
-//					id: "course_124",
-//					img_src: "images/home/hot_three.png",
-//					title: "制造型企业生产主管实践训练成品",
-//					haveTime: "02:28",
-//					time: "45:56"
-//				}, {
-//					id: "course_124",
-//					img_src: "images/home/hot_three.png",
-//					title: "制造型企业生产主管实践训练成品",
-//					haveTime: "02:28",
-//					time: "45:56"
-//				}, {
-//					id: "course_124",
-//					img_src: "images/home/hot_three.png",
-//					title: "制造型企业生产主管实践训练成品",
-//					haveTime: "02:28",
-//					time: "45:56"
-//				}, {
-//					id: "course_124",
-//					img_src: "images/home/hot_three.png",
-//					title: "制造型企业生产主管实践训练成品",
-//					haveTime: "02:28",
-//					time: "45:56"
-//				}, {
-//					id: "course_124",
-//					img_src: "images/home/hot_three.png",
-//					title: "制造型企业生产主管实践训练成品",
-//					haveTime: "02:28",
-//					time: "45:56"
-//				}, {
-//					id: "course_124",
-//					img_src: "images/home/hot_three.png",
-//					title: "制造型企业生产主管实践训练成品",
-//					haveTime: "02:28",
-//					time: "45:56"
-//				}]
-//				
-//				var lists = document.getElementById("recodeList");
+				mui.init();
+				//分页数
+				var count = 1;
+				
+				var lists=document.getElementById("recodeList");
+				
+				//*************执行函数
 				var createFragment = function(learingRecode) {
 					var fragment = document.createDocumentFragment();
 					var li;
@@ -170,46 +127,26 @@
 					}
 					return fragment;
 				};
-//				lists.appendChild(createFragment(learingRecode));
-				var header = plus.storage.getItem('header');
-				//分页数
-				var count = 1;
+				
+				//*****************上拉刷新
 				function pullupRefresh() {
-					setTimeout(function() {
-						mui.ajax('http://192.168.1.112/api/Course/GetMyCourseLearnRecord', {
-							data: {
-								Header: header,
-								Body: {
-									PageIndex: 1,
-									PageSize: 20
-								}
-							},
-							dataType: 'json', //服务器返回json格式数据
-							type: 'get', //HTTP请求类型
-							timeout: 10000, //超时时间设置为10秒；
-							success: function(data) {
-								if(data.Body.TotalCount > 0) {
-									lists.appendChild(createFragment(data.Body.Items));
-									count++;
-								} else {
-									mui('#recodeList').pullRefresh().endPullupToRefresh(true);
-								}
-							},
-							error: function(xhr, type, errorThrown) {
-								//异常处理；
-								console.log(type);
-								mui('#recodeList').pullRefresh().endPullupToRefresh(true);
+					var header = JSON.parse(plus.storage.getItem('header'));
+						var data = JSON.stringify({
+							Header: header,
+							Body: {
+								PageIndex: count,
+								PageSize: 100
 							}
 						});
-					}, 500);
-				}
-				if(mui.os.plus) {
-					setTimeout(function() {
-						mui('#recodeList').pullRefresh().pullupLoading();
-					}, 1000);
-				} else {
-					mui('#recodeList').pullRefresh().pullupLoading();
-				}
+					setTimeout(function() { 
+						sendAjax('api/Course/GetMyCourseLearnRecord',data, function(data) {
+							console.log(JSON.stringify(data));
+							lists.appendChild(createFragment(data.Body.Items)); 
+						});
+					}, 500);  
+				};
+				
+				pullupRefresh();
 			})
 		</script>
 	</body>

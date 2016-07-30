@@ -144,7 +144,7 @@
 		<script type="text/javascript" charset="UTF-8">
 		mui.plusReady(function  () {
 			mui.init();
-			var list={
+			/*var list={
 				book:[{
 				  state:"已完成",
 				  number:"订单号：dd00000022",
@@ -183,8 +183,10 @@
 				  time:"包含教材：迈向成功之路",
 				  price:"￥10.01"
 				},]
-			};
+			};*/
 			//定义虚拟数据结构，本页面主要为展示页面，只需要将数据从服务器取出进行真实即可
+			
+			//***********创建教材列表
 			function creatCourse (data) {
 				var frame=document.createDocumentFragment();
 				var li;
@@ -195,7 +197,7 @@
 				}
 				return frame;
 			};
-			
+			//**********创建学习卡列表
 			function creatCard (data) {
 				var frame=document.createDocumentFragment();
 				var li;
@@ -216,9 +218,10 @@
 									PageSize: 100
 								}
 							});
-				sendAjax('http://192.168.1.112/api/User/GetMyTransaction',data,function  (data) {
-					document.getElementById("purchasebook").appendChild(creatFrame(data.Body.Books));
-					document.getElementById("purchasecard").appendChild(creatFrame(data.Body.Cards));
+				sendAjax('api/User/GetMyTransaction',data,function  (data) {
+					console.log(data);
+					document.getElementById("purchasebook").appendChild(creatCourse(data.Body.Books));
+					document.getElementById("purchasecard").appendChild(creatCard(data.Body.Cards));
 				})
 			})()
 				

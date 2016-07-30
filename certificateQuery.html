@@ -95,7 +95,8 @@
 	</head>
 
 	<body>
-		<div class="mui-content">
+		<div class="mui-content" id="queryList">
+			
 			<img src="images/home/home_new2.png" width="100%" />
 			<form>
 				<h6>*请填写如下信息</h6>
@@ -124,27 +125,37 @@
 	    </ul>-->
 		</div>
 		<script src="js/mui.min.js"></script>
+		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
-			mui.init();
-			var certificateQuery = [
+		mui.plusReady(function  () {
+			mui.init({  
+					//下拉刷新
+					pullRefresh: {
+						container: '#queryList', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+						up: {
+							height: 50, //可选.默认50.触发上拉加载拖动距离
+							auto: false, //可选,默认false.自动上拉加载一次
+							contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+							contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+							callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+						}
+					}
+				});
+			/*var certificateQuery = [
 				["姓名 : 黄娇娇", "身份证号 : 30683199208117325", "获得证书 : 专项技术证书", "获证时间 : 2016-04-25", "获证方式 : 凭自己的努力获得"],
 				["姓名 : 黄娇娇", "身份证号 : 30683199208117325", "获得证书 : 专项技术证书", "获证时间 : 2016-04-25", "获证方式 : 凭自己的努力获得"]
-			]
-			var createFragment = function(certificateQuery) {
+			]*/
+			//********创建证书内容
+			var createFragment = function(data) {
 				var fragment = document.createDocumentFragment();
-				var ul;
-				for (var i = 0; i < certificateQuery.length; i++) {
-					ul = document.createElement("ul");
-					for (var j = 0; j < certificateQuery[i].length; j++) {
-						li = document.createElement('li');
-						li.innerHTML = certificateQuery[i][j];
-						ul.appendChild(li);
-					}
+				for (var i = 0; i < data.length; i++) {
+					var ul = document.createElement("ul");
+					ul.innerHTML='<li>姓名 :'+data[i].Name+'</li><li>身份证号 : '+data[i].IdNumber+'</li><li>获得证书 : '+data[i].CertName+'</li><li>获证时间 : '+data[i].Time+'</li><li>获证方式 : '+data[i].Obtaintype+'</li>'
 					fragment.appendChild(ul);
 				}
 				return fragment;
 			};
-			document.body.appendChild(createFragment(certificateQuery));
+			
 			var names = document.getElementById("yours");
 			//姓名
 			var number = document.getElementById("number");
@@ -154,7 +165,10 @@
 			var check = document.getElementById("check");
 			//查询
 			var data = {
+				
 			};
+			//定义分页数量
+			var count=1;
 			names.addEventListener('input', function() {
 				this.onblur = function() {
 					this.onblur = null;
@@ -186,23 +200,30 @@
 					data.code = this.value;
 				}
 			})
-			check.addEventListener('tap', function() {
+			
+			function pullupRefresh(){
 				if (data.name) {
 					if (data.number) {
 						if (data.code) {
-							mui.ajax('http://server-name/login.php', {
-								data: data,
-								dataType: 'json', //服务器返回json格式数据
-								type: 'post', //HTTP请求类型
-								timeout: 10000, //超时时间设置为10秒；
-								success: function(data) {
-									document.body.appendChild(createFragment(certificateQuery));
-									//直接渲染数据
-								},
-								error: function(xhr, type, errorThrown) {
-									mui.alert('请稍后重试', '网络错误', '确定');
-								}
-							});
+							var header = JSON.parse(plus.storage.getItem('header'));
+							var datas=JSON.stringify({
+										Header: header,
+										Body: {
+											PageIndex: count,
+											PageSize: 10
+										}
+								});
+							sendAjax('api/Course/GetCertificateList',datas,function  () {
+								if(data.Body.TotalCount > 0) {
+									newList.appendChild(createFragment(data.Body.Items));
+									count++; 
+									mui('#queryList').pullRefresh().endPullupToRefresh(false);
+								} else {
+									mui('#queryList').pullRefresh().endPullupToRefresh(true);
+								} 
+							},function  () {
+								mui('#queryList').pullRefresh().endPullupToRefresh(true);
+							})
 						} else {
 							mui.alert('请填写验证码', '信息补全', '是');
 						}
@@ -212,7 +233,13 @@
 				} else {
 					mui.alert('请填写姓名', '信息补全', '是');
 				}
+			}
+			
+			check.addEventListener('tap', function() {
+				pullupRefresh();
 			})
+		})
+			
 		</script>
 	</body>
 

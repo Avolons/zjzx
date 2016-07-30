@@ -50,7 +50,8 @@
 
 	<body>
 
-		<div class="mui-content">
+		<div class="mui-content" id="pullupRefresh">
+			<div class="mui-scroll">
 			<ul id="get_list">
 				<li>
 					<h5>成功人际关系</h5>
@@ -61,6 +62,7 @@
 					</div>
 				</li>
 			</ul>
+			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
@@ -69,6 +71,7 @@
 				//触发首页的点击事件，凡是需要登录的都要进行验证
 				window.addEventListener('clicked', function(event) {
 					//获得事件参数
+					console.log("1");
 					urlopenwindow(Initialization);
 					//根据id向服务器请求新闻详情
 				});
@@ -84,7 +87,7 @@
 					mui.init({
 						//下拉刷新
 						pullRefresh: {
-							container: '#get_list', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+							container: '#pullupRefresh', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
 							up: {
 								height: 50, //可选.默认50.触发上拉加载拖动距离
 								auto: true, //可选,默认false.自动上拉加载一次
@@ -144,21 +147,21 @@
 									PageSize: 20
 								}
 							});
-							sendAjax('http://192.168.1.112/api/Course/GetMyCourseXinDe', data, function(data) {
-								console.log(data);
+							sendAjax('api/Course/GetMyCourseXinDe', data, function(data) {
+								console.log(JSON.stringify(data)); 
 								if(data.Code == 200) {
 									if(data.Body.TotalCount > 0) {
 										document.getElementById("get_list").appendChild(creatList(data.Body.Items));
 										count++;
-										mui('#get_list').pullRefresh().endPullupToRefresh(true);
+										mui('#pullupRefresh').pullRefresh().endPullupToRefresh(false);
 									} else {
-										mui('#get_list').pullRefresh().endPullupToRefresh(true);
+										mui('#pullupRefresh').pullRefresh().endPullupToRefresh(true);
 									}
 								} else {
 
 								}
 							}, function() {
-								mui('#get_list').pullRefresh().endPullupToRefresh(true);
+								mui('#pullupRefresh').pullRefresh().endPullupToRefresh(true);
 							})
 						}, 500);
 					}
@@ -197,6 +200,7 @@
 						})
 					})
 				}
+				Initialization();
 			})
 		</script>
 	</body>

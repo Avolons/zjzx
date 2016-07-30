@@ -131,7 +131,7 @@
 									PageSize: 20
 								}
 						});
-						sendAjax('http://192.168.1.112/api/System/GetNewsList',data,function (data) {
+						sendAjax('api/System/GetNewsList',data,function (data) {
 							if(data.Body.TotalCount > 0) {
 									newList.appendChild(createFragment(data.Body.Items));
 									count++; 

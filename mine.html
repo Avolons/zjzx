@@ -238,6 +238,11 @@
 			});
 			//单独设定的设置页面
 			document.getElementById("messageNotification").addEventListener('tap',function () {
+				//***************绑定自定义事件
+				var  detailPage = plus.webview.getWebviewById('messageNotification.html');
+				 mui.fire(detailPage,'clicked',{
+					    click:true
+					 });
 				mui.openWindow({
 					url: 'messageNotification.html',
 					show: {
@@ -256,6 +261,7 @@
 						//TODO  by chb 当初这么设计，是为了一个App中有多个模板，目前仅有一个模板的情况下，实际上无需这么复杂
 						//使用父子模板方案打开的页面
 						//获得共用模板组 
+						
 						var template = getTemplate('default'); //getTemplate('default');
 						//alert(template); 
 						//判断是否显示右上角menu图标；

@@ -264,39 +264,148 @@
 		</div>
 		<script type="text/javascript" charset="UTF-8">
 			mui.plusReady(function() {
-				mui.init({
-					pullRefresh: {
-						container: '#search_list', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
-						up: {
-							height: 50, //可选.默认50.触发上拉加载拖动距离
-							auto: true, //可选,默认false.自动上拉加载一次
-							contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
-							contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
-							callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
-						}
-					}
-				});
-				var storage = plus.storage;
+				mui.init();
+
 				//自定义本地存储
-				if(storage.getItem("hist")==null) {
-					var historys = JSON.stringify(["", "", "", ""]);
-					storage.setItem("hist", historys);
-				};
-				//自定义监听input数值变化的函数：valuechange;
-				var mb = document.getElementById("search_hist");
+				var storage = plus.storage;
 				//搜索历史主体部分
-				var list = document.getElementById("search_course");
+				var mb = document.getElementById("search_hist");
 				//搜索结果主体部分
-				var course_list = document.getElementById("search_list");
+				var list = document.getElementById("search_course");
 				//搜索结果课程列表
-				var searchIput = document.getElementById("search");
+				var course_list = document.getElementById("search_list");
 				//input输入框
-				var header = storage.getItem('header');
+				var searchIput = document.getElementById("search");
 				//定义搜索值
 				var values = null;
 				//定义分页数
 				var count = 1;
-				//模拟数据
+
+				//**********定义模板函数 课程显示部分
+				var createFragment = function(courseList) {
+					var fragment = document.createDocumentFragment();
+					var li;
+					for(var i = 0; i < courseList.length; i++) {
+						li = document.createElement('li');
+						li.id = courseList[i].Id;
+						li.innerHTML = "<img   width='40%' data-lazyload=" + courseList[i].Src + " /><div><h1>名称：" + courseList[i].Title + "</h1><h3>简介：" + courseList[i].Introduce + "</h3><h4>￥" + courseList[i].Price + "</h4></div>"
+						fragment.appendChild(li);
+					}
+					return fragment;
+				};
+
+				//*********上拉刷新效果
+				function getsearchlist() {
+					var header = JSON.parse(plus.storage.getItem('header'));
+					var data = JSON.stringify({
+						body: {
+							PageIndex: count,
+							PageSize: 20,
+							Searchstr: values,
+						},
+						Header: header
+					});
+					/*课程搜索ajax*/
+
+				}
+
+				//*************搜索数据函数
+				function noneAndBlock(values) {
+					mb.style.display = "none";
+					//主体部分隐藏
+					for(var i = 3; i > 0; i--) {
+						historys[i].innerHTML = historys[i - 1].innerHTML;
+						//当点击搜索，也就是搜索按钮时，触发历史记录更替效果，从最后开始往前更替，使用父子页面传值，子页面进行ajax请求
+					}
+					historys[0].innerHTML = values;
+					//分页的页码数
+					var header = JSON.parse(plus.storage.getItem('header'));
+					var data = JSON.stringify({
+						body: {
+							PageIndex: count,
+							PageSize: 20,
+							Searchstr: values,
+						},
+						Header: header
+					});
+					sendAjax('api/Course/GetCourseList', data, function(data) {
+						console.log(JSON.stringify(data));
+						course_list.appendChild(createFragment(data.Body.Items));
+					})
+
+					list.style.display = "block";
+				}
+
+				function resetHStyle() {
+					for(var i = 0; i < historys.length; i++) {
+						his_list[i] = historys[i].innerHTML;
+						if(historys[i].innerHTML) {
+							historys[i].style.opacity = 1;
+						}
+					}
+				}
+
+				//*******************重置样式函数
+				function localstyle() {
+					resetHStyle();
+					//进行历史更新后需要再次判断，显示出有内容的li标签
+					storage.setItem("hist", his_list);
+					//重置本地历史
+				}
+
+				//*******************模拟数据，热门搜索
+				function creatHotSearch(list) {
+					var color = ["#85c683", "#de4343", "#883ab2", "#207fc6"];
+					var framat = document.createDocumentFragment();
+					var li;
+					for(var i = 0; i < list.length; i++) {
+						li = document.createElement("li");
+						li.id = list[i].CourseId;
+						li.innerHTML = '<span style="background:' + color[i] + '">' + (i + 1) + '</span><a href="javascript:void(0);">' + list[i].Title + '</a>'
+						framat.appendChild(li);
+					}
+					return framat;
+				}
+
+				//**********热门搜索
+				var hotSearch = document.getElementById("hotSearch");
+				(function() {
+					var header = JSON.parse(plus.storage.getItem('header'));
+					var data = JSON.stringify({
+						Header: header,
+						Body: {
+							PageIndex: 1,
+							PageSize: 4
+						}
+					});
+					sendAjax('api/Course/GetCourseHotsearch', data, function(data) {
+						hotSearch.appendChild(creatHotSearch(data.Body.Items));
+						var hotSearchList = hotSearch.getElementsByTagName('li');
+
+						//*********获取所有热门搜索历史记录
+						for(var i = 0; i < hotSearchList.length; i++) {
+							//热门搜索的点击事件
+							hotSearchList[i].addEventListener('tap', function() {
+								var values = (searchIput.value = this.getElementsByTagName('a')[0].innerText);
+								//封装在外面
+								noneAndBlock(values);
+								//样式重置
+								resetHStyle();
+							})
+						}
+					})
+				})();
+
+				//假设初次本地无存储数据，设置它的存储数据
+				if(storage.getItem("hist") == null) {
+					var historys = JSON.stringify(["", "", "", ""]);
+					storage.setItem("hist", historys);
+				};
+
+				//懒加载
+				mui(document).imageLazyload({
+					placeholder: 'images/60x60.gif'
+				});
 
 				/*var courseList = [{
 					id:'course_165',
@@ -330,103 +439,6 @@
 					price: 200
 				}];*/
 
-				//定义模板函数 课程显示部分
-				var createFragment = function(courseList) {
-					var fragment = document.createDocumentFragment();
-					var li;
-					for(var i = 0; i < courseList.length; i++) {
-						li = document.createElement('li');
-						li.id = courseList[i].Id;
-						li.innerHTML = "<img   width='40%' data-lazyload=" + courseList[i].Src + " /><div><h1>名称：" + courseList[i].Title + "</h1><h3>简介：" + courseList[i].Introduce + "</h3><h4>￥" + courseList[i].Price + "</h4></div>"
-						fragment.appendChild(li);
-					}
-					return fragment;
-				};
-
-				function pullupRefresh() {
-					var header = JSON.parse(plus.storage.getItem('header'));
-					var data = JSON.stringify({
-						body: {
-							PageIndex: count,
-							PageSize: 20,
-							Searchstr: values,
-						},
-						Header: header
-					});
-					/*课程搜索ajax*/
-					sendAjax('http://192.168.1.112/api/Course/GetCourseList', data, function(data) {
-						if(data.Body.TotalCount > 0) {
-							course_list.appendChild(createFragment(data.Body.Items));
-							//懒加载
-							mui(document).imageLazyload({
-								placeholder: 'images/60x60.gif'
-							});
-							count++; //页码增加
-						} else {
-							mui('#search_list').pullRefresh().endPullupToRefresh(true);
-						}
-					}, function() {
-						mui('#search_list').pullRefresh().endPullupToRefresh(true);
-					})
-				}
-				if(mui.os.plus) {
-					setTimeout(function() {
-						mui('#search_list').pullRefresh().pullupLoading();
-					}, 1000);
-				} else {
-					mui('#search_list').pullRefresh().pullupLoading();
-				}
-
-				function noneAndBlock(values) {
-					mb.style.display = "none";
-					//主体部分隐藏
-					for(var i = 3; i > 0; i--) {
-						historys[i].innerHTML = historys[i - 1].innerHTML;
-						//当点击搜索，也就是搜索按钮时，触发历史记录更替效果，从最后开始往前更替，使用父子页面传值，子页面进行ajax请求
-					}
-					historys[0].innerHTML = values;
-					//分页的页码数
-
-					var header = JSON.parse(plus.storage.getItem('header'));
-					var data = JSON.stringify({
-						body: {
-							PageIndex: count,
-							PageSize: 20,
-							Searchstr: values,
-						},
-						Header: header
-					});
-					/*课程搜索ajax*/
-//					sendAjax('http://192.168.1.112/api/Course/GetCourseList', data, function(data) {
-//						course_list.appendChild(createFragment(data.Body.Items));
-//						//懒加载
-//						mui(document).imageLazyload({
-//							placeholder: 'images/60x60.gif'
-//						});
-//						count++; //页码增加
-//					})
-                    pullupRefresh();
-                     
-					list.style.display = "block";
-				}
-
-				function resetHStyle() {
-					for(var i = 0; i < historys.length; i++) {
-						his_list[i] = historys[i].innerHTML;
-						if(historys[i].innerHTML) {
-							historys[i].style.opacity = 1;
-						}
-					}
-				}
-
-				//重置样式函数
-				function localstyle() {
-					resetHStyle();
-					//进行历史更新后需要再次判断，显示出有内容的li标签
-					storage.setItem("hist", his_list);
-					//重置本地历史
-				}
-				
 				//重置样式代码,更改本地记录函数
 				var his_list = storage.getItem("hist").split(",");
 				//将本地储存进行字符串分割，获得数组
@@ -435,7 +447,6 @@
 
 				resetHStyle();
 				//由于本身历史记录是隐藏的，必须初始化时进行判断，得知是否有内容
-
 				for(var i = 0; i < historys.length; i++) {
 					historys[i].addEventListener('tap', function() {
 						var values = (searchIput.value = this.innerText);
@@ -501,45 +512,8 @@
 							historys[i].style.opacity = 0;
 						}
 					};
-				})
+				});
 
-				//  模拟数据，热门搜索
-				function creatHotSearch(list) {
-					var color = ["85c683", "de4343", "883ab2", "207fc6"];
-					var framat = document.createDocumentFragment();
-					var li;
-					for(var i = 0; i < list.length; i++) {
-						li = document.createElement("li");
-						li.id = list[i].CourseId;
-						li.innerHTML = '<span style="background:' + color[i] + '">' + (i + 1) + '</span><a href="javascript:void(0);">' + list[i].Title + '</a>'
-						framat.appendChild(li);
-					}
-					return framat;
-				}
-				var hotSearch = document.getElementById("hotSearch");
-
-				(function() {
-					var header = JSON.parse(plus.storage.getItem('header'));
-					var data = JSON.stringify({
-						Header: header
-					});
-					sendAjax('http://192.168.1.112/api/Course/GetCourseHotsearch', data, function(data) {
-						hotSearch.appendChild(creatHotSearch(Body.hotsearch));
-					})
-				})()
-				//热门搜索列表页最上册dom
-
-				var hotSearchList = hotSearch.getElementsByTagName('li');
-				//获取所有热门搜索历史记录
-				for(var i = 0; i < hotSearchList.length; i++) {
-					hotSearchList[i].addEventListener('tap', function() {
-						var values = (searchIput.value = this.getElementsByTagName('a')[0].innerText);
-						//封装在外面
-						noneAndBlock(values);
-						//样式重置
-						resetHStyle();
-					})
-				}
 				//点击热门，直接返回搜索结果
 				mui('#search_list').on("tap", 'li', function() {
 					var courseid = this.getAttribute('id');

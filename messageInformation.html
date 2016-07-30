@@ -93,7 +93,7 @@
 							},
 							Header:header
 						});
-				sendAjax('http://192.168.1.112/api/User/GetMessageInfo',data,function  (data) {
+				sendAjax('api/User/GetMessageInfo',data,function  (data) {
 					informationWrite(data.Body);
 				})
 		})

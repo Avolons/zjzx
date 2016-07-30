@@ -75,6 +75,7 @@
 	    <p>欢迎激活学习卡</p>
 	</div>
 	<script src="js/mui.min.js"></script>
+	<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="UTF-8">
       	mui.init(); 
       	var submits=document.getElementById("submits");
@@ -83,40 +84,31 @@
       	submits.addEventListener('tap',function  () {
       		//在函数当中对value进行正则匹配
       		var numberData=number.value;
-      		
+      		var header = JSON.parse(plus.storage.getItem('header'));
+      		var data = JSON.stringify({
+								Header: header,
+								Body: {
+									Code:numberData
+								}
+							});
       		//将数据传输到后台ajax，根据返回的数据打开学习卡的具体信息页面
-      		mui.ajax('http://server-name/login.php',{
-				data:{
-					studyCard:'numberData'
-				},
-				dataType:'json',//服务器返回json格式数据
-				type:'post',//HTTP请求类型
-				timeout:10000,//超时时间设置为10秒；
-				success:function(data){
-					//服务器返回响应，根据响应结果，分析是否登录成功；返回的数据类型是url，传递到详情页面，作为地址直接获取所需的静态数据
-					if (data.use==1) {
+      		sendAjax('http://192.168.1.112/api/Course/GetCardInfo',data,function  (data) {
+      			if (data.Body.Cardstate == 1) {
 						mui.openWindow({
 		      			url:'activateLearningCardInformation.html',
 		      			styles:{
 		      				scrollIndicator: "none"
 		      			},
 		      			extras:{
-                         information:data.url
+                         information:data.Body.cardinfo
                           },
 		      		})
-					} else if (data.use==2) {
+					} else if (data.Body.Cardstate==2) {
 						mui.alert('无效的卡密','卡密错误',"确定");
 					}else{
 						mui.alert('该卡密已被使用','卡密错误',"确定");
 					}
-					
-				},
-				error:function(xhr,type,errorThrown){
-					mui.alert('连接失败，请稍后重试','网络错误',"确定");
-				}
-			});
-			
-      		
+      		})
       	})
     </script>
 </body>

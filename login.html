@@ -405,7 +405,7 @@
 								Body:loginInfo 
 						});
 						
-						sendAjax('http://192.168.1.112/api/User/Login',data,function  (data) {
+						sendAjax('api/User/Login',data,function  (data) {
 							if (data.Code==200) {
 								//设置token值
 								header.User.Token=data.Body.Token;

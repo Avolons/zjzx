@@ -20,7 +20,7 @@
 			}
 			
 			.mui-input-row {
-				width: 85%;
+				width: 85%; 
 				float: left;
 			}
 			
@@ -320,7 +320,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav" style="padding: 0  30px;">
 			<div id="search">
-				<span class="mui-icon mui-icon-search"></span>
+				<span class="mui-icon mui-icon-search" style="padding-right: 200px;"></span> 
 			</div>
 			<!--消息按钮-->
 			<span id="message" class="mui-icon mui-icon-email"><i></i></span>
@@ -367,24 +367,24 @@
 				<!--热门课程推荐-->
 				<ul class="mui-table-view mui-grid-view" id="hotCourse">
 					<li class="mui-table-view-cell mui-media mui-col-xs-6">
-						<a href="#">
+						<a href="javascript:void(0);">
 							<img class="mui-media-object" src="images/home/home_new1.png">
 							<div class="mui-media-body">如何做一名优秀的中层干部</div>
 						</a>
 					</li>
 					<li class="mui-table-view-cell mui-media mui-col-xs-6">
-						<a href="#">
+						<a href="javascript:void(0);" >
 							<img class="mui-media-object" src="images/home/home_new2.png">
 							<div class="mui-media-body">客户关系管理</div>
 						</a>
 					</li>
 					<li class="mui-table-view-cell mui-media mui-col-xs-6">
-						<a href="#"><img class="mui-media-object" src="images/home/home_new3.png">
+						<a href="javascript:void(0);"><img class="mui-media-object" src="images/home/home_new3.png">
 							<div class="mui-media-body">向会议要绩效</div>
 						</a>
 					</li>
 					<li class="mui-table-view-cell mui-media mui-col-xs-6">
-						<a href="#">
+						<a href="javascript:void(0);">
 							<img class="mui-media-object" src="images/home/home_new4.png">
 							<div class="mui-media-body">轻松搞定大客户</div>
 						</a>
@@ -424,13 +424,10 @@
 		<script src="js/mui.lazyload.img.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script>
-			//函数开始
-			    mui(document).imageLazyload({
-					placeholder: 'images/home/hot_four.png'
-				});
-				//后期注释
-				$('#moreCourse div').height(parseInt($('#moreCourse>li').width()*0.4/(5/3))-20); 
-			   mui.plusReady(function() {
+				mui(document).imageLazyload({
+							placeholder: 'images/home/hot_four.png' 
+						});
+			    mui.plusReady(function() {
 				mui.init({
 					swipeBack: true, //启用右滑关闭功能
 					//	预加载页面：1.课程搜索页面 2.证书查询页面 3.激活学习卡页面  4.我的任务页面 5.我的考试页面 6.课程信息页面 7.热点新闻目录页 8.热点新闻阅读页面
@@ -508,7 +505,7 @@
 					var texts = fragment.getElementsByTagName('div')[0].getElementsByTagName('p')[0];
 					//列表图片的渲染
 					img.src = data.Src;
-					img.newsid = data.Id;
+					img.id= data.Id;
 					texts.innerText = data.Title;
 					createNewsList(data.newlist, fragment);
 				};
@@ -520,9 +517,9 @@
 					for(var i = 0; i < data.length; i++) {
 						li = document.createElement('li');
 						li.className = 'mui-table-view-cell';
-						li.newsid = data.Id;
-						li.innerHTML = "<span style='background-color:#" + color[i] + ";'>" + (i + 1) + "</span><a href='#'>" + data.Title + "</a>"
-						fragment.appendChild(li);
+						li.id = data[i].Id;
+						li.innerHTML = "<span style='background-color:#" + color[i] + ";'>" + (i + 1) + "</span><a href='#'>" + data[i].Title + "</a>"
+						fragment.appendChild(li); 
 					}
 				}
 				//***********最新课程页面渲染
@@ -536,16 +533,18 @@
 						fragment.appendChild(li);
 					}
 					return fragment;
-				};
-				//热点新闻的渲		
+				}; 
+				
+				
+				
+				
 				//同一加载页面所有资源
 				(function() {
 					var header = JSON.parse(plus.storage.getItem('header'));
 					var data = JSON.stringify({
 						Header: header
 					});
-					console.log(data); 
-					sendAjax('http://192.168.1.112/api/System/GetMainInfo', data, function(data) {
+					sendAjax('api/System/GetMainInfo', data, function(data) {
 
 						messageShow(data.Body.IsSHowReddot);
 						//创建轮播图
@@ -563,19 +562,23 @@
 					var data = JSON.stringify({
 						Header: header
 					});
-					sendAjax('http://192.168.1.112/api/Course/GetNewestCourseList', data, function(data) {
+					sendAjax('api/Course/GetNewestCourseList', data, function(data) {
+						
 						var moreCourse = document.getElementById("moreCourse");
 						//创建最新课程列表
 						moreCourse.appendChild(createNewCourses(data.Body.Items));
-						
-						$('#moreCourse div').height($('#moreCourse li').height()); 
+						 
+						$('#moreCourse div').height(parseInt($('#moreCourse>li').width()*0.4/(5/3))-20); 
+						  
+						//图片懒加载
+						mui(document).imageLazyload({
+							placeholder: 'images/home/hot_four.png' 
+						});
+
 					})
 				})()
 
-				//图片懒加载
-				mui(document).imageLazyload({
-					placeholder: 'images/home/hot_four.png'
-				});
+				
 
 				//为导航栏四个快捷方式添加各自相应的事件
 				var templates = {};
@@ -730,6 +733,7 @@
 				//为轮播图绑定事件，需要预加载课程信息页面
 				$(".mui-slider-group").on("tap", ".mui-slider-item", function() {
 					var id = this.getAttribute('id');
+					var src=this.firstChild.firstChild.src;
 					var detailPage = null;
 					//				  向后台传输自带的id值
 					//获得详情页面
@@ -738,7 +742,8 @@
 					}
 					//触发详情页面的newsId事件
 					mui.fire(detailPage, 'newsId', {
-						id: id
+						id: id,
+						src:src 
 					});
 					//打开详情页面          
 					mui.openWindow({
@@ -748,7 +753,10 @@
 
 				//为大家热搜绑定跳转事件
 				$("#hotCourse").on("tap", "li", function() {
+					
 					var id = this.getAttribute('id');
+					var src=this.querySelectorAll('img')[0].src;
+					console.log(src); 
 					var detailPage = null;
 					//				  向后台传输自带的id值
 					//获得详情页面
@@ -757,7 +765,8 @@
 					}
 					//触发详情页面的newsId事件
 					mui.fire(detailPage, 'newsId', {
-						id: id
+						id: id,
+						src:src
 					});
 					//打开详情页面          
 					mui.openWindow({
@@ -780,7 +789,7 @@
 
 				//为新闻图片绑定点击事件
 				document.getElementById("news_img").addEventListener('tap', function() {
-					var id = this.getAttribute('newsid');
+					var id = this.getAttribute('id');
 					var detailPage = null;
 					//				  向后台传输自带的id值
 					//获得详情页面
@@ -798,8 +807,9 @@
 				})
 
 				//为每条新闻添加点击事件，直接跳转到所需加载的新闻阅读页面
-				$("#news").on("tap", "li", function() {
-					var id = this.getAttribute('newsid');
+				mui("#news").on("tap", "li", function() {
+					var id = this.getAttribute('id');
+					console.log(id);
 					var detailPage = null;
 					//				  向后台传输自带的id值
 					//获得详情页面
@@ -817,9 +827,9 @@
 				})
 
 				//为最新课程绑定事件
-				$("#moreCourse").on("tap", "li", function() {
-					var id = this.getAttribute('id'); 
-					console.log(id);
+				mui("#moreCourse").on("tap", "li", function() {
+					var id = this.id;
+					var src=this.firstChild.src;
 					var detailPage = null;
 					//				  向后台传输自带的id值
 					//获得详情页面
@@ -828,7 +838,8 @@
 					}
 					//触发详情页面的newsId事件
 					mui.fire(detailPage, 'newsId', {
-						id: id
+						id: id,
+						src:src
 					});
 					//打开详情页面          
 					mui.openWindow({
