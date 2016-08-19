@@ -38,7 +38,14 @@
 				background-color: #FFFFFF
 			}
 			
-			.studyCard>li {
+			.studyCard>li {}
+			
+			.studyCard>li>ul {
+				width: 100%;
+				padding: 0;
+			}
+			
+			.studyCard>li>ul>li {
 				list-style: none;
 				height: 35px;
 				border-bottom: 1px solid #e8e8e8;
@@ -199,31 +206,46 @@
 		</header>
 		<div class="mui-content">
 			<ul id="courseIncloud" class="studyCard">
-				<h5>包含课程</h5>
-				<li><a href="javascript:void(0);" class="left">课程编号：</a>
-					<a href="javascript:void(0);" class="right"></a>
-				</li>
-				<li><a href="javascript:void(0);" class="left">课程名称 :</a>
-					<a href="javascript:void(0);" class="right"></a>
-				</li>
-				<li><a href="javascript:void(0);" class="left">学习有效期（天）：</a>
-					<a href="javascript:void(0);" class="right"></a>
+				<li>
+					<ul>
+						<h5>包含课程</h5>
+						<li>
+							<a href="javascript:void(0);" class="left">课程编号：</a>
+							<a href="javascript:void(0);" class="right"></a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" class="left">课程名称 :</a>
+							<a href="javascript:void(0);" class="right"></a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" class="left">学习有效期（天）：</a>
+							<a href="javascript:void(0);" class="right"></a>
+						</li>
+					</ul>
 				</li>
 				<li></li>
 			</ul>
 			<ul id="bookIncloud" class="studyCard">
-				<h5>包含教材</h5>
-				<li><a href="javascript:void(0);" class="left">教材编号 :</a>
-					<a href="javascript:void(0);" class="right"></a>
-				</li>
-				<li><a href="javascript:void(0);" class="left">教材名称 : </a>
-					<a href="javascript:void(0);" class="right"></a>
-				</li>
-				<li><a href="javascript:void(0);" class="left">教材类型 : </a>
-					<a href="javascript:void(0);" class="right"></a>
-				</li>
-				<li><a href="javascript:void(0);" class="left">出版社: </a>
-					<a href="javascript:void(0);" class="right"></a>
+				<li>
+					<ul>
+						<h5>包含教材</h5>
+						<li>
+							<a href="javascript:void(0);" class="left">教材编号 :</a>
+							<a href="javascript:void(0);" class="right"></a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" class="left">教材名称 : </a>
+							<a href="javascript:void(0);" class="right"></a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" class="left">教材类型 : </a>
+							<a href="javascript:void(0);" class="right"></a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" class="left">出版社: </a>
+							<a href="javascript:void(0);" class="right"></a>
+						</li>
+					</ul>
 				</li>
 			</ul>
 
@@ -259,46 +281,51 @@
 		<script type="text/javascript" charset="UTF-8">
 			(function($, doc) {
 				$.plusReady(function() {
-				$.init();
-				//***********数据渲染过程
-				(function  () {
-					var presentWebview = plus.webview.currentWebview();
-					var information = presentWebview.information;
-					    //取出数据对应数组
+					$.init();
+					//***********数据渲染过程
+					(function() {
+						//****当前的webview
+						var presentWebview = plus.webview.currentWebview();
+						
+						var information = presentWebview.information;
+						
+						//取出数据对应数组
 						var courses = document.getElementById("courseIncloud").getElementsByClassName('right');
 						//取出数据对应数组
 						var books = document.getElementById("bookIncloud").getElementsByClassName('right');
-						
-						//获取了数据之后，通过js进行渲染。
-						for (var i = 0; i < courses.length; i++) {
-							courses[i].innerHTML = information.CourseIncloud[i+1];
+
+						//***********使用ajax渲染
+						for(var i = 0; i < courses.length; i++) {
+							courses[i].innerHTML = information.CourseIncloud[i + 1];
 						}
-						
-						for (var i = 0; i < books.length; i++) {
-							books[i].innerHTML = information.BookIncloud[i+1];
+
+						for(var i = 0; i < books.length; i++) {
+							books[i].innerHTML = information.BookIncloud[i + 1];
 						}
-				})()
-					//地区选择插件
+					})()
+					//*******地区选择插件
 					var cityPicker3 = new $.PopPicker({
 						layer: 3
 					});
+					
 					cityPicker3.setData(cityData3);
 					//插件初始化
 					var showCityPickerButton = doc.getElementById('showCityPicker3');
-					//地区
 					var cityResult3 = doc.getElementById('cityResult3');
-					var area_data;
 					var consignee = document.getElementById("pursePerson");
-					var consignee_data;
-					//收货人
-					var content = document.getElementById("content");
-					var content_data;
-					//联系方式
 					var specificAddress = document.getElementById("specificAddress");
-					var specificAddress_data;
+					var content = document.getElementById("content");
+					//地区
+					var area_data;
+					//收货人
+					var consignee_data;
+					//联系方式
+					var content_data;
 					//具体地址，这三个数据都会使用正则匹配
-					//所在地区
-					var local = localStorage;
+					var specificAddress_data;
+					//本地存储
+					var local = plus.storage;
+					//********对所有数据的重置行为
 					local.getItem("consignee_data") ? consignee.value = local.getItem("consignee_data") : null;
 					local.getItem("content_data") ? content.value = local.getItem("content_data") : null;
 					local.getItem("area_data") ? showCityPickerButton.innerText = local.getItem("area_data") : null;
@@ -327,8 +354,8 @@
 					consignee.addEventListener('input', function() {
 						this.onblur = function() {
 							this.onblur = null;
-							var re=new RegExp('^[\\u4e00-\\u9fa5]{0,}$');
-						if (re.test(this.value)) {
+							var re = new RegExp('^[\\u4e00-\\u9fa5]{0,}$');
+							if(re.test(this.value)) {
 								mui.ajax('http://server-name/login.php', {
 									data: {
 										consignee_data: this.value
@@ -342,20 +369,22 @@
 									error: function(xhr, type, errorThrown) {
 										$.alert('请稍后重试', '网络错误', '确定')
 									}
-								});consignee_data = this.value;
-							local.setItem('consignee_data', this.value);
-							}else{
+								});
+								consignee_data = this.value;
+								local.setItem('consignee_data', this.value);
+							} else {
 								$.alert('请输入汉字', '格式错误', '确定');
 							}
-							
+
 						}
 					})
+					
 					content.addEventListener('input', function() {
 						this.onblur = function() {
 							this.onblur = null;
 							var isPhone = /^([0-9]{3,4}-)?[0-9]{7,8}$/;
-	                    var isMob=/^((\+?86)|(\(\+86\)))?(13[012356789][0-9]{8}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8}|1349[0-9]{7})$/;
-						if (isMob.test(this.value)||isPhone.test(this.value)) {
+							var isMob = /^((\+?86)|(\(\+86\)))?(13[012356789][0-9]{8}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8}|1349[0-9]{7})$/;
+							if(isMob.test(this.value) || isPhone.test(this.value)) {
 								mui.ajax('http://server-name/login.php', {
 									data: {
 										content_data: this.value
@@ -369,18 +398,19 @@
 									error: function(xhr, type, errorThrown) {
 										$.alert('请稍后重试', '网络错误', '确定')
 									}
-								});content_data = this.value;
-							local.setItem('content_data', this.value);
-							}else{
+								});
+								content_data = this.value;
+								local.setItem('content_data', this.value);
+							} else {
 								mui.alert('请输入正确的联系方式', '格式错误', '确定')
 							}
-							
+
 						}
 					})
 					specificAddress.addEventListener('input', function() {
 						this.onblur = function() {
 							this.onblur = null;
-							if (this.value) {
+							if(this.value) {
 								$.ajax('http://server-name/login.php', {
 									data: {
 										specificAddress_data: this.value
@@ -414,7 +444,7 @@
 							success: function(data) {
 								var btnArray = ['否', '是'];
 								$.confirm('确认激活学习卡？', '学习卡激活', btnArray, function(e) {
-									if (e.index == 1) {
+									if(e.index == 1) {
 										mui.alert('你成功激活了学习卡', '学习卡激活');
 									} else {
 										mui.alert('你放弃了激活学习卡', '学习卡激活');

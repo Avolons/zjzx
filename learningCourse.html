@@ -135,8 +135,9 @@
 				padding-right: 37px;
 			}
 			/*视屏播放控制*/
-			#myVideo{
-			   width: 100%; 
+			
+			#myVideo {
+				width: 100%;
 			}
 			
 			footer>.mui-icon {
@@ -331,8 +332,8 @@
 			<span class="mui-icon iconfont icon-shoucang" style="color: #acabab;font-size: 25px;" id="collection"></span>
 		</footer>
 		<div class="mui-content">
-			<video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" autoplay="autoplay"  ata-setup="{}" >
-				<source src="http://cdn.theoplayer.com/video/big_buck_bunny/big_buck_bunny_metadata.m3u8" type="application/x-mpegURL"></source>
+			<video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" poster="images/course/logo.jpg" ata-setup="{}">
+				<source src="http://7xpfpu.com2.z0.glb.qiniucdn.com/32c21bb95cb74a929149eb8165d85cfb.m3u8" type="application/x-mpegURL"></source>
 			</video>
 			<ul id="table_one">
 				<li>
@@ -453,8 +454,9 @@
 		<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
 		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
-
 		<script type="text/javascript" charset="UTF-8">
+		    //定义计时器对象。
+			var timesend = null;
 			//**************切换按钮函数
 			function chatAndAnswer(buttons, contens, classNames) {
 				for(var i = 0; i < buttons.length; i++) {
@@ -472,69 +474,106 @@
 					}(i))
 				}
 			}
-		  	//*************时间格式化函数
-				function getNowFormatDate() {
-					var date = new Date();
-					var seperator1 = "-";
-					var seperator2 = ":";
-					var month = date.getMonth() + 1;
-					var strDate = date.getDate();
-					if(month >= 1 && month <= 9) {
-						month = "0" + month;
-					}
-					if(strDate >= 0 && strDate <= 9) {
-						strDate = "0" + strDate;
-					}
-					var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate + " " + date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
-					return currentdate;
+			//*************时间格式化函数
+			function getNowFormatDate() {
+				var date = new Date();
+				var seperator1 = "-";
+				var seperator2 = ":";
+				var month = date.getMonth() + 1;
+				var strDate = date.getDate();
+				if(month >= 1 && month <= 9) {
+					month = "0" + month;
 				}
+				if(strDate >= 0 && strDate <= 9) {
+					strDate = "0" + strDate;
+				}
+				var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate + " " + date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
+				return currentdate;
+			}
 			/**********创建课程列表函数*********/
 			function creatList(courselist) {
-				var famework = "";
+				var famework = document.createDocumentFragment();
+				var li;
 				for(var i = 0; i < courselist.length; i++) {
-					famework += '<li><span class="mui-icon iconfont icon-yousanjiao"></span>' + (i + 1) + '.' + courselist.children[i].Title + '<b>' + courselist.courseList[i].time + '</b></li>'
+					li = document.createElement("li");
+					li.setAttribute('data-src', courselist[i].Src);
+					li.id = courselist[i].Id;
+					li.innerHTML = '<span class="mui-icon iconfont icon-yousanjiao"></span>' + (i + 1) + '.' + courselist[i].Title + '<b>' + courselist[i].PassTime + '分钟</b>'
+					famework.appendChild(li);
 				}
 				return famework;
 			}
-			
+
 			/*********创建我的心得列表*********/
-				function creatgetlist(list) {
-					var frame = document.createDocumentFragment();
-					var li;
-					for(var i = 0; i < list.length; i++) {
-						li = document.createElement("li");
-						li.innerHTML = '<img src=' + list[i].Src + ' /><div class="talkback"><h3>' + list[i].UserName + '</h3><p>' + list[i].Contect + '</p><h6>' + list[i].Time + '</h6>'
-						frame.appendChild(li);
-					}
-					return frame;
+			function creatgetlist(list) {
+				var frame = document.createDocumentFragment();
+				var li;
+				for(var i = 0; i < list.length; i++) {
+					li = document.createElement("li");
+					li.innerHTML = '<img src=' + list[i].Src + ' /><div class="talkback"><h3>' + list[i].UserName + '</h3><p>' + list[i].Contect + '</p><h6>' + list[i].Time + '</h6>'
+					frame.appendChild(li);
 				}
-				
+				return frame;
+			}
+
 			/**********添加我的心得函数************/
-				function creatnewget(src, name, texts, time) {
-					var li = document.createElement("li")
-					li.innerHTML = '<img src=' + src + ' /><div class="talkback"><h3>' + name + '</h3><p>' + texts + '</p><h6>' + time + '</h6>'
-					return li;
-				}
-				
+			function creatnewget(src, name, texts, time) {
+				var li = document.createElement("li")
+				li.innerHTML = '<img src=' + src + ' /><div class="talkback"><h3>' + name + '</h3><p>' + texts + '</p><h6>' + time + '</h6>'
+				return li;
+			}
+
 			//************创建我的讨论回复列表
-				function creatbacklist(list) {
-					var li = "";
-					for(var i = 0; i < list.length; i++) {
-						li += '<img src=' + list[i].imgsrc + ' /><div class="talkback"><h3>' + list[i].name + '</h3><p>' + list[i].p + '</p><div class="time"><h6>' + list[i].time + '</h6><div class="rightback"><span class="mui-icon iconfont icon-xuexi"></span><span  class="answer_two">回答</span></div></div></div>'
-					}
-					return li;
+			function creatbacklist(list) {
+				var li = "";
+				for(var i = 0; i < list.length; i++) {
+					li += '<img src=' + list[i].imgsrc + ' /><div class="talkback"><h3>' + list[i].name + '</h3><p>' + list[i].p + '</p><div class="time"><h6>' + list[i].time + '</h6><div class="rightback"><span class="mui-icon iconfont icon-xuexi"></span><span  class="answer_two">回答</span></div></div></div>'
 				}
-                //**************创建我的讨论一级列表
-				function creattalklist(list) {
-					var frame = document.createDocumentFragment();
-					var li;
-					for(var i = 0; i < list.length; i++) {
-						li = document.createElement("li");
-						li.innerHTML = '<img src=' + list[i].imgsrc + ' /><div class="talkback"><h3>' + list[i].name + '</h3><p>' + list[i].p + '</p><div class="time"><h6>' + list[i].time + '</h6><div class="rightback"><span class="mui-icon iconfont icon-taolun"></span><span>' + list[i].number + '</span><span class="mui-icon iconfont icon-xuexi"></span><span class="answer">回答</span></div></div></div><ul class="callback">' + creatbacklist(list[i].backlist) + '</ul>'
-						frame.appendChild(li);
-					}
-					return frame;
+				return li;
+			}
+			//**************创建我的讨论一级列表
+			function creattalklist(list) {
+				var frame = document.createDocumentFragment();
+				var li;
+				for(var i = 0; i < list.length; i++) {
+					li = document.createElement("li");
+					li.innerHTML = '<img src=' + list[i].imgsrc + ' /><div class="talkback"><h3>' + list[i].name + '</h3><p>' + list[i].p + '</p><div class="time"><h6>' + list[i].time + '</h6><div class="rightback"><span class="mui-icon iconfont icon-taolun"></span><span>' + list[i].number + '</span><span class="mui-icon iconfont icon-xuexi"></span><span class="answer">回答</span></div></div></div><ul class="callback">' + creatbacklist(list[i].backlist) + '</ul>'
+					frame.appendChild(li);
 				}
+				return frame;
+			}
+			//*************视屏播放函数
+			function resetPlayer(player, src, auto, data, header) {
+				player.src({
+					type: "application/x-mpegURL",
+					src: src
+				});
+				//视屏重置
+				player.load();
+				//首先清除计时器
+				clearInterval(timesend);
+				//设置自动播放属性的时候进行播放
+				if(auto) {
+					player.ready(function() {
+						this.play();
+					})
+				};
+				player.on('play', function() {
+					timesend = setInterval(function() {
+						data.Time = player.currentTime();
+						var send_data = JSON.stringify({
+							Body: data,
+							Header: header
+						});
+						sendAjax('api/Course/SaveLearnWare', send_data, function() {
+						})
+					}, 10000);
+				});
+				player.on('pause', function() {
+					clearInterval(timesend);
+				})
+			}
+
 			mui.plusReady(function() {
 				mui.init();
 				/*var courselist = {
@@ -614,11 +653,10 @@
 					number: "3",
 					backlist: []
 				}];*/
+
 				
-				var myPlayer=videojs('#myVideo');
-				
-				myPlayer.enterFullWindow();
-				
+				//浏览器播放对象
+				var myPlayer = videojs('myVideo');
 				//目录页标题
 				var title = document.getElementById("title");
 				//课程列表标题
@@ -628,31 +666,39 @@
 				//我的心得列表
 				var getList = document.getElementById("get_list");
 				//我的讨论列表
-				var talkList=document.getElementById("talk_list");
-				
-//				title.innerHTML = courselist.title;
-				
-//				childTitle.innerHTML = courselist.childTitle;
-//				//获取所需修改的一级二级标题
-//				
-//				table_index.innerHTML += creatList(courselist);
-                 
-                /*******渲染课程目录树结构********/
+				var talkList = document.getElementById("talk_list");
+				//是否允许移动网络下播放
+				var netType = plus.storage.getItem('netType');
+				//是否允许自动播放
+				var autoPlay = plus.storage.getItem('autoPlay');
+
+				var CourseId = null; //课程id
+				var WareId = null; //课件id
+				var SortId = null; //章节id
+				var wareType = 2; //2
+				var RecordId = null; //课程学习记录
+				var Time = null; //当前学习时间
+
+				/*******渲染课程目录树结构********/
 				(function() {
 					//页面打开后获取到所携带的额外参数
 					var thisWbview = plus.webview.currentWebview();
+					//获取到的所有数据；
 					var data = thisWbview.data;
+					CourseId = data.WareId;
+					WareId = data.CourseId;
+					RecordId = data.RecordId;
 					var header = JSON.parse(plus.storage.getItem('header'));
 					var courseList = JSON.stringify({
-						body: {
+						Body: {
 							LearnProcess: data.LearnProcess,
-						    WareId: data.WareId,
-						    Id: data.CourseId
+							WareId: data.WareId,
+							Id: data.CourseId
 						},
 						Header: header,
 					});
-					var getList= JSON.stringify({
-						body: {
+					var getLists = JSON.stringify({
+						Body: {
 							PageIndex: 1,
 							PageSize: 99,
 							CourseId: data.CourseId
@@ -661,16 +707,36 @@
 					});
 					console.log(getList);
 					//课程目录渲染过程
-					sendAjax('api/Course/GetCourseWareTree',courseList,function  (data) {
+					sendAjax('api/Course/GetCourseWareTree', courseList, function(data) {
+						console.log(JSON.stringify(data));
+						//***标题的更改 
+						title.innerHTML = data.Body.Title;
+						//***二级标题的更改
+						childTitle.innerHTML = data.Body.Title;
+						//列表的渲染
+						table_index.appendChild(creatList(data.Body.children));
 
+						mui(table_index).on('tap', 'li', function() {
+							SortId = this.id;
+							var src = this.getAttribute('data-src');
+							console.log(src);
+							var sendData = {
+								CourseId: CourseId,
+								WareId: WareId,
+								SortId: SortId,
+								wareType: 2,
+								RecordId: RecordId,
+								Time:Time
+							};
+							resetPlayer(myPlayer, src, autoPlay, sendData, header);
+						})
 					});
 					//课程我的心得渲染过程
-					sendAjax('api/Course/GetCourseXinDe',getList,function  (data) {
-						console.log(JSON.stringify(data));
+					sendAjax('api/Course/GetCourseXinDe', getLists, function(data) {
 						//*******数据渲染
 						getList.appendChild(creatgetlist(data.Body.Items));
 					})
-				})()
+				})();
 
 				window.addEventListener('newsId', function(event) {
 					//获得事件参数
@@ -686,10 +752,10 @@
 					}, 'json');
 					//根据id向服务器请求课程详情
 				});
-                
-                //*******table页的切换
-				chatAndAnswer($('#table_one>li'), $('#table_one>li>ul'), 'click'); 
-				
+
+				//*******table页的切换
+				chatAndAnswer($('#table_one>li'), $('#table_one>li>ul'), 'click');
+
 				/********控制课程目录的背景颜色间隔*********/
 				(function() {
 					var indexs = document.getElementById("table_index").getElementsByTagName("li");
@@ -703,7 +769,7 @@
 				//***********重写back函数，退出后会关闭整个页面
 				var thiswebview = plus.webview.currentWebview();
 				mui.back = function() {
-					plus.webview.close(thiswebview); 
+					plus.webview.close(thiswebview);
 				}
 				document.getElementById("addCourseGet").addEventListener('click', function(e) {
 					//修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
@@ -720,8 +786,7 @@
 						}
 					})
 				})
-				
-				
+
 				$('.answer_two').on("tap", function(e) {
 					//修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
 					var btnArray = ['取消', '确定'];

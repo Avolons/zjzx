@@ -310,6 +310,17 @@
 				font-size: 13px;
 			}
 			
+			.note textarea {
+				width: 85%;
+				margin-left: 5%;
+				border-radius: 0;
+				padding: 0;
+				height: 50px;
+				text-align: left;
+				font-family: "微软雅黑";
+				font-size: 13px;
+			}
+			
 			.detail {
 				height: 50px;
 			}
@@ -409,6 +420,10 @@
 			.mui-content .showCityPicker3 {
 				display: none;
 			}
+			
+			.mui-content .purseCode {
+				display: none;
+			}
 		</style>
 	</head>
 
@@ -424,7 +439,7 @@
 		</footer>
 		<div class="mui-content">
 			<div class="course">
-				<img src="images/center/center (1).png" id="img" />
+				<img src="images/center/center (1).png" id="Img" />
 				<h5 id="title"></h5>
 				<p><b id="price"></b>
 					<a href="javascript:voide(0);" id="time"></a>
@@ -439,7 +454,7 @@
 						<input name="checkbox" type="checkbox">
 					</div>
 					<div class="mui-input-row mui-checkbox mui-left">
-						<label>中国近代史 </label>
+						<label>中国近代史 </label> 
 						<span>￥200</span>
 						<input name="checkbox" type="checkbox">
 					</div>
@@ -465,11 +480,18 @@
 							<h3>所在地区：</h3><button id='showCityPicker3' class="mui-btn mui-btn-block" type='button'>请填写所在地区</button>
 							<div id='cityResult3' class="ui-alert"></div><span class='showCityPicker3'>√</span>
 						</div>
+						<div class="addresslist">
+							<i>*</i>
+							<h3>邮编</h3>
+							<input type="number" name="" id="zipcode" placeholder="请输入邮编" /><span class="purseCode">√</span>
+						</div>
 						<div class="addresslist  detail">
 							<textarea name="" rows="" cols="" placeholder="请输入具体地址" id="specificAddress"></textarea>
 						</div>
+						<div class="addresslist  note">
+							<textarea name="" rows="" cols="" placeholder="备注" id="purseNote"></textarea>
+						</div>
 					</div>
-					<button type="button" id="submit_address">确认</button>
 				</div>
 				<br />
 				<br />
@@ -480,315 +502,347 @@
 			</div>
 		</div>
 
-		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.picker.js"></script>
 		<script src="js/mui.poppicker.js"></script>
 		<script src="js/city.data.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
 			mui.init();
-			var data = {
-				img: "images/center/center (1).png",
-				title: "高效能人士必修的7堂心理课",
-				time: 265,
-				price: 200,
-				book: [{
-					name: '世界地理教材',
-					price: 200,
-				}, {
-					name: '中国近代史',
-					price: 200,
-				}, {
-					name: '艺术论坛教程',
-					price: 200,
-					onlyReady: true
-				}]
+			//*****空对象，存放订单的所有数据
+			var dataBody = {};
+
+			//****定义一个全局的价格变量
+			var prices = 0;
+
+			var addInformation = document.getElementById("bodys");
+
+			//页面数据列表
+			var purchaseList = {
+				img: document.getElementById("Img"),
+				title: document.getElementById("title"),
+				time: document.getElementById("time"),
+				price: document.getElementById("price"),
+				foot_price: document.getElementById("foot_price"),
+				bookselects: document.getElementById("select")
 			}
-			//创建页面信息
+
+			//**********创建页面信息
 			var createbooks = function(data) {
 				var fragment = document.createDocumentFragment();
 				var div;
-				for (var i = 0; i < data.length; i++) {
+				for(var i = 0; i < data.length; i++) {
 					div = document.createElement('div');
-					if (data[i].onlyReady) {
+					if(data[i].IsBuy == 1) {
 						div.className = 'mui-input-row mui-checkbox mui-left mui-disabled';
-						div.innerHTML = '<label>' + data[i].name + '</label><span>￥' + data[i].price + '</span><input name="checkbox" type="checkbox" disabled="disabled" checked>';
+						div.innerHTML = '<label>' + data[i].Title + '</label><span>￥' + data[i].Price + '</span><input id=' + data[i].Id + ' data-price=' + data[i].Price + ' name="checkbox" type="checkbox" disabled="disabled" checked>';
 					} else {
 						div.className = 'mui-input-row mui-checkbox mui-left';
-						div.innerHTML = '<label>' + data[i].name + '</label><span>￥' + data[i].price + '</span><input name="checkbox" type="checkbox" >';
+						div.innerHTML = '<label>' + data[i].Title + '</label><span>￥' + data[i].Price + '</span><input id=' + data[i].Id + ' data-price=' + data[i].Price + ' name="checkbox" type="checkbox" >';
 					}
 					fragment.appendChild(div);
 				}
 				return fragment;
 			};
-			var prices = data.price;
-			//定义一个全局的价格变量
-			var addInformation = document.getElementById("bodys");
-			var img = document.getElementById("img");
-			var title = document.getElementById("title");
-			var time = document.getElementById("time");
-			var price = document.getElementById("price");
-			var foot_price = document.getElementById("foot_price");
-			var bookselects = document.getElementById("select");
-			//数据渲染
-			bookselects.appendChild(createbooks(data.book));
-			//最后将其注释
-			addInformation.style.display = 'block';
-			img.style.src = data.img;
-			title.innerHTML = data.title;
-			price.innerHTML = "￥" + data.price;
-			time.innerHTML = "购买后" + data.time + "天有效"
-			foot_price.innerHTML = "￥" + data.price;
-			//最后将其注释
-			mui.plusReady(function() {
-				//课程数据的初始化
-				var thisPage = plus.webview.currentWebview();
-				var courseid = thisPage.courseid;
-				//上册目录获取到课程数据
-				mui.getJSON('http://server-name/list.php', {
-					courseid: courseid
-				}, function(data) {
-					//如果拥有教材，显示教材的出现
-					if (data.book) {
-						addInformation.style.display = 'block';
-					}
-					img.style.src = data.img;
-					title.innerHTML = data.title;
-					price.innerHTML = "￥" + data.price;
-					time.innerHTML = "购买后" + data.time + "天有效"
-					foot_price.innerHTML = "￥" + data.price;
-					bookselects.appendChild(createbooks(data.book));
-				});
-				var checkboxs = document.getElementsByName("checkbox");
-				//获取所有的input按钮，添加监听事件
-				for (var i = 0; i < checkboxs.length; i++) {
+
+			//************获取所有的input按钮，添加监听事件,渲染后使用
+			function addInput(checkboxs, prices, footprice) {
+				for(var i = 0; i < checkboxs.length; i++) {
+					//必买的直接加上价格
+					if(checkboxs[i].checked) {
+						prices += parseFloat(this.getAttribute('data-price'));
+						footprice.innerHTML = '￥' + prices;
+					};
 					(function(i) {
 						checkboxs[i].addEventListener('change', function() {
-							if (this.checked) {
-								prices += data.book[i].price;
+							if(this.checked) {
+								//								console.log(prices);
+								prices += parseFloat(this.getAttribute('data-price'));
+								//								console.log(this.getAttribute('data-price'));
+								//								console.log(prices);
 							} else {
-								prices -= data.book[i].price;
-							}
-							foot_price.innerHTML = '￥' + prices;
+								prices -= parseFloat(this.getAttribute('data-price'));
+							};
+							footprice.innerHTML = '￥' + prices;
 							return false;
-						})
-					}(i))
-				}
-				//价格增减的函数判断
+						});
+					}(i));
+				};
+			};
+
+			mui.plusReady(function() {
+				var thisPage = plus.webview.currentWebview();
+				var courseid = thisPage.courseid;
+
+				/***mui自带本地存储***/
+				var local = plus.storage;
+
+				/***数据发送头部***/
+				var header = JSON.parse(local.getItem('header'));
+
+				/***收货地址对象***/
+				var addressList = {
+					cityResult3: document.getElementById('cityResult3'), //三级联动地区选择
+					consignee: document.getElementById("pursePerson"), //收件人
+					content: document.getElementById("content"), //联系方式
+					specificAddress: document.getElementById("specificAddress"), //详细地址
+					zipcode: document.getElementById("zipcode"), //邮编
+					purseNote: document.getElementById("purseNote") //备注
+				};
+
+				/***三个输入框的对勾，输入成功后方可显示***/
+				var show_pursePerson = document.getElementsByClassName('pursePerson')[0];
+				var show_content = document.getElementsByClassName('content')[0];
+				var show_showCityPicker3 = document.getElementsByClassName("showCityPicker3")[0];
+				var show_code = document.getElementsByClassName("purseCode")[0];
+
+				/***需要发送的地址数据***/
+				var addressData = {
+					Name: null, //收货人
+					Address: null, //收货地址
+					Phone: null, //收货电话
+					ZIP: null, //邮编
+					Memo: null //备注
+				};
+
+				//***三级联动插件触发插件
+				var showCityPickerButton = document.getElementById('showCityPicker3');
+
 				//插件初始化
-				var cityPicker3 = new $.PopPicker({
+				var cityPicker3 = new mui.PopPicker({
 					layer: 3
 				});
 				cityPicker3.setData(cityData3);
-				//插件初始化
-				var showCityPickerButton = doc.getElementById('showCityPicker3');
-				//地区
-				var cityResult3 = doc.getElementById('cityResult3');
-				var area_data;
-				var consignee = document.getElementById("pursePerson");
-				var consignee_data;
-				//收货人
-				var content = document.getElementById("content");
-				var content_data;
-				//联系方式
-				var specificAddress = document.getElementById("specificAddress");
-				var specificAddress_data;
-				//具体地址，这三个数据都会使用正则匹配
-				//所在地区
-				var show_pursePerson=document.getElementsByClassName('pursePerson')[0];
-				var show_content=document.getElementsByClassName('content')[0];
-				var show_showCityPicker3=document.getElementsByClassName("showCityPicker3")[0];
-				//3个对勾
-				var local = localStorage;
-				//取出本地存储；
-				local.getItem("consignee_data") && (function() {
-					consignee.value = local.getItem("consignee_data");
-					show_pursePerson.style.display = 'block';
+
+				//课程数据的初始化，闭包显示
+				(function() {
+					//上册目录获取到课程数据
+					var datas = JSON.stringify({
+						Body: {
+							Id: courseid
+						},
+						Header: header
+					});
+					//					console.log(datas);
+					sendAjax('api/Course/GetPayCourseInfo', datas, function(data) {
+						if(data.Code == 200) {
+							console.log(JSON.stringify(data));
+							//判断是否有教材
+							if(data.Body.BookList[0]) {
+								addInformation.style.display = 'block';
+							};
+							//向要传递的额外数据中添加数据，下一个页面所需要的是图片，title，有效期和价格，以及最终的总价；
+							dataBody.imgsrc = data.Body.FrontImage;
+							dataBody.title = data.Body.Title;
+							dataBody.price = data.Body.Price;
+							dataBody.effectivetime = data.Body.Effectivetime;
+							dataBody.courseid=courseid;
+							/*****数据传递结束，开始页面渲染部分******/
+							purchaseList.img.src = data.Body.FrontImage;
+							purchaseList.title.innerHTML = data.Body.Title;
+							purchaseList.price.innerHTML = "￥" + data.Body.Price;
+							purchaseList.time.innerHTML = "购买后" + data.Body.Effectivetime + "天有效"
+							purchaseList.foot_price.innerHTML = "￥" + data.Body.Price;
+							purchaseList.bookselects.appendChild(createbooks(data.Body.BookList));
+							//把地区数据取出存放在此
+							if(data.Body.DeliveryInfo) {
+								addressData = data.Body.DeliveryInfo
+							};
+							//******取出本地存储；闭包
+							(function() {
+								//联系人
+								!!addressData.Name && (function() {
+									addressList.consignee.value = addressData.Name;
+									show_pursePerson.style.display = 'block';
+								}());
+								//联系方式
+								!!addressData.Phone && (function() {
+									addressList.content.value = addressData.Phone;
+									show_content.style.display = 'block';
+								}());
+								//邮编
+								!!addressData.ZIP && (function() {
+									addressList.zipcode.value = addressData.ZIP;
+									show_code.style.display = 'block';
+								}());
+								//备注 
+								!!addressData.Address && (addressList.specificAddress.value = addressData.Address);
+								//详细地址
+								!!addressData.purseNote && (addressList.purseNote.value = addressData.purseNote);
+							}());
+							//全局函数价格 
+							prices = data.Body.Price;
+							var checkboxs = document.getElementsByName("checkbox");
+							/***为所有的checkbox添加事件****/
+							addInput(checkboxs, prices, purchaseList.foot_price);
+						} else {
+							mui.alert(data.Message);
+						}
+					});
 				}());
-				local.getItem("content_data") && (function() {
-					content.value = local.getItem("content_data");
-					show_content.style.display = 'block';
-				}());
-				local.getItem("area_data") && (function() {
-					showCityPickerButton.innerText = local.getItem("area_data");
-					show_showCityPicker3.style.display = 'block';
-				}());
-				local.getItem("specificAddress_data") && (specificAddress.value = local.getItem("specificAddress_data"))
-				//本地存储数据的判断
+
+				//******省市级联动选择
 				showCityPickerButton.addEventListener('tap', function(event) {
 					cityPicker3.show(function(items) {
 						area_data = "" + (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
-						showCityPickerButton.innerText = area_data;
-						local.setItem('area_data', area_data);
 						//更换内容，在页面显示
+						showCityPickerButton.innerText = area_data;
 						show_showCityPicker3.style.display = 'block';
-						mui.ajax('http://server-name/login.php', {
-							data: {
-								areas: area_data
-							},
-							dataType: 'json', //服务器返回json格式数据
-							type: 'post', //HTTP请求类型
-							timeout: 10000, //超时时间设置为10秒；
-							success: function(data) {
-								
-							},
-							error: function(xhr, type, errorThrown) {}
-						});
-						//返回 false 可以阻止选择框的关闭
-						//return false;
+						//直接将数据相加一起渲染
+						addressList.specificAddress.value = area_data + addressList.specificAddress.value;
+						addressData.Memo = addressList.specificAddress.value;
 					});
 				}, false);
-				//选择地区
-				consignee.addEventListener('input', function() {
+
+				//******选择收件人
+				addressList.consignee.addEventListener('input', function() {
 					this.onblur = function() {
 						this.onblur = null;
 						var re = new RegExp('^[\\u4e00-\\u9fa5]{0,}$');
-						if (re.test(this.value)) {
-							mui.ajax('http://server-name/login.php', {
-								data: {
-									consignee_data: this.value
-								},
-								dataType: 'json', //服务器返回json格式数据
-								type: 'post', //HTTP请求类型
-								timeout: 10000, //超时时间设置为10秒；
-								success: function(data) {
-									show_pursePerson.style.display = 'block';
-								},
-								error: function(xhr, type, errorThrown) {
-									mui.alert('请稍后重试', '网络错误', '确定')
-								}
-							});
-							consignee_data = this.value;
-							local.setItem('consignee_data', this.value);
+						if(re.test(this.value)) {
+							addressData.Name = this.value;
+							show_pursePerson.style.display = 'block';
 						} else {
-							mui.alert('请输入汉字', '格式错误', '确定')
+							mui.alert('请输入汉字', '格式错误', '确定');
+							show_pursePerson.style.display = 'none';
 						}
 					}
-				})
-				//选择收件人
-				content.addEventListener('input', function() {
+				});
+
+				//******选择联系方式
+				addressList.content.addEventListener('input', function() {
 					this.onblur = function() {
 						this.onblur = null;
 						var isPhone = /^([0-9]{3,4}-)?[0-9]{7,8}$/;
 						var isMob = /^((\+?86)|(\(\+86\)))?(13[012356789][0-9]{8}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8}|1349[0-9]{7})$/;
-						if (isMob.test(this.value) || isPhone.test(this.value)) {
-							mui.ajax('http://server-name/login.php', {
-								data: {
-									content_data: this.value
-								},
-								dataType: 'json', //服务器返回json格式数据
-								type: 'post', //HTTP请求类型
-								timeout: 10000, //超时时间设置为10秒；
-								success: function(data) {
-									show_content.style.display = 'block';
-								},
-								error: function(xhr, type, errorThrown) {
-									mui.alert('请稍后重试', '网络错误', '确定')
-								}
-							});
-							content_data = this.value;
-							local.setItem('content_data', this.value);
+						if(isMob.test(this.value) || isPhone.test(this.value)) {
+							addressData.Phone = this.value;
+							show_content.style.display = 'block'
 						} else {
-							mui.alert('请输入正确的联系方式', '格式错误', '确定')
+							mui.alert('请输入正确的联系方式', '格式错误', '确定');
+							show_content.style.display = 'none'
 						}
 					}
-				})
-				//选择联系方式
-				specificAddress.addEventListener('input', function() {
+				});
+
+				//******选择邮编
+				addressList.zipcode.addEventListener('input', function() {
 					this.onblur = function() {
 						this.onblur = null;
-						if (this.value) {
-							mui.ajax('http://server-name/login.php', {
-								data: {
-									specificAddress_data: this.value
-								},
-								dataType: 'json', //服务器返回json格式数据
-								type: 'post', //HTTP请求类型
-								timeout: 10000, //超时时间设置为10秒；
-								success: function(data) {
-									
-								},
-								error: function(xhr, type, errorThrown) {
-									mui.alert('请稍后重试', '网络错误', '确定')
-								}
-							});
+						var isCode = /^[1-9][0-9]{5}$/
+						if(isCode.test(this.value)) {
+							addressData.ZIP = this.value;
+							show_code.style.display = 'block';
+						} else {
+							mui.alert('请输入正确的邮编', '格式错误', '确定');
+							show_code.style.display = 'none';
 						}
-						specificAddress_data = this.value;
-						local.setItem('specificAddress_data', this.value);
+					}
+				});
+
+				//******选择详细收件地址
+				addressList.specificAddress.addEventListener('input', function() {
+					this.onblur = function() {
+						this.onblur = null;
+						addressData.Address = this.value;
+					}
+				});
+
+				//******选择备注
+				addressList.purseNote.addEventListener('input', function() {
+					this.onblur = function() {
+						this.onblur = null;
+						addressData.Memo = this.value;
 					}
 				})
-				//选择具体地址
-				
-				document.getElementById("submit_address").addEventListener("tap",function  () {
-					if (show_pursePerson.style.display == 'block') {
-						if (show_content.style.display == 'block') {
-							if (show_showCityPicker3.style.display == 'block') {
-								addconfirm();
-							} else{
-								mui.alert('请确认输入正确的联系方式','补充信息','是');
-							}
-						} else{
-							mui.alert('请确认输入正确的地址','补充信息','是');
-						}
-					} else{
-						mui.alert('请确认输入正确的姓名','补充信息','是');
-					}
-					
-				})
+
 				//信息确认，完全正确才能激活确定订单按钮；
-				
-				function addconfirm () {
-					document.getElementById("confirm").addEventListener('tap', function() {
-						var bookindex=[];
-						//此处最好添加一个最终的价格确认
-						for (var i=0;i<checkboxs;i++) {
-							checkboxs[i].checked&&bookindex.push(i);
-						}
-					mui.ajax('http://server-name/login.php', {
-						data: {
-							area_data: area_data,
-							//收货地区
-							consignee_data: consignee_data,
-							//收货人
-							content_data: content_data,
-							//联系方式
-							specificAddress_data: specificAddress_data,
-							//具体地址
-							price:prices,
-							//价格
-							bookindex:bookindex,
-							//具体书本
-						},
-						dataType: 'json', //服务器返回json格式数据
-						type: 'post', //HTTP请求类型
-						timeout: 10000, //超时时间设置为10秒；
-						success: function(data) {
-							var btnArray = ['否', '是'];
-							mui.confirm('是否确认订单？', '确认订单', btnArray, function(e) {
-								if (e.index == 1) {
-									mui.openWindow({
-										url: 'payment.html',
-										styles: {
-											scrollIndicator: 'none'
-										},
-										extras: {
-											payment: data,
-										}
-									})
+				document.getElementById("confirm").addEventListener('tap', function() {
+					//拥有教材的情况下
+					if(addInformation.style.display == 'block') {
+						if(show_pursePerson.style.display == 'block') {
+							if(show_content.style.display == 'block') {
+								if(show_showCityPicker3.style.display == 'block') {
+									if(show_code.style.display == 'block') {
+
+									} else {
+										return false;
+										mui.alert('请确认输入正确的邮编', '补充信息', '是');
+									}
 								} else {
-									mui.alert('你取消了订单', '订单确认');
-								}
-							})
+									return false;
+									mui.alert('请确认输入正确的联系方式', '补充信息', '是');
+								};
+							} else {
+								return false;
+								mui.alert('请确认输入正确的地址', '补充信息', '是');
+							};
+						} else {
+							return false;
+							mui.alert('请确认输入正确的姓名', '补充信息', '是');
+						};
+					};
+					var booklist = [];
+					//遍历所有的check；
+					var checkboxs = document.getElementsByName("checkbox");
+					for(var i = 0; i < checkboxs.length; i++) {
+						(function(i) {
+							if(checkboxs[i].checked) {
+								booklist.push(checkboxs[i].id);
+							}
+						}(i));
+					};
+					//											console.log(booklist);
+					/***开始发送数据***/
+					var data = JSON.stringify({
+						Body: {
+							CourseId: courseid,
+							BookIds: booklist,
+							OrderType: 0, //购买课程0，单独购买教材1
+							IsBilling: 0, //是否要买票
+							BillingTitle: null, //发票抬头
+							DeliveryInfo: addressData,
 						},
-						error: function(xhr, type, errorThrown) {
-							mui.alert('请稍后重试', '网络错误', '确定');
-						}
+						Header: header
 					});
-				})
-				//确认订单
-				}
-				
+					console.log(data);
+					sendAjax('api/Payment/CreateOrder', data, function(datas) {
+						console.log(datas);
+						if(datas.Code == 200) {
+							//"OrderNo": "sample string 1",订单号
+							//"TotalAmount": 2.0,金额
+							//"resultCode": 3,订单状态
+							//"result_msg": "sample string 4"//订单说明
+							if(datas.Body.resultCode) {
+								purchaseList.foot_price.innerHTML = '￥' + datas.Body.TotalAmount;
+								var btnArray = ['否', '是'];
+								mui.confirm('是否确认订单？', '确认订单', btnArray, function(e) {
+									if(e.index == 1) {
+										mui.openWindow({
+											url: 'payment.html',
+											styles: {
+												scrollIndicator: 'none'
+											},
+											extras: {
+												payment: datas.Body,
+												extraData: dataBody
+											}
+										});
+									} else {
+										mui.alert('你取消了订单', '订单确认');
+									}
+								});
+							} else {
+								mui.alert(datas.Body.result_msg); 
+							}
+						} else {
+							mui.alert(Message);
+						}
+					})
+
+				});
 			});
 		</script>
 	</body>

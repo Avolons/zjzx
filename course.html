@@ -9,7 +9,7 @@
 		<title>course</title>
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
-		<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="libs/easymob-webim-sdk/jquery-1.11.1.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
 			html {
 				height: 100%;
@@ -405,7 +405,7 @@
 				float: left;
 				display: -webkit-box;
 				-webkit-box-pack: justify;
-			-webkit-box-orient: vertical;
+				-webkit-box-orient: vertical;
 			}
 			
 			#courseCenter li div h1 {
@@ -523,10 +523,10 @@
 			<div class="course-nav">
 				<ul id="nav">
 					<li class=" level_one" id="level_one">
-						<a href="javascript:void(0);">全部类别<span class="mui-icon iconfont icon-down-copy-copy"></span></a>
+						<a href="javascript:void(0);" id="one_alltype">全部类别<span class="mui-icon iconfont icon-down-copy-copy"></span></a>
 						<h1>收起</h1>
 						<ul id="nav_two">
-							<li>全部类别
+							<li id="alltype">全部类别
 							</li>
 							<!--<li class="taped">财务管理
 								<div class="nav_three">
@@ -685,7 +685,7 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-		$('#courseCenter div').height(parseInt($('#courseCenter>li').width() * 0.4 / (5 / 3)));
+			$('#courseCenter div').height(parseInt($('#courseCenter>li').width() * 0.4 / (5 / 3)));
 			mui.plusReady(function() {
 				mui.init({
 					preloadPages: [{
@@ -699,27 +699,36 @@
 						container: "#pullrefresh", //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
 						up: {
 							contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
-							auto: true,
+							auto: false,
 							contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
 							callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
 						}
 					}
 				});
 				//***********定义搜索项
-				var ClassId = '全部类别',
+				var ClassId = 0,
 					Coursesort = '最新',
 					Typeclass = '全部类型',
 					Level = '全部'
 					//**定义分页
-				var count = 0;
+				var count = 1;
 				//**课程列表
 				var courses = document.getElementById("courseCenter");
-				//***********创建导航栏
-				var createChiNav = function(navList) {
+				
+				var clicktime=0;
+				
+				//选择全部按钮
+				var selectAll=$('#alltype');
+				
+				//第一导航栏
+				var nav_oneAll=$("#one_alltype");
+			
+
+				var createChiNav = function(data) {
 					var fragment = "";
 					var li;
-					for(var i = 0; i < navList.length; i++) {
-						fragment += "<li>" + navList[i] + "</li>";
+					for(var i = 0; i < data.length; i++) {
+						fragment += "<li class='selectType' id=" + data[i].ClassID + ">" + data[i].ClassName + "</li>";
 					}
 					return fragment;
 				};
@@ -732,13 +741,13 @@
 						if(i == 0) {
 							li.className = 'taped';
 						}
-						li.innerHTML = navList[i].title + '<div class="nav_three"><h1>' + '全部' + navList[i].title + '</h1><ul>' + createChiNav(navList[i].list) + '</ul></div>'
+						li.innerHTML = navList[i].ClassName + '<div class="nav_three "><h1 class="selectType">' + '全部' + navList[i].ClassName + '</h1><ul>' + createChiNav(navList[i].ChindleList) + '</ul></div>'
 						fragment.appendChild(li);
 					}
 					return fragment;
 				};
 
-				//**************8模板渲染，课程列表页面	
+				//**************模板渲染，课程列表页面	
 				var createFragment = function(courseList) {
 					var fragment = document.createDocumentFragment();
 					var li;
@@ -756,62 +765,135 @@
 
 					setTimeout(function() {
 						var header = JSON.parse(plus.storage.getItem('header'));
+						//						console.log(JSON.stringify(header));
 						var data = JSON.stringify({
 							body: {
-								PageIndex: 1,
+								PageIndex: count,
 								PageSize: 20,
-								ClassId: '全部类别',
-								Coursesort: '最新',
-								Typeclass: '全部类型',
-								Level: '全部'
+								ClassId: ClassId,
+								Coursesort: Coursesort,
+								Typeclass: Typeclass,
+								Level: Level
 							},
 							Header: header,
 						});
+						console.log(data);
 						sendAjax('api/Course/GetCourseListByFilter', data, function(data) {
-							if(data.Body.TotalCount > 0) {
+							console.log(JSON.stringify(data));
+							if(data.Body.TotalCount > 0 && data.Body.TotalCount <= 20) {
+								courses.appendChild(createFragment(data.Body.Items));
+								count++;
+								$('#courseCenter div').height(parseInt($('#courseCenter>li').width() * 0.4 / (5 / 3)));
+								mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+							} 
+							else if(data.Body.TotalCount >20){
 								courses.appendChild(createFragment(data.Body.Items));
 								count++;
 								$('#courseCenter div').height(parseInt($('#courseCenter>li').width() * 0.4 / (5 / 3)));
 								mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
-							} else {
+							}
+							else {
 								mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
 							}
 
 						}, function() {
 							mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
 						})
-					}, 1000);
-				}
+					}, 500);
+				}; 
 
-				var nav_list = [{
-						title: "财务管理",
-						list: ["全部", "采购管理", "金融资本", "市场营销", "市场营销", "销售类"]
-					}, {
-						title: "个人发展规划",
-						list: ["全部", "人际关系", "创业讲堂", "口才技巧", "人脉管理", "自我提升"]
-					}, {
-						title: "国学讲座",
-						list: ["全部", "百家讲坛", "中国文化", "孙子兵法"]
-					}, {
-						title: "领导艺术",
-						list: ["全部", "员工管理", "处世技巧", "目标结果", "技能提升", "职场必备", "管理类", "团队管理类"]
-					}, {
-						title: "情绪管理专家",
-						list: ["全部", "自我情绪", "员工情绪", "情绪专家"]
-					}, {
-						title: "商务礼仪",
-						list: ["全部", "礼仪作用", "握手礼仪", "仪表礼仪", "举止礼仪", "谈吐礼仪", "交谈礼仪", "会面礼仪", "西餐礼仪", "电话礼仪", "传真礼仪", "国外礼仪"]
-					}, {
-						title: "人力资源",
-						list: ["全部", "员工培训", "人力资本", "薪酬管理", "人力资源管控"]
-					}, {
-						title: "生产管理",
-						list: ["供应管理", "成本管理", "管理实践"]
-					}]
-					//定义导航栏伪数据
+				window.addEventListener('clicked', function(event) {
+					//获得事件参数
+					
+					if(clicktime==0) {
+						clicktime++;
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+						
+						var header = JSON.parse(plus.storage.getItem('header'));
+						var data = JSON.stringify({
+							Header: header,
+						});
+						sendAjax('api/Course/GetSortList', data, function(datas) {
+//							console.log(JSON.stringify(datas));
+							document.getElementById("nav_two").appendChild(createNav(datas.Body.Items));
+							
+							$('.selectType').on('tap', function() { 
+//								console.log(1);
+								count=1;
+								ClassId = parseInt($(this).attr('id'));
+//								console.log(ClassId);
+								courses.innerHTML='';
+								setTimeout(function() {
+									mui('#pullrefresh').pullRefresh().pullupLoading();
+								}, 100);
+							});
+							
+							
+							selectAll.on('tap',function  () {
+								count=1;
+								ClassId=0;
+								nav_oneAll.html('全部分类' + '<span class="mui-icon iconfont icon-down-copy-copy"></span>');
+								courses.innerHTML='';
+								setTimeout(function() {
+									mui('#pullrefresh').pullRefresh().pullupLoading();
+								}, 100);
+							})
 
-				document.getElementById("nav_two").appendChild(createNav(nav_list));
+							var mask = mui.createMask(function() {
+								$(".level_one").removeClass('show');
+							});
+							//***********常规一级导航栏点击事件
+							$(".level_one").on("tap", function() {
+									if($(this).hasClass("show")) {
+										$(this).removeClass("show");
+										mask.close();
+									} else {
+										$(this).addClass("show").siblings().removeClass("show");
+										mask.show();
+									}
+								})
+								//点击普通导航栏一级列表切换class类并且移除同类型其他标签的class类
+							$(".level_one>ul>li").on("tap", function() {
+								if($(this).parent().parent()[0] != $(".level_one>ul>li").parents().children(".level_one")[0]) {
+									$(this).parents(".level_one").children("a").html($(this).html() + '<span class="mui-icon iconfont icon-down-copy-copy"></span>');
+									$(this).addClass("select").siblings().removeClass("select");
+									mask.close();
+									courses.innerHTML = '';
+									setTimeout(function() {
+										mui('#pullrefresh').pullRefresh().pullupLoading();
+									}, 100);
+									return false;
+								}
+							})
 
+							//点击导航栏二级列表进行class类的切换，并且通过事件冒泡，关闭标签，使用判断，隔离开第一个与众不同的标签,进行列表内容的切换
+							$("#level_one>ul>li").on("tap", function() {
+									if($(this)[0] == $("#level_one>ul>li")[0]) {
+										$("#level_one").removeClass("show");
+										mask.close();
+										return false;
+									} else {
+										$(this).addClass("taped").siblings().removeClass("taped");
+										return false;
+									}
+								})
+								//特殊导航栏二级列表点击进行class类的切换，阻止冒泡，防止关闭标签
+							$("#level_one>ul>li>div>ul>li").on("tap", function() {
+								$(this).toggleClass("checked").siblings().removeClass("checked");
+								$(this).parents(".level_one").children("a").html($(this).html() + '<span class="mui-icon iconfont icon-down-copy-copy"></span>');
+								$(this).parents(".level_one").removeClass("show");
+								mask.close();
+								//关闭遮罩
+								//清空数据
+
+							})
+
+						})
+					};
+					//根据id向服务器请求新闻详情
+				});
+
+				/*
 				//对课程列表使上拉加载
 				var courseList = [{
 					id: "course_118",
@@ -868,6 +950,7 @@
 					introduce: "成功人士的五项自我管理成功人",
 					price: 200
 				}];
+				**/
 
 				//搜索事件，由于搜索页面已经经过初始化
 				document.getElementById("search").addEventListener("tap", function() {
@@ -889,62 +972,12 @@
 					})
 				});
 
-				var mask = mui.createMask(function() {
-					$(".level_one").removeClass('show');
-				});
-				$(".level_one").on("tap", function() {
-						if($(this).hasClass("show")) {
-							$(this).removeClass("show");
-							mask.close();
-						} else {
-							$(this).addClass("show").siblings().removeClass("show");
-							mask.show();
-						}
-					})
-					//点击导航栏一级列表切换class类并且移除同类型其他标签的class类
-				$(".level_one>ul>li").on("tap", function() {
-					if($(this).parent().parent()[0] != $(".level_one>ul>li").parents().children(".level_one")[0]) {
-						$(this).parents(".level_one").children("a").html($(this).html() + '<span class="mui-icon iconfont icon-down-copy-copy"></span>');
-						$(this).addClass("select").siblings().removeClass("select");
-						mask.close();
-						courses.innerHTML = '';
-						setTimeout(function() {
-							mui('#pullrefresh').pullRefresh().pullupLoading();
-						}, 300);
-						return false;
-					}
-				})
-
-				//点击导航栏二级列表进行class类的切换，并且通过事件冒泡，关闭标签，使用判断，隔离开第一个与众不同的标签,进行列表内容的切换
-				$("#level_one>ul>li").on("tap", function() {
-						if($(this)[0] == $("#level_one>ul>li")[0]) {
-							$("#level_one").removeClass("show");
-							mask.close();
-							return false;
-						} else {
-							$(this).addClass("taped").siblings().removeClass("taped");
-							return false;
-						}
-					})
-					//特殊导航栏二级列表点击进行class类的切换，阻止冒泡，防止关闭标签
-				$("#level_one>ul>li>div>ul>li").on("tap", function() {
-					$(this).toggleClass("checked").siblings().removeClass("checked");
-					$(this).parents(".level_one").children("a").html($(this).html() + '<span class="mui-icon iconfont icon-down-copy-copy"></span>');
-					$(this).parents(".level_one").removeClass("show");
-					mask.close();
-					//关闭遮罩
-					courses.innerHTML = '';
-					//清空数据
-					setTimeout(function() {
-						mui('#pullrefresh').pullRefresh().pullupLoading();
-					}, 300);
-				})
 				var detailPage = null;
 				//添加列表项的点击事件
 				mui('#courseCenter').on('tap', 'li', function(e) {
 					var courseid = this.getAttribute('id');
 					var id = this.id;
-					var src=this.firstChild.src;
+					var src = this.firstChild.src;
 					//向后台传输自带的id值,将id值传递进去
 					var detailPage = null;
 					//				  向后台传输自带的id值
@@ -955,12 +988,12 @@
 					//触发详情页面的newsId事件
 					mui.fire(detailPage, 'newsId', {
 						id: courseid,
-						src:src 
+						src: src
 					});
 					//打开详情页面          
 					mui.openWindow({
 						id: 'courseInformation.html'
-					}); 
+					});
 				});
 			})
 		</script>

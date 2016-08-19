@@ -204,12 +204,13 @@
 				color: #E93F32;
 			}
 			
-			footer b:nth-of-type(3) {
+			#btn_buy {
 				float: right;
 				height: 42px;
 				padding: 0 13px;
 				color: #FFFFFF;
-				background-color: #E93F32
+				background-color: #E93F32;
+				font-weight: 500;
 			}
 			
 			.studyCard {
@@ -260,45 +261,265 @@
 			<div class=" mui-input-row  mui-radio mui-left">
 				<span></span>
 				<label>支付宝支付</label>
-				<input name="radio1" type="radio" value="alipay" checked="true">
+				<input id="ALI_APP" name="radio1" type="radio" value="alipay" checked="true">
 			</div>
 			<div class="mui-input-row mui-radio mui-left" style="margin-bottom: 70px;">
 				<span></span>
 				<label>微信支付</label>
-				<input name="radio1" type="radio" value="weixin">
+				<input id="WX_APP" name="radio1" type="radio" value="weixin">
 			</div>
 		</div>
 		<footer>
 			<b>应付金额:</b>
 			<b id="foot_price"></b>
-			<b>确认并付款</b>
+			<button type="button" id="btn_buy">确认并付款</button>
 		</footer>
 		<script src="js/mui.min.js"></script>
+		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
-			mui.init();
-			var data = {
-				img: "images/center/center (1).png",
-				title: "高效能人士必修的7堂心理课",
-				time: 265,
-				price: 200,
-				book: {
-					number: 'jc5456',
-					name: '世界地理',
-					type: '高级教材',
-					shop: '中国国家出版社'
-				}
-			}
-			var img = document.getElementById("img");
-			var title = document.getElementById("title");
-			var time = document.getElementById("time");
-			var price = document.getElementById("price");
-			var foot_price = document.getElementById("foot_price");
-			img.style.src = data.img;
-			title.innerHTML = data.title;
-			price.innerHTML = "￥" + data.price;
-			time.innerHTML = "购买后" + data.time + "天有效"
-			foot_price.innerHTML = "￥" + data.price;
-			//以上为教程的数据渲染部分，以下为假设拥有教材的部分
+			mui.plusReady(function() {
+
+				mui.init();
+				//**********变量申明
+				//********支付宝支付
+				var ALI_APP = document.getElementById("ALI_APP");
+				//********微信支付
+				var WX_APP = document.getElementById("WX_APP");
+				//**图片
+				var img = document.getElementById("img");
+				//**标题
+				var title = document.getElementById("title");
+				//**时间
+				var time = document.getElementById("time");
+				//**价格
+				var price = document.getElementById("price");
+				//**底部价格
+				var foot_price = document.getElementById("foot_price");
+				//**支付按钮
+				var btn_buy = document.getElementById("btn_buy");
+				//**支付状态id
+				var _appid = null;
+				//支付通道
+				var channels = null;
+				//等待框
+				var w = null;
+
+				var thisWebview = plus.webview.currentWebview();
+				//上个页面所附带的课程信息属性
+				var extraData = thisWebview.extraData;//courseid
+				//上个页面所附带的支付数据
+				var payData = thisWebview.payment;
+
+				//获取支付通道列表
+				plus.payment.getChannels(function(s) {
+					//返回支付通道列表
+					channels = s;
+				}, function(e) {
+					alert("获取支付渠道信权限失败:" + e.message);
+				});
+
+				function getPayChannel(bc_channel) {
+					var dc_channel_id = '';
+					switch(bc_channel) {
+						case 'ALI_APP':
+							dc_channel_id = 'alipay';
+							break;
+						case 'WX_APP':
+							dc_channel_id = 'wxpay';
+							break;
+						default:
+							break;
+					}
+
+					for(var i in channels) {
+						if(channels[i].id == dc_channel_id && checkServices(channels[i])) {
+							return channels[i];
+							//返回具体点击的支付程序
+						}
+					}
+					return null;
+				};
+
+				//*****支付服务的检测
+				function checkServices(pc) {
+					if(!pc.serviceReady) {
+						var txt = null;
+						switch(pc.id) {
+							case "alipay":
+								txt = "检测到系统未安装“支付宝快捷支付服务”，无法完成支付操作，是否立即安装？";
+								break;
+							default:
+								txt = "系统未安装“" + pc.description + "”服务，无法完成支付，是否立即安装？";
+								break;
+						}
+						plus.nativeUI.confirm(txt, function(e) {
+							if(e.index == 0) {
+								pc.installService();
+							}
+						}, pc.description);
+						return false;
+					}
+					return true;
+				};
+
+				/****页面渲染开始*****/
+				(function() {
+					img.src = extraData.imgsrc;
+					title.innerHTML = extraData.title;
+					price.innerHTML = "￥" + extraData.price;
+					time.innerHTML = "购买后" + extraData.effectivetime + "天有效"
+					foot_price.innerHTML = "￥" + payData.TotalAmount;
+				}());
+
+				//获取支付id
+				btn_buy.addEventListener('tap', function() {
+					//appid赋值
+					ALI_APP.checked ? _appid = 0 : _appid = 2;
+					//支付类型
+					var bc_channel = ALI_APP.checked ? 'ALI_APP' : 'WX_APP';
+					var header = JSON.parse(plus.storage.getItem('header'));
+					var data = JSON.stringify({
+						Body: {
+							OrderNo: payData.OrderNo,
+							PayMode: _appid
+						},
+						Header:header
+					});
+					//原生等待框，防止多次点击；
+					if(w) {
+						return;
+					};
+					//出现原生等待框；
+					w = plus.nativeUI.showWaiting();
+					//发送数据请求；
+					console.log(data);
+					sendAjax('api/Payment/GetTOPayUnifiedorderInfo', data, function(datas) {
+						console.log(JSON.stringify(datas));
+							//等待框关闭
+							w.close();
+							w = null;
+							//调动支付数据
+							var paySrc = '';
+							if(datas.Code == 200) {
+								if(datas.Body.resultCode == 1) {
+									var payChannel = getPayChannel(bc_channel);
+									if(payChannel) {
+										//等于支付宝的时候
+										if(payChannel.id === 'alipay') {
+											paySrc = datas.Body.AliPayRes.result;
+											//等于微信的时候
+										} else if(payChannel.id === 'wxpay') {
+											//微信数据空集
+											var statement = {};
+											statement.appid = datas.Body.WxPayRes.appid;
+											statement.noncestr = datas.Body.WxPayRes.nonce_str;
+											statement.package = datas.Body.WxPayRes.package;
+											statement.partnerid = datas.Body.WxPayRes.partner_id;
+											statement.prepayid = datas.Body.WxPayRes.prepay_id;
+											statement.timestamp = parseInt(datas.Body.WxPayRes.timestamp);
+											statement.sign = datas.Body.WxPayRes.pay_sign;
+											paySrc = JSON.stringify(statement);
+										};
+										console.log(paySrc);
+										/*
+					void plus.payment.request( channel, statement, successCB, errorCB );
+					说明：
+　　　                                                调用指定的支付通道进行支付操作，其中statement包含支付操作的相关信息，支付模块将弹出支付界面供用户进行支付信息的输入确认操作。用户支付操作成功后通过successCB回调返回支付操作结果，支付操作失败则通过errorCB回调返回。 
+					参数：
+					channel: ( PaymentChannel ) 必选 支付通道
+					指定支付操作的通道，通过getChannels接口获取。
+					statement: ( String | JSON | OrderStatementIAP ) 必选 支付订单信息
+					支付订单信息，由支付通道定义的数据格式，通常是由业务服务器生成或向支付服务器获取，是经过加密的字符串信息。
+					successCB: ( PaymentSuccessCallback ) 必选 获取支付通道成功回调函数
+					获取支付通道列表成功时的回调函数，用于返回终端支持的支付通道列表。
+					errorCB: ( PaymentErrorCallback ) 可选 获取支付通道失败回调函数
+					获取支付通道列表失败时的回调函数，用于返回错误信息。
+					*/
+										plus.payment.request(payChannel, paySrc, function(result) {
+											mui.alert('支付成功');
+											setTimeout(function  () {
+												var detailPage = null;
+											//				  向后台传输自带的id值
+											//获得详情页面
+											if(!detailPage) {
+												detailPage = plus.webview.getWebviewById('courseInformation.html');
+											}
+											//触发详情页面的newsId事件
+											mui.fire(detailPage, 'newsId', {
+												id: extraData.courseid,
+												src:extraData.imgsrc
+											});
+											//打开详情页面          
+											mui.openWindow({
+												id: 'courseInformation.html'
+											}); 
+											},100);
+											
+										}, function(e) {
+											mui.alert('支付失败,错误码:' + e.code + ';' + e.message);
+											
+										});
+										//为银联的时候
+									};
+								} else {
+									console.log(1);
+									mui.alert(datas.Body.result_msg); 
+								}
+							} else {
+								
+								mui.alert(datas.Message);
+							}
+						}, function() {
+							w.close();
+							w = null;
+						})
+						//					console.log(_appid);
+				})
+
+//				function beecloudPay(bcChannel) {
+//					var _appid = bcChannel == "UN_WEB" ? "c37d661d-7e61-49ea-96a5-68c34e83db3b" : "44f01a13-965f-4b27-ba9f-da678b47f3f5"
+//						/*
+//						 * 构建支付参数
+//						 * 
+//						 * app_id: BeeCloud控制台上创建的APP的appid，必填 
+//						 * title: 订单标题，32个字节，最长支持16个汉字；必填
+//						 * total_fee: 支付金额，以分为单位，大于0的整数，必填
+//						 * bill_no: 订单号，8~32位数字和/或字母组合,确保在商户系统中唯一，必填
+//						 * optional: 扩展参数,可以传入任意数量的key/value对来补充对业务逻辑的需求;此参数会在webhook回调中返回; 选填
+//						 * bill_timeout: 订单失效时间,必须为非零正整数，单位为秒，必须大于360。选填 
+//						 */
+//					var payData = {
+//						app_id: _appid,
+//						channel: bcChannel,
+//						title: "DCloud项目捐赠",
+//						total_fee: document.getElementById('total').value * 100,
+//						bill_no: beecloud.genBillNo(),
+//						optional: {
+//							'uerId': 'beecloud',
+//							'phone': '4006280728'
+//						},
+//						bill_timeout: 360,
+//						return_url: "http://www.dcloud.io/demo/pay" //wap支付成功后的回跳地址
+//					};
+//					/*
+//					 *  发起支付
+//					 *  payData: 支付参数
+//					 *  cbsuccess: 支付成功回调
+//					 *  cberror: 支付失败回调
+//					 */
+//					console.log('doPay1: ' + JSON.stringify(payData));
+//					beecloud.payReq(payData, function(result) {
+//						document.getElementById("status").innerHTML = 'success';
+//						document.getElementById("status").style.color = 'green'
+//						document.getElementById("status_msg").innerHTML = "-------- 支付成功 --------" + "\n感谢您的支持,我们会继续努力完善产品";
+//						console.log(result);
+//					}, function(e) {
+//						document.getElementById("status").innerHTML = 'failed';
+//						document.getElementById("status").style.color = 'red'
+//						document.getElementById("status_msg").innerHTML = "-------- 支付失败 --------\n" + "错误码：" + e.code + '\n' + e.message;
+//					});
+//				}
+			})
 		</script>
 	</body>
 

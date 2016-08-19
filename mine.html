@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -66,14 +65,38 @@
 			.lists {
 				margin-bottom: 10px;
 			}
+			/*登陆按钮*/
+			#list .header_out .btn_login{
+				width: 120px;
+				margin: 0 auto;
+				margin-top:22px;
+				display: block;
+				border-radius: 0;
+				font-size: 16px;
+				color:#bdbdbd;
+				padding:3px 0;
+				border: none;
+				border: 1px solid #bdbdbd;
+			}
+			#list .header_out .btn_unlogin{
+				width: 120px;	
+				margin: 0 auto;
+				margin-top:22px;
+				display: block;
+				border-radius: 0;
+				font-size: 14px;
+				color:#bdbdbd;
+				padding:3px 0;
+				border: none;
+			}
 		</style>
 	</head>
 
 	<body>
 		<div class="mui-content" id="list">
 			<div class="header_out" style="padding: 28px 0 31px 0;background-image: url(images/home/bc.jpg);height: 190px;">
-				<img src="images/water.jpg" style="width: 86px;height: 86px;border-radius: 50%;display: block;margin: 0 auto;" />
-				<button type="button" class="mui-btn  mui-btn-outlined" style="width: 120px;margin: 0 auto;margin-top:22px;display: block;border-radius: 0;font-size: 16px;color:#bdbdbd;padding:3px 0;border: none;border: 1px solid #bdbdbd;">点击登录</button>
+				<img src="images/water.jpg" id="avator" style="width: 86px;height: 86px;border-radius: 50%;display: block;margin: 0 auto;" />
+				<button type="button" id="btn_login" class="mui-btn   mui-btn-outlined btn_login" >点击登录</button>
 			</div>
 			<ul class="mui-table-view mui-grid-view mui-grid-9">
 				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" id="certificateQuery" data-href="certificateQuery.html">
@@ -106,7 +129,7 @@
 				<li class="mui-table-view-cell" id="myTask" data-href="activateLearningCard.html">
 					<span class="mui-icon iconfont icon-renwu" style="font-size: 23px;color: #56a4ee;"></span>
 					<a class="mui-navigate-right">
-					            激活学习卡
+			            激活学习卡
 					</a>
 				</li>
 				<li class="mui-table-view-cell" id="myDicussion" data-href="myDiscussion.html">
@@ -138,12 +161,112 @@
 				</li>
 			</ul>
 		</div>
+		<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/app.js"></script>
 		<script>
+		/*
+		 页面集成click自定义出发事件，在被点击是触发，检测是否处于用户登录状态，登陆状态时切换头像和登陆按钮，假设处于非登陆状态，则使得登陆按钮可点击
+		 * */
 			mui.init({
 				swipeBack: true, //启用右滑关闭功能
 			});
+            //****登陆按钮
+			var btn_login=$('#btn_login');
+			
+			//****用户头像
+			var avator=document.getElementById("avator");
+			
+			mui.plusReady(function  () {
+				
+			//************监听自定义事件，来自主页面的定义，用于检测是否处于用户登陆状态
+			window.addEventListener('clicked', function(event) {
+					//****获得事件参数
+					setTimeout(function() {
+						//清除tap事件，防止每次都进行事件绑定，由于dom2级是可以重复绑定事件的
+						btn_login.off("tap"); 
+						/*如果可以检测到用户的token，则表示处于登陆状态，此时应当是btn按钮转换格式*/
+						if (JSON.parse(plus.storage.getItem('header')).User.Token) {
+							btn_login.removeClass('btn_login');
+							btn_login.addClass('btn_unlogin');
+							avator.src=(plus.storage.getItem('Pic'));
+							btn_login.text(plus.storage.getItem('UserName'));
+						}else{
+//							console.log("1");
+							//非异步操作一般不需要使用事件驱动,回调函数机制
+							btn_login.addClass('btn_login');
+							
+							btn_login.removeClass('btn_unlogin');
+							
+							btn_login.text('点击登陆');
+							
+							avator.src='images/water.jpg';
+							
+							btn_login.on('tap',function  (e) { 
+								urlopenwindow(function  () {
+									window.addEventListener('token', function(event) {
+//										console.log("1"); 
+										//获得事件参数
+										btn_login.removeClass('btn_login',function  () {
+											btn_login.addClass('btn_unlogin',function  () {
+												btn_login.text(plus.storage.getItem('UserName'));
+											});
+										});
+										//
+										btn_login.off('tap');
+									});
+								});
+								return false;
+							})
+						}
+					}, 10);
+					//根据id向服务器请求新闻详情
+			});
+			
+			window.addEventListener('token', function(event) {
+				console.log(1);
+					//获得事件参数
+					//****获得事件参数
+					setTimeout(function() {
+						//清除tap事件，防止每次都进行事件绑定，由于dom2级是可以重复绑定事件的
+						btn_login.off("tap"); 
+						/*如果可以检测到用户的token，则表示处于登陆状态，此时应当是btn按钮转换格式*/
+						if (JSON.parse(plus.storage.getItem('header')).User.Token) {
+							btn_login.removeClass('btn_login');
+							btn_login.addClass('btn_unlogin');
+							btn_login.text(plus.storage.getItem('UserName'));
+						}else{
+//							console.log("1");
+							//非异步操作一般不需要使用事件驱动,回调函数机制
+							btn_login.addClass('btn_login');
+							
+							btn_login.removeClass('btn_unlogin');
+							
+							btn_login.text('点击登陆');
+							
+							btn_login.on('tap',function  (e) {
+								urlopenwindow(function  () {
+									window.addEventListener('token', function(event) {
+//										console.log("1"); 
+										//获得事件参数
+										btn_login.removeClass('btn_login',function  () {
+											btn_login.addClass('btn_unlogin',function  () {
+												btn_login.text(plus.storage.getItem('UserName'));
+											});
+										});
+										//
+										btn_login.off('tap');
+									});
+								});
+								return false;
+							})
+						}
+					}, 10);
+					//根据id向服务器请求新闻详情
+				});
+			
+			
 			var aniShow = "pop-in";
 			//只有ios支持的功能需要在Android平台隐藏；
 			if (mui.os.android) {
@@ -228,6 +351,8 @@
 			mui.plusReady(function() {
 				initTemplates();
 			});
+			
+			//*******设置页面的单独打开
 			document.getElementById("setting").addEventListener("tap", function() {
 				mui.openWindow({
 					url: 'setting.html',
@@ -236,7 +361,8 @@
 					}
 				})
 			});
-			//单独设定的设置页面
+			
+			//********我的消息页面单独设定的设置页面
 			document.getElementById("messageNotification").addEventListener('tap',function () {
 				//***************绑定自定义事件
 				var  detailPage = plus.webview.getWebviewById('messageNotification.html');
@@ -251,21 +377,16 @@
 				})
 			})
 			
+			
 			mui('#list').on('tap', 'li', function() {
+				//********不为消息通知的情况
 				if (this != document.getElementById("list").getElementsByTagName('li')[3]) {
 					var id = this.getAttribute('data-href');
+					//*********不为设置页面的情况下
 					if (id != "setting.html") {
-						//获得所设置的href值
 						var href = id;
-						//不使用父子模板方案的页面
-						//TODO  by chb 当初这么设计，是为了一个App中有多个模板，目前仅有一个模板的情况下，实际上无需这么复杂
-						//使用父子模板方案打开的页面
-						//获得共用模板组 
-						
 						var template = getTemplate('default'); //getTemplate('default');
 						//alert(template); 
-						//判断是否显示右上角menu图标；
-						//获得共用父模板
 						var headerWebview = template.header;
 						//获得共用子webview
 						var contentWebview = template.content;
@@ -281,6 +402,10 @@
 							if (!template.loaded) {
 								if (contentWebview.getURL() != this.href) {
 									contentWebview.loadURL(this.href);
+									//通知子页面被点击；
+									mui.fire(contentWebview,'clicked',{
+									    click:true
+									 });
 								} else {
 									reload = false;
 								}
@@ -293,6 +418,8 @@
 					}
 				}
 			});
+			})
+			
 		</script>
 	</body>
 

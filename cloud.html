@@ -31,7 +31,7 @@
 				margin: 0;
 				height: 30px;
 				background-color: white;
-				border-bottom: 1px solid #DDDDDD;
+				border-bottom: 1px solid #e7e7e7;
 			}
 			
 			nav>ul>li {
@@ -128,6 +128,9 @@
 			}
 			
 			#moreCourse li a div {
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-box-pack: justify;
 				height: 100%;
 				margin-left: 10px;
 				float: left;
@@ -135,14 +138,16 @@
 			}
 			
 			#moreCourse li a img {
+				width: 134px;
+				overflow: hidden;
 				margin-right: 10px;
 				display: block;
-				max-width: 90%;
 				height: 100%;
 			}
 			
 			#moreCourse li a div p {
 				color: #999999;
+				margin-bottom: 10px;
 			}
 			
 			#moreCourse li a div p span {
@@ -160,8 +165,10 @@
 				margin: 0;
 				line-height: 2;
 				height: calc(100% / 2);
-				color: #5d5d5d;
-				font-size: 17px;
+				color: #5a5a5a;
+				font-size: 16px;
+				margin-top: 10px;
+				font-weight: 400;
 			}
 			
 			.mui-table-view-cell:after {
@@ -221,16 +228,16 @@
 				font-size: 15px;
 				width: 100%;
 				box-sizing: border-box;
-				border-bottom: 1px solid #DDDDDD;
+				border-bottom: 1px solid #e7e7e7;
 			}
 			
 			nav>ul>li>ul .select {
-				background-color: white
+				background-color:white;
 			}
 			
 			nav>ul .level_one>a {
 				color: #333333;
-			}
+			} 
 			
 			nav>ul .touch>ul .select {
 				color: #e93f32;
@@ -247,9 +254,10 @@
 			nav>ul .touch>ul {
 				display: block;
 			}
-			.mui-scroll{
+			
+			.mui-scroll {
 				top: 74px;
-			}   
+			}
 		</style>
 	</head>
 
@@ -282,143 +290,166 @@
 		<div class="mui-content" id="pullupRefresh">
 			<div class="mui-scroll" style="position:absolute;  top: 74px;width: 100%;">
 				<ul class="mui-table-view" id="moreCourse">
-				<li class="mui-table-view-cell mui-media">
-					<a href="javascript:void(0);" class="">
-						<img class=" mui-pull-left" src="images/center/center (1).png">
-						<div class="title">
-							<h3>情商与影响力</h3>
-							<p><span class="mui-icon iconfont icon-shizhong"></span>上次学习时间：11月16日</p>
-						</div>
-					</a>
-				</li>
-			</ul>
+					<!--<li class="mui-table-view-cell mui-media">
+						<a href="javascript:void(0);" class="">
+							<img class=" mui-pull-left" src="images/center/center (1).png">
+							<div class="title">
+								<h3>情商与影响力</h3>
+								<p><span class="mui-icon iconfont icon-shizhong"></span>上次学习时间：11月16日</p>
+							</div>
+						</a>
+					</li>-->
+				</ul>
 			</div>
 		</div>
 		<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
-		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script> 
 		<script type="text/javascript">
+		/*
+		 云课堂后期一定会添加下拉加载和上拉刷新功能，目前使用下拉刷新功能会导致classlist未定义错误，暂时没有解决，可能要参考示例使用双webvie写法，
+		 云课堂属于私有功能，因此在点击时一定会检查用户的登录状态
+		 * */
 			mui.plusReady(function() {
-				mui.init({
-						//下拉刷新
-						pullRefresh: {
-							container: '#pullupRefresh', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
-							up: {
-								height: 50, //可选.默认50.触发上拉加载拖动距离
-								auto: true, //可选,默认false.自动上拉加载一次
-								contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
-								contentnomore: '没有新内容', //可选，请求完毕若没有更多数据时显示的提醒内容；
-								callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
-							}
-						}
-					});
-				
+//				mui.init({
+//					//下拉刷新
+//					pullRefresh: {
+//						container: '#pulluprefresh', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+//						up: {
+//							height: 50, //可选.默认50.触发上拉加载拖动距离
+//							auto:true,
+//							contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+//							contentnomore: '没有新内容', //可选，请求完毕若没有更多数据时显示的提醒内容；
+//							callback: pulluprefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+//						}
+//					} 
+//				});
 				//*****状态函数
-				var Sorttype='最近学习';
-				var LearnState='全部';
-				//***分页
-				var count=1;
-				var course=document.getElementById("moreCourse");
-				//**********************课程渲染函数
-					var createCourseList = function(courselist) {
-						console.log("1");
-						var fragment = document.createDocumentFragment();
-						var li;
-						for(var i = 0; i < courselist.length; i++) {
-							li = document.createElement('li');
-							li.className = 'mui-table-view-cell mui-media';
-							li.id = courselist[i].Id;
-//							li.setAttribute('data-process')=courselist[i].LearnProcess;
-							li.innerHTML = "<a href='javascript:void(0);' class=''><img  class='mui-pull-left' src=" + courselist[i].Src + "><div class='title'><h3>" + courselist[i].Title + "</h3><p><span class='mui-icon iconfont icon-shizhong'></span>上次学习时间：" + courselist[i].Time + "</p></div></a>"
-							fragment.appendChild(li);
-						}
-						return fragment;
-					};
+				var Sorttype = 0;
+				var LearnState = -1;
 				
-				//********************ajax数据渲染函数
-			     function getCourlists () {
-			    	var header = JSON.parse(plus.storage.getItem('header'));
-			    	var data = JSON.stringify({
+				
+				var dataobj={
+					'最近学习':0,
+					'最新课程':1,
+					'全部':-1,
+					'未学习':0,
+					'学习中':1,
+					'已暂定':2,
+					'已完成':3,
+					'已过期':4
+				}
+				//***分页
+				var count = 1; 
+				var course = document.getElementById("moreCourse");
+				//**********************课程渲染函数
+				var createCourseList = function(courselist) {
+					var fragment = document.createDocumentFragment();
+					var li;
+					for(var i = 0; i < courselist.length; i++) {
+						li = document.createElement('li');
+						li.className = 'mui-table-view-cell mui-media';
+						li.id = courselist[i].Id;
+						//							li.setAttribute('data-process')=courselist[i].LearnProcess;
+						li.innerHTML = "<a href='javascript:void(0);' class=''><img  class='mui-pull-left' src=" + courselist[i].Src + "><div class='title'><h3>" + courselist[i].Title + "</h3><p><span class='mui-icon iconfont icon-shizhong'></span>上次学习时间：" + courselist[i].Time + "</p></div></a>"
+						fragment.appendChild(li); 
+					}
+					return fragment;
+				};
+
+				//**********刷新函数
+				function pulluprefresh() {
+//					setTimeout(function() {
+						var header = JSON.parse(plus.storage.getItem('header'));
+						var datas = JSON.stringify({
 							Header: header,
 							Body: {
 								PageIndex: count,
-							    PageSize: 20,
-							    Sorttype: Sorttype,
-							    LearnState:LearnState
+								PageSize: 99,
+								Sorttype: Sorttype,
+								LearnState: LearnState
 							}
 						});
-			    	sendAjax('api/Course/GetMyCourseList',data,function  (data) {
-			    		console.log(JSON.stringify(data));
-			    		if (data.Code==200) {
-			    			if(data.Body.TotalCount > 0) {
+//						console.log(JSON.stringify(data));
+						sendAjax('api/Course/GetMyCourseList', datas, function(data) {
+							console.log(JSON.stringify(data)); 
+							if(data.Code == 200) {
+								if(data.Body.TotalCount > 0) {
 									course.appendChild(createCourseList(data.Body.Items));
 									count++;
-									mui('#pullupRefresh').pullRefresh().endPullupToRefresh(false);
 								} else {
-									mui('#pullupRefresh').pullRefresh().endPullupToRefresh(true);
 								}
-			    		} else{
-			    			mui.alert(data.Message);
-			    		}
-			    	},function  () {
-			    		mui('#pullupRefresh').pullRefresh().endPullupToRefresh(true);
-			    	})
-			    }
-			    
-			    //刷新函数
-			    function pullupRefresh() {
-						setTimeout(function() {
-							getCourlists();
-						}, 500);
-					}
-				
+							} else {
+								mui.alert(data.Message);
+							}
+						}, function() {
+						})
+//					}, 500);
+				};
 				//************监听自定义事件
 				window.addEventListener('clicked', function(event) {
+					if (!mui('#moreCourse').innerHTML) {
+						setTimeout(function() {
+						urlopenwindow(function() {
+							pulluprefresh();
+						});
+					}, 500);
+					} else{
+						return false;
+					}
 					//获得事件参数
-					setTimeout(function() {
-						urlopenwindow(getCourlists );
-					}, 1000);
+					
 					//根据id向服务器请求新闻详情
 				});
-				
-                //***********login返回事件
+
+				//***********login返回事件
 				window.addEventListener('token', function(event) {
 					//获得事件参数
-					urlopenwindow(getCourlists);
+					console.log(1)
+					urlopenwindow(function() {
+						pulluprefresh();
+					});
 					//根据id向服务器请求新闻详情
 				});
-				
+
 				$(".level_one").on("tap", function() {
-					$(this).toggleClass("touch").siblings().removeClass("touch");
-				})
-				//一级列表的点击切换
+						$(this).toggleClass("touch").siblings().removeClass("touch");
+				}) 
+					//一级列表的点击切换
 				$(".level_one>ul>li").on("tap", function() {
 						$(this).parent().parent().children("a").html($(this).html() + '<span class="mui-icon iconfont icon-down-copy-copy"></span>');
 						$(this).toggleClass("select").siblings().removeClass("select");
 						//清空列表
 						course.innerHTML = '';
 						//重置筛选条件
-						Sorttype=$(".level_one>a").eq(0).text();
-				        LearnState=$(".level_one>a").eq(1).text();
-				        //重置分页
-				        count=1;
-				        getCourlists ();
+						Sorttype = dataobj[$(".level_one>a").eq(0).text()];
+						LearnState = dataobj[$(".level_one>a").eq(1).text()];
+						//重置分页
+						count = 1;
+						pulluprefresh();
 					})
-				//二级列表的点击切换，并且将当前值传给一级列表
-				
+					//二级列表的点击切换，并且将当前值传给一级列表
+
 				var detailPage = null;
 				mui('#moreCourse').on('tap', 'li', function(e) {
+					var imgsrc=this.querySelectorAll('img')[0].getAttribute('src');
 					var courseid = this.getAttribute('id');
 					//向后台传输自带的id值,将id值传递进去
 					//打开详情页面          
+					var detailPage = null;
+					//				  向后台传输自带的id值
+					//获得详情页面
+					if(!detailPage) {
+						detailPage = plus.webview.getWebviewById('courseInformation.html');
+					}
+					//触发详情页面的newsId事件
+					mui.fire(detailPage, 'newsId', {
+						id:courseid,
+						src:imgsrc 
+					});
+					//打开详情页面          
 					mui.openWindow({
-						url: 'learningCourse.html',
-						styles: {
-							scrollIndicator: 'none'
-						},
-						extras: {
-							courseid: courseid,
-						}
+						id: 'courseInformation.html'
 					});
 				});
 			})

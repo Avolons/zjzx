@@ -80,7 +80,7 @@
 		<div class="mui-content" id="pullRefreshs">
 			<div class="mui-scroll">
 				<ul id="recodeList">
-					<li>
+					<!--<li>
 						<img src="images/center/center (5).gif" />
 						<div class="title">
 							<h1>制造型企业生产主管实践训练成品</h1>
@@ -100,7 +100,7 @@
 							<h1>制造型企业生产主管实践训练成品</h1>
 							<p><span class="mui-icon iconfont icon-shizhong"></span>02:28/45:56</p>
 						</div>
-					</li>
+					</li>-->
 				</ul>
 			</div>
 		</div>
@@ -131,7 +131,7 @@
 				//*****************上拉刷新
 				function pullupRefresh() {
 					var header = JSON.parse(plus.storage.getItem('header'));
-						var data = JSON.stringify({
+						var datas = JSON.stringify({
 							Header: header,
 							Body: {
 								PageIndex: count,
@@ -139,7 +139,7 @@
 							}
 						});
 					setTimeout(function() { 
-						sendAjax('api/Course/GetMyCourseLearnRecord',data, function(data) {
+						sendAjax('api/Course/GetMyCourseLearnRecord',datas, function(data) {
 							console.log(JSON.stringify(data));
 							lists.appendChild(createFragment(data.Body.Items)); 
 						});

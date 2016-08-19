@@ -84,7 +84,8 @@
 				});
 				//*****初始化函数
 				function Initialization() {
-					mui.init({
+					setTimeout(function  () {
+						mui.init({
 						//下拉刷新
 						pullRefresh: {
 							container: '#pullupRefresh', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
@@ -97,6 +98,7 @@
 							}
 						}
 					});
+					},500);
 					var getList = [{
 						id: "talk_11",
 						title: "成功人际关系",

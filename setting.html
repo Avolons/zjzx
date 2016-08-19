@@ -7,7 +7,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
 		<link rel="stylesheet" href="css/mui.min.css">
 		<link rel="stylesheet" type="text/css" href="css/app.css" />
 		<style>
@@ -199,7 +198,7 @@
 			<!--页面主内容区开始-->
 			<div class="mui-page-content">
 				<div class="mui-scroll-wrapper">
-					<div class="mui-scroll">
+					<div class="mui-scroll"> 
 						<ul class="mui-table-view mui-table-view-chevron" style="margin-top: 10px;">
 							<li class="mui-table-view-cell" id="change">
 								<a href="javascript:void(0);" class="mui-navigate-right">更换施教机构</a>
@@ -223,7 +222,7 @@
 							</li>
 
 							<li class="mui-table-view-cell" id="clearSsd">
-								<span></span>清除缓存
+								<span>清除缓存</span>
 							</li>
 						</ul>
 						<ul class="mui-table-view mui-table-view-chevron" style="margin-top: 0;">
@@ -298,12 +297,18 @@
 
 		mui.plusReady(function() {
 			var local = plus.storage;
-			
+			//token值的重置，退出后清除一切与登录后相关的本地数据
 			function  setToken () {
 				var header=JSON.parse(plus.storage.getItem('header'));
+				var userName=plus.storage.getItem("UserName");
+				var pic=plus.storage.getItem("Pic");
 				header.User.Token=null;
+				userName=null;
+				pic=null;
+				plus.storage.setItem("UserName",userName);
+				plus.storage.setItem("Pic",pic);
 				plus.storage.setItem("header",JSON.stringify(header));
-			}
+			};
 			//打开关于我们
 			document.getElementById("aboutus").addEventListener('tap', function() {
 				mui.openWindow({
@@ -311,14 +316,13 @@
 					id: 'aboutUs.html',
 					style: {}
 				})
-			})
+			});
 
-			//更换施教机构
+			//******更换施教机构
 			document.getElementById("change").addEventListener("tap", function() {
 				var btnArray = ['否', '是'];
 				mui.confirm('此操作将清除施教机构信息，是否继续？', '更换施教机构', btnArray, function(e) {
 					if(e.index == 1) {
-						local.setItem("ajaxCode", "");
 						mui.openWindow({
 							url: "barcode.html"
 						})
@@ -326,7 +330,7 @@
 						return;
 					}
 				})
-			})
+			});
 
 			//**********允许移动网络状态下播放
 			document.getElementById("netType").addEventListener("toggle", function(event) {
@@ -346,7 +350,7 @@
 				}
 			})
 
-			//定义清除缓存事件
+			//*******定义清除缓存事件(暂时没有实现这个功能)
 			document.getElementById("clearSsd").addEventListener("tap", function() {
 				setTimeout(function() {
 					mui.alert("已清除所有缓存", '缓存清理', "确定", null, "div");
@@ -394,16 +398,12 @@
 						//清除当前登录数据
 						case 1:
 							setToken();
-							mui.openWindow({
-								url: 'home.html',
-								id: 'home.html',
-								show: {
-									aniShow: 'pop-in'
-								},
-								waiting: {
-									autoShow: false
-								}
-							});
+							var thiswebview=plus.webview.currentWebview();
+							plus.webview.hide(thiswebview);
+							var detailPage = plus.webview.getWebviewById('mine.html');
+							mui.fire(detailPage,'token',{
+								    token:true
+								 });  
 							break;
 						case 2:
 							//直接关闭当前页面

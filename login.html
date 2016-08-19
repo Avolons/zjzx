@@ -379,6 +379,7 @@
 					window.addEventListener('logined',function(event){
 					  //获得事件参数
 				    webviewId = event.detail.webviewId;
+				    console.log(webviewId); 
 					  //根据id向服务器请求新闻详情 
 					});
 					//登陆事件
@@ -407,6 +408,7 @@
 						
 						sendAjax('api/User/Login',data,function  (data) {
 							if (data.Code==200) {
+								console.log(JSON.stringify(data));
 								//设置token值
 								header.User.Token=data.Body.Token;
 								plus.storage.setItem("header",JSON.stringify(header));
@@ -414,16 +416,17 @@
 								plus.storage.setItem("Pic",data.Body.Pic);
 								 //添加自定义事件，通知源页面token值以获取到
 								var detailPage = plus.webview.getWebviewById(webviewId);
+								
 							      //触发源页面的token事件
 								  mui.fire(detailPage,'token',{
 								    token:true
-								  });
+								  }); 
 							      //打开源页面          
 								  mui.openWindow({
 								    id:webviewId
 								  });
 								  //关闭当前页面
-								  plus.webview.close(plus.webview.currentWebview());
+								  plus.webview.hide(plus.webview.currentWebview());
 							} else{
 								mui.alert('账号或密码错误');
 							}

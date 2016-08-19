@@ -53,10 +53,10 @@ var openw=null,waiting=null;
  * @param {JSON} ws : Webview窗口属性
  */
 w.clicked=function(id,wa,ns,ws){
-	if(openw){//避免多次打开同一个页面
-		return null;
-	}
 	if(w.plus){
+		if(openw){//避免多次打开同一个页面
+		plus.webview.close(openw); 
+	    }
 		wa&&(waiting=plus.nativeUI.showWaiting());
 		ws=ws||{};
 		ws.scrollIndicator||(ws.scrollIndicator='none');

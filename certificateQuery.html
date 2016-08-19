@@ -18,6 +18,7 @@
 			
 			.mui-content>img {
 				padding: 14px 0;
+				padding-top: 0;
 			}
 			
 			.mui-content>form {
@@ -96,150 +97,138 @@
 
 	<body>
 		<div class="mui-content" id="queryList">
-			
 			<img src="images/home/home_new2.png" width="100%" />
 			<form>
 				<h6>*请填写如下信息</h6>
-				<input type="text" id="yours" value="" placeholder="请输入姓名" />
-				<input type="text" id="number" value="" placeholder="请输入身份证号" />
-				<div>
-					<input type="text" id="code" value="" placeholder="请输入验证码" />
-					<img src="images/60x60.gif" height="32.5" id="Verification" />
-				</div>
-
-				<div><button type="submit" id="check">查询</button></div>
+				<input type="text" id="yours" value="李晓雪" placeholder="请输入姓名" />
+				<input type="text" id="number" value="320902199511232020" placeholder="请输入身份证号" />
+				<div><button type="button" id="check">查询</button></div>
 			</form>
-			<!--<ul>
-	    	<li>姓名 : 黄娇娇</li>
-	    	<li>身份证号 : 30683199208117325</li>
-	    	<li>获得证书 : 专项技术证书</li>
-	    	<li>获证时间 : 2016-04-25</li>
-	    	<li>获证方式 : 凭自己的努力获得</li>
-	    </ul>
-	     <ul>
-	    	<li>姓名 : 黄娇娇</li>
-	    	<li>身份证号 : 30683199208117325</li>
-	    	<li>获得证书 : 专项技术证书</li>
-	    	<li>获证时间 : 2016-04-25</li>
-	    	<li>获证方式 : 凭自己的努力获得</li>
-	    </ul>-->
 		</div>
+		<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
+		<script src="js/md5.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
-		mui.plusReady(function  () {
-			mui.init({  
-					//下拉刷新
-					pullRefresh: {
-						container: '#queryList', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
-						up: {
-							height: 50, //可选.默认50.触发上拉加载拖动距离
-							auto: false, //可选,默认false.自动上拉加载一次
-							contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
-							contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
-							callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
-						}
+			mui.plusReady(function() {
+				mui.init();
+				/*var certificateQuery = [
+					["姓名 : 黄娇娇", "身份证号 : 30683199208117325", "获得证书 : 专项技术证书", "获证时间 : 2016-04-25", "获证方式 : 凭自己的努力获得"],
+					["姓名 : 黄娇娇", "身份证号 : 30683199208117325", "获得证书 : 专项技术证书", "获证时间 : 2016-04-25", "获证方式 : 凭自己的努力获得"]
+				]*/
+				//********创建证书内容
+				var createFragment = function(data) {
+					var fragment = document.createDocumentFragment();
+					for(var i = 0; i < data.length; i++) {
+						var ul = document.createElement("ul");
+						ul.innerHTML = '<li>姓名 :' + data[i].Name + '</li><li>身份证号 : ' + data[i].IdNumber + '</li><li>获得证书 : ' + data[i].CertName + '</li><li>获证时间 : ' + data[i].Time + '</li><li>获证方式 : ' + data[i].Obtaintype + '</li>'
+						fragment.appendChild(ul);
 					}
-				});
-			/*var certificateQuery = [
-				["姓名 : 黄娇娇", "身份证号 : 30683199208117325", "获得证书 : 专项技术证书", "获证时间 : 2016-04-25", "获证方式 : 凭自己的努力获得"],
-				["姓名 : 黄娇娇", "身份证号 : 30683199208117325", "获得证书 : 专项技术证书", "获证时间 : 2016-04-25", "获证方式 : 凭自己的努力获得"]
-			]*/
-			//********创建证书内容
-			var createFragment = function(data) {
-				var fragment = document.createDocumentFragment();
-				for (var i = 0; i < data.length; i++) {
-					var ul = document.createElement("ul");
-					ul.innerHTML='<li>姓名 :'+data[i].Name+'</li><li>身份证号 : '+data[i].IdNumber+'</li><li>获得证书 : '+data[i].CertName+'</li><li>获证时间 : '+data[i].Time+'</li><li>获证方式 : '+data[i].Obtaintype+'</li>'
-					fragment.appendChild(ul);
-				}
-				return fragment;
-			};
-			
-			var names = document.getElementById("yours");
-			//姓名
-			var number = document.getElementById("number");
-			//身份证号码
-			var code = document.getElementById("code");
-			//验证码
-			var check = document.getElementById("check");
-			//查询
-			var data = {
+					return fragment;
+				};
+				var newList=document.getElementById("queryList"); 
 				
-			};
-			//定义分页数量
-			var count=1;
-			names.addEventListener('input', function() {
-				this.onblur = function() {
-					this.onblur = null;
-					var re=new RegExp('^[\\u4e00-\\u9fa5]{0,}$');
-					//只能是汉字
-					if (re.test(this.value)) {
-						data.name = this.value;
-					} else{
-						mui.alert("请填写正确的姓名",'格式错误','是');
+				var names = document.getElementById("yours");
+				//姓名
+				var number = document.getElementById("number");
+				//身份证号码
+				var check = document.getElementById("check");
+				//查询
+				var data = {
+
+				};
+				//定义分页数量
+				var count = 1;
+				names.addEventListener('input', function() {
+					this.onblur = function() {
+						this.onblur = null;
+						var re = new RegExp('^[\\u4e00-\\u9fa5]{0,}$');
+						//只能是汉字
+						if(re.test(this.value)) {
+							data.name = this.value;
+						} else {
+							mui.alert("请填写正确的姓名", '格式错误', '是');
+						}
+
 					}
-					
-				}
-			})
-			number.addEventListener('input', function() {
-				this.onblur = function() {
-					this.onblur = null;
-					var re=/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
-					if (re.test(this.value)) {
-						data.number = this.value;
-					} else{
-						mui.alert("请填写正确的身份证号码",'格式错误','是');
+				})
+				number.addEventListener('input', function() {
+					this.onblur = function() {
+						this.onblur = null;
+						var re = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+						if(re.test(this.value)) {
+							data.number = this.value;
+						} else {
+							mui.alert("请填写正确的身份证号码", '格式错误', '是');
+						}
+
 					}
-					
-				}
-			})
-			code.addEventListener('input', function() {
-				this.onblur = function() {
-					this.onblur = null;
-					data.code = this.value;
-				}
-			})
-			
-			function pullupRefresh(){
-				if (data.name) {
-					if (data.number) {
-						if (data.code) {
+				})
+
+				//*********信息查询
+				function messagecheck() {
+					data.name=names.value;
+					data.number=number.value;
+					var md_five=md5(data.name+123456+data.number);
+					//检查是否填写姓名
+					if(data.name) {
+						//检查是否填写身份证号码
+						if(data.number) {
+							//检查身份证号码是否符合格式，正则匹配
+							if ((/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/).test(data.number)) {
 							var header = JSON.parse(plus.storage.getItem('header'));
-							var datas=JSON.stringify({
-										Header: header,
-										Body: {
-											PageIndex: count,
-											PageSize: 10
-										}
-								});
-							sendAjax('api/Course/GetCertificateList',datas,function  () {
+							var datas = JSON.stringify({
+								Header: header,
+								Body: {
+									PageIndex: count,
+									PageSize: 10, 
+									Name:data.name ,
+                                    IdNumber:data.number,
+                                    VerificationCode:md_five 
+								}
+							});
+							sendAjax('api/Course/GetCertificateList', datas, function(data) {
 								if(data.Body.TotalCount > 0) {
 									newList.appendChild(createFragment(data.Body.Items));
-									count++; 
-									mui('#queryList').pullRefresh().endPullupToRefresh(false);
+									count++;
+									$(check).off('tap');
+									setTimeout(function() {
+										$(check).on('tap', function() { 
+											messagecheck();
+										});
+									}, 10000);
 								} else {
-									mui('#queryList').pullRefresh().endPullupToRefresh(true);
-								} 
-							},function  () {
-								mui('#queryList').pullRefresh().endPullupToRefresh(true);
-							})
+									$(check).off('tap');
+									setTimeout(function() {
+										$(check).on('tap', function() {
+											messagecheck();
+										});
+									}, 10000);
+								}
+							}, function() {
+								$(check).off('tap');
+								setTimeout(function() {
+									$(check).on('tap', function() {
+										messagecheck();
+									});
+								}, 10000);
+							});
+							} else{
+								mui.alert("请填写正确的身份证号码", '格式错误', '是');
+							}
+							
 						} else {
-							mui.alert('请填写验证码', '信息补全', '是');
+							mui.alert('请填写身份证号码', '信息补全', '是');
 						}
 					} else {
-						mui.alert('请填写身份证号码', '信息补全', '是');
+						mui.alert('请填写姓名', '信息补全', '是');
 					}
-				} else {
-					mui.alert('请填写姓名', '信息补全', '是');
 				}
-			}
-			
-			check.addEventListener('tap', function() {
-				pullupRefresh();
+
+				$(check).on('tap', function() {
+					messagecheck();
+				})
 			})
-		})
-			
 		</script>
 	</body>
 

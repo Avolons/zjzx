@@ -63,10 +63,30 @@
 				}
 				result = result.replace(/\n/g, '');
 				//设置本地存储，存储施教机构信息；
-				localStorage.setItem("local_barcode", result);
-				mui.openWindow({
-					url: "login.html"
-				});
+				var header=JSON.parse(plus.storage.getItem("header"));
+				header.App.TenantId=result;
+				//重置header施教机构值
+				plus.storage.setItem("header", JSON.stringify(header));
+				if (plus.webview.getWebviewById('main')) {
+					plus.webview.close(plus.webview.getWebviewById('main')); 
+					console.log(1);
+				} else{
+					plus.webview.close(plus.webview.getLaunchWebview());
+					console.log(2);
+				};  
+				setTimeout(function  () {
+					mui.openWindow({
+						url: 'main.html',
+						id: 'main',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: { 
+							autoShow: true
+						}
+					});
+				},300);
+				
 			}
 			// 从相册中选择二维码图片
 		</script>

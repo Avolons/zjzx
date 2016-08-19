@@ -146,6 +146,10 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
+		    /*
+		     消息列表页面，由于无法判断登陆情况，所以设定在初始阶段为未登录状态，然后通过home页自定义的事件来触发消息页面的列表，使得其在被点击时立马触发相关事件，
+		     ，但是实际上在用户退出登陆后，应该将其之前所显示的信息全部清空，目前想法是在退出登陆后直接跳转到用户首页
+		     * */
 			mui.plusReady(function() {
 				mui.init({
 					preloadPages: [{
@@ -168,7 +172,7 @@
 				function creatMessage(data) {
 					var farme = document.createDocumentFragment();
 					var li;
-					for(var i = 0; i < data.length; i++) {
+					for(var i = 0; i < data.length; i++) { 
 						li = document.createElement("li"); 
 						//0是未读，1是已读
 						if(data.Status == 0) {
@@ -181,7 +185,7 @@
 					}
 					return farme;
 				}
-				//定义分页数
+				//*********定义分页数
 				var count = 1;
 				var msg_list = document.getElementById("message_list")
 
@@ -194,9 +198,9 @@
 									PageSize: 20
 								}
 						});
-						console.log(data);
 					setTimeout(function() {
 						sendAjax('api/User/GetMessageList',data,function(data){
+//							console.log(JSON.stringify(data));
 							if (data.Body.TotalCount>0) {
 									msg_list.appendChild(creatMessage(data.Body.Items));
 							    	count++;
@@ -211,13 +215,13 @@
 						});
 					}, 500);
 				}
-				if (mui.os.plus) {
-					setTimeout(function() {
-						mui('#pullup-container').pullRefresh().pullupLoading();
-					}, 1000);
-				} else {
-						mui('#pullup-container').pullRefresh().pullupLoading();
-				}
+//				if (mui.os.plus) {
+//					setTimeout(function() {
+//						mui('#pullup-container').pullRefresh().pullupLoading();
+//					}, 1000);
+//				} else {
+//						mui('#pullup-container').pullRefresh().pullupLoading();
+//				}
 				var detailPage = null;
 				
 				//定义下级目录
@@ -256,6 +260,26 @@
 
 				})
 				}
+				
+				window.addEventListener('clicked', function(event) {
+					//获得事件参数
+					setTimeout(function() {
+						urlopenwindow(function() {
+							pullupRefresh();
+						});
+					}, 500);
+					//根据id向服务器请求新闻详情
+				});
+				
+				//***********login返回事件
+				window.addEventListener('token', function(event) {
+					//获得事件参数
+					urlopenwindow(function() {
+						pullupRefresh();
+					});
+					//根据id向服务器请求新闻详情
+				});
+				
 			})
 		</script>
 	</body>

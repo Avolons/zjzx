@@ -82,16 +82,28 @@
 		"Webview": {},
 		"NativeUI": {},
 		"Navigator": {},
-		"NativeObj": {},"Device":{},"Barcode":{}
+		"NativeObj": {},
+		"Device": {},
+		"Barcode": {},
+		"Payment": {}
 	},
 	"plus": {
 		"splashscreen": {
 			"autoclose": true,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
-			"waiting": true,"delay":"2000"
+			"waiting": true,
+			"delay": "2000"
 		},
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
 		"distribute": {
+			"plugins": {
+				"payment": {
+					"alipay": {
+						"description": "阿里支付",
+						"scheme": ""
+					}
+				}
+			},
 			"apple": {
 				"appid": "",/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
 				"mobileprovision": "",/*iOS应用打包配置文件*/
@@ -104,11 +116,28 @@
 				"packagename": "",/*Android应用包名，如io.dcloud.HelloH5*/
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
-				"hardwareAccelerated":true,//开启硬件加速
+				"hardwareAccelerated": true,//开启硬件加速
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-				"permissions": ["<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>"]
+				"permissions": [
+					"<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>",
+					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+					"<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+					"<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+					"<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+					"<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+					"<uses-feature android:name=\"android.hardware.camera\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>",
+					"<uses-permission android:name=\"android.permission.CAMERA\"/>"
+				]
 			},
-			"orientation": ["portrait-primary","portrait-secondary","landscape-primary","landscape-secondary"],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
+			"orientation": [
+				"portrait-primary",
+				"portrait-secondary"
+			],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
 			"icons": {
 				"ios": {
 					"prerendered": true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
@@ -167,7 +196,8 @@
 				"android": {
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
 					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": ""
+					"hdpi": "",
+					"xxhdpi": "C:/Users/Administrator/Desktop/启动页.png"
 				}
 			}
 		}
@@ -336,7 +366,8 @@
 					"js/getDevice.js",
 					"js/sendAjax.js",
 					"js/extra.js",
-					"js/jquery-2.1.0.min.js"
+					"js/jquery-2.1.0.min.js",
+					"images/home/load.jpg"
 				],
 				"refer": [
 					"newsInformation.html",
@@ -432,7 +463,9 @@
 					"images/water.jpg",
 					"fonts/mui.ttf",
 					"css/iconfont.css",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/jquery-2.1.0.min.js",
+					"js/extra.js"
 				],
 				"refer": [
 					"myExam.html",
@@ -446,7 +479,8 @@
 					"certificateQuery.html",
 					"messageNotification.html",
 					"myDiscussion.html",
-					"activateLearningCard.html"
+					"activateLearningCard.html",
+					"login.html"
 				],
 				"priority": 0
 			},
@@ -459,7 +493,8 @@
 					"images/center/center (1).gif",
 					"images/course_IN.png",
 					"js/jquery-2.1.0.min.js",
-					"js/extra.js"
+					"js/extra.js",
+					"images/course/bc.png"
 				],
 				"refer": [
 					"coursePurchase.html",
@@ -523,7 +558,11 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"images/60x60.gif",
-					"images/home/home_new2.png"
+					"images/home/home_new2.png",
+					"certificateQuery.html",
+					"js/jquery-2.1.0.min.js",
+					"js/extra.js",
+					"js/md5.min.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -599,10 +638,13 @@
 			},
 			"barcode_scan.html": {
 				"resources": [
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"js/common.js",
+					"css/common.css"
 				],
 				"refer": [
-					"login.html"
+					"login.html",
+					"main.html"
 				],
 				"priority": 0
 			},
@@ -622,7 +664,8 @@
 					"images/course/weixin.png",
 					"js/jquery-2.1.0.min.js",
 					"js/extra.js",
-					"js/videojs-contrib-hls.js"
+					"js/videojs-contrib-hls.js",
+					"images/course/logo.jpg"
 				],
 				"refer": [],
 				"priority": 0
@@ -687,7 +730,8 @@
 					"fonts/iconfont.ttf",
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"js/extra.js"
+					"js/extra.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"getInformation.html"
@@ -718,7 +762,9 @@
 					"fonts/mui.ttf",
 					"images/center/center (1).png",
 					"css/mui.min.css",
-					"js/jquery-2.1.0.js"
+					"js/jquery-2.1.0.js",
+					"js/jquery-2.1.0.min.js",
+					"js/extra.js"
 				],
 				"refer": [
 					"payment.html"
@@ -738,7 +784,13 @@
 			"payment.html": {
 				"resources": [
 					"images/course/weixin.png",
-					"images/course/zfb.png"
+					"images/course/zfb.png",
+					"js/beecloud.js",
+					"images/center/center (1).png",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/extra.js",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -769,9 +821,9 @@
 			]
 		}
 	},
-	"unpackage":[
-	  "README.md",
-	  "images/user-photo.png",
-	  "libs/easymob-webim-sdk/quickstart.md"
+	"unpackage": [
+		"README.md",
+		"images/user-photo.png",
+		"libs/easymob-webim-sdk/quickstart.md"
 	]
 }
