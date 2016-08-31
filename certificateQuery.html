@@ -65,13 +65,15 @@
 				margin: 0 auto;
 				padding: 0;
 				height: 32.5px;
+				line-height: 32.5px;
 				border-radius: 0;
 				display: block;
 				font-size: 14px;
-				width: 20%;
+				width: 30%;
 				color: #FFFFFF;
 				background-color: #f2b928;
 				border: none;
+				border-radius: 3px;
 			}
 			
 			li {
@@ -100,10 +102,13 @@
 			<img src="images/home/home_new2.png" width="100%" />
 			<form>
 				<h6>*请填写如下信息</h6>
-				<input type="text" id="yours" value="李晓雪" placeholder="请输入姓名" />
-				<input type="text" id="number" value="320902199511232020" placeholder="请输入身份证号" />
+				<input type="text" id="yours" value="胡茂霞" placeholder="请输入姓名" />
+				<input type="text" id="number" value="460034199201013343" placeholder="请输入身份证号" />
 				<div><button type="button" id="check">查询</button></div>
 			</form>
+			<div id="certList">
+				
+			</div>
 		</div>
 		<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
@@ -126,7 +131,7 @@
 					}
 					return fragment;
 				};
-				var newList=document.getElementById("queryList"); 
+				var newList=document.getElementById("certList"); 
 				
 				var names = document.getElementById("yours");
 				//姓名
@@ -138,7 +143,7 @@
 
 				};
 				//定义分页数量
-				var count = 1;
+//				var count = 1;
 				names.addEventListener('input', function() {
 					this.onblur = function() {
 						this.onblur = null;
@@ -170,6 +175,8 @@
 					data.name=names.value;
 					data.number=number.value;
 					var md_five=md5(data.name+123456+data.number);
+					//清空之前的登陆信息
+					newList.innerHTML=null;
 					//检查是否填写姓名
 					if(data.name) {
 						//检查是否填写身份证号码
@@ -180,8 +187,8 @@
 							var datas = JSON.stringify({
 								Header: header,
 								Body: {
-									PageIndex: count,
-									PageSize: 10, 
+									PageIndex: 1,
+									PageSize: 100, 
 									Name:data.name ,
                                     IdNumber:data.number,
                                     VerificationCode:md_five 

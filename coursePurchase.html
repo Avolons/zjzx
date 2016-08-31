@@ -406,7 +406,7 @@
 			}
 			
 			#bodys {
-				display: none;
+				display: block;
 			}
 			
 			.mui-content .pursePerson {
@@ -516,7 +516,10 @@
 
 			//****定义一个全局的价格变量
 			var prices = 0;
-
+			
+			//*****图片地址
+			var img_src=null;
+			
 			var addInformation = document.getElementById("bodys");
 
 			//页面数据列表
@@ -635,6 +638,7 @@
 							};
 							//向要传递的额外数据中添加数据，下一个页面所需要的是图片，title，有效期和价格，以及最终的总价；
 							dataBody.imgsrc = data.Body.FrontImage;
+							img_src= data.Body.FrontImage;
 							dataBody.title = data.Body.Title;
 							dataBody.price = data.Body.Price;
 							dataBody.effectivetime = data.Body.Effectivetime;
@@ -820,7 +824,26 @@
 								var btnArray = ['否', '是'];
 								mui.confirm('是否确认订单？', '确认订单', btnArray, function(e) {
 									if(e.index == 1) {
-										mui.openWindow({
+										if (datas.Body.TotalAmount==0) {
+											var detailPage = null;
+											//向后台传输自带的id值
+											//获得详情页面
+											if(!detailPage) {
+												detailPage = plus.webview.getWebviewById('courseInformation.html');
+											}
+											//触发详情页面的newsId事件
+											mui.fire(detailPage, 'newsId', {
+												id: courseid, 
+												src: img_src
+											});
+											//打开详情页面          
+											mui.openWindow({
+												id: 'courseInformation.html'
+											});
+											//关闭当前页面
+											plus.webview.close(plus.webview.currentWebview());
+										} else{
+											mui.openWindow({
 											url: 'payment.html',
 											styles: {
 												scrollIndicator: 'none'
@@ -830,6 +853,7 @@
 												extraData: dataBody
 											}
 										});
+										}
 									} else {
 										mui.alert('你取消了订单', '订单确认');
 									}

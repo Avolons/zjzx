@@ -31,7 +31,7 @@
 			
 			.mui-bar-nav~.mui-content {
 				padding: 0 15px;
-				padding-top: 84px;
+				margin-top: 74px; 
 				background-color: #FFFFFF
 			}
 			
@@ -666,7 +666,7 @@
 		</header>
 
 		<div class="mui-content">
-			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper ">
 				<div class="mui-scroll">
 					<ul class="mui-table-view" id="courseCenter">
 						<!--<li>
@@ -684,8 +684,11 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.pullToRefresh.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.pullToRefresh.material.js" type="text/javascript" charset="utf-8"></script>  
 		<script type="text/javascript">
 			$('#courseCenter div').height(parseInt($('#courseCenter>li').width() * 0.4 / (5 / 3)));
+			
 			mui.plusReady(function() {
 				mui.init({
 					preloadPages: [{
@@ -702,12 +705,28 @@
 							auto: false,
 							contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
 							callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
-						}
+						},
+//						down:{
+//							height: 50, //可选,默认50.触发下拉刷新拖动距离,
+//							auto: false, //可选,默认false.自动下拉刷新一次
+//							contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+//							contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+//							contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+//							callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+//						}
 					}
 				});
+				
+//				var deceleration = mui.os.ios?0.003:0.0009;
+//				$('.mui-scroll-wrapper').scroll({
+//					bounce: false,
+//					indicators: true, //是否显示滚动条
+//					deceleration:deceleration
+//				});
+				
 				//***********定义搜索项
 				var ClassId = 0,
-					Coursesort = '最新',
+					Coursesort = '最新', 
 					Typeclass = '全部类型',
 					Level = '全部'
 					//**定义分页

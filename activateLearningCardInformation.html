@@ -35,10 +35,22 @@
 				margin: 0;
 				padding: 0;
 				margin-bottom: 13px;
-				background-color: #FFFFFF
+				background-color: #efeff4
 			}
 			
-			.studyCard>li {}
+			#bookIncloud {
+				background-color: #efeff4;
+			}
+			
+			#bookIncloud>h5 {
+				margin: 0;
+				background-color: #FFFFFF;
+			}
+			
+			.studyCard>li {
+				background-color: #FFFFFF;
+				margin-bottom: 13px;
+			}
 			
 			.studyCard>li>ul {
 				width: 100%;
@@ -60,6 +72,8 @@
 				line-height: 40px;
 				padding-left: 20px;
 				border-bottom: 1px solid #e8e8e8;
+				margin: 0;
+				background-color: #FFFFFF;
 			}
 			
 			li a {
@@ -75,6 +89,16 @@
 				font-family: "微软雅黑";
 				background-color: #FFFFFF;
 				padding: 15px 45px 20px 20px;
+			}
+			
+			.address>h1 {
+				margin: -15px -45px 20px -20px;
+				font-size: 15px;
+				color: #333333;
+				height: 33px;
+				background-color: #f3f3f3;
+				line-height: 33px;
+				padding-left: 17px;
 			}
 			
 			.address>h5 {
@@ -159,6 +183,17 @@
 				font-size: 13px;
 			}
 			
+			.note textarea {
+				width: 85%;
+				margin-left: 5%;
+				border-radius: 0;
+				padding: 0;
+				height: 50px;
+				text-align: left;
+				font-family: "微软雅黑";
+				font-size: 13px;
+			}
+			
 			.detail {
 				height: 50px;
 			}
@@ -171,17 +206,20 @@
 			}
 			
 			.submit {
-				display: -webkit-box;
-				-webkit-box-pack: center;
+				width: 100%;
+				background-color: #FFFFFF;
+				padding-top: 20px;
+				padding-bottom: 150px;
 			}
 			
-			.submit button {
+			#confirm {
 				display: block;
-				width: 20%;
 				border-radius: 0;
 				color: #FFFFFF;
 				background-color: #f2b928;
 				border: none;
+				margin: 0 auto;
+				border-radius: 3px;
 			}
 			
 			.mui-content .pursePerson {
@@ -195,6 +233,10 @@
 			.mui-content .showCityPicker3 {
 				display: none;
 			}
+			
+			.mui-content .purseCode {
+				display: none;
+			}
 		</style>
 
 	</head>
@@ -206,258 +248,334 @@
 		</header>
 		<div class="mui-content">
 			<ul id="courseIncloud" class="studyCard">
-				<li>
+				<h5>包含课程</h5>
+				<!--<li>
 					<ul>
-						<h5>包含课程</h5>
 						<li>
 							<a href="javascript:void(0);" class="left">课程编号：</a>
-							<a href="javascript:void(0);" class="right"></a>
+							<a href="javascript:void(0);" class="right" id="course_num"></a>
 						</li>
 						<li>
 							<a href="javascript:void(0);" class="left">课程名称 :</a>
-							<a href="javascript:void(0);" class="right"></a>
+							<a href="javascript:void(0);" class="right" id="course_name"></a>
 						</li>
 						<li>
 							<a href="javascript:void(0);" class="left">学习有效期（天）：</a>
-							<a href="javascript:void(0);" class="right"></a>
+							<a href="javascript:void(0);" class="right" id="course_eff"></a>
 						</li>
 					</ul>
-				</li>
-				<li></li>
-			</ul>
-			<ul id="bookIncloud" class="studyCard">
-				<li>
-					<ul>
-						<h5>包含教材</h5>
-						<li>
-							<a href="javascript:void(0);" class="left">教材编号 :</a>
-							<a href="javascript:void(0);" class="right"></a>
-						</li>
-						<li>
-							<a href="javascript:void(0);" class="left">教材名称 : </a>
-							<a href="javascript:void(0);" class="right"></a>
-						</li>
-						<li>
-							<a href="javascript:void(0);" class="left">教材类型 : </a>
-							<a href="javascript:void(0);" class="right"></a>
-						</li>
-						<li>
-							<a href="javascript:void(0);" class="left">出版社: </a>
-							<a href="javascript:void(0);" class="right"></a>
-						</li>
-					</ul>
-				</li>
-			</ul>
+				</li>-->
 
-			<div class="address">
-				<h5>请填写收货地址</h5>
-				<div class="addresslist">
-					<i>*</i>
-					<h3>收货人:</h3><input type="text" name="" id="pursePerson" placeholder="请填写收货人姓名" /><span class="pursePerson">√</span>
-				</div>
-				<div class="addresslist">
-					<i>*</i>
-					<h3>联系方式：</h3><input type="text" name="" id="content" placeholder="请填写联系方式" /><span class="content">√</span>
-				</div>
-				<div class="addresslist">
-					<i>*</i>
-					<h3>所在地区：</h3><button id='showCityPicker3' class="mui-btn mui-btn-block" type='button'>请填写所在地区</button>
-					<div id='cityResult3' class="ui-alert"></div><span class='showCityPicker3'>√</span>
-				</div>
-				<div class="addresslist  detail">
-					<textarea name="" rows="" cols="" placeholder="请输入具体地址" id="specificAddress"></textarea>
-				</div>
-				<div class="addresslist submit">
-					<button type="button" id="submits">确定</button>
+			</ul>
+			<div id="bodys">
+				<ul id="bookIncloud" class="studyCard">
+					<h5>包含教材</h5>
+					<!--<li>
+						<ul>
+							<li>
+								<a href="javascript:void(0);" class="left">教材编号 :</a>
+								<a href="javascript:void(0);" class="right"></a>
+							</li>
+							<li>
+								<a href="javascript:void(0);" class="left">教材名称 : </a>
+								<a href="javascript:void(0);" class="right"></a>
+							</li>
+							<li>
+								<a href="javascript:void(0);" class="left">教材类型 : </a>
+								<a href="javascript:void(0);" class="right"></a>
+							</li>
+							<li>
+								<a href="javascript:void(0);" class="left">出版社: </a>
+								<a href="javascript:void(0);" class="right"></a>
+							</li>
+						</ul>
+					</li>-->
+				</ul>
+
+				<div class="address">
+					<h1>请填写收货地址</h1>
+					<div class="addresslist">
+						<i>*</i>
+						<h3>收货人:</h3><input type="text" name="" id="pursePerson" placeholder="请填写收货人姓名" /><span class="pursePerson">√</span>
+					</div>
+					<div class="addresslist">
+						<i>*</i>
+						<h3>联系方式：</h3><input type="text" name="" id="content" placeholder="请填写联系方式" /><span class="content">√</span>
+					</div>
+					<div class="addresslist">
+						<i>*</i>
+						<h3>所在地区：</h3><button id='showCityPicker3' class="mui-btn mui-btn-block" type='button'>请填写所在地区</button>
+						<div id='cityResult3' class="ui-alert"></div><span class='showCityPicker3'>√</span>
+					</div>
+					<div class="addresslist">
+						<i>*</i>
+						<h3>邮编</h3>
+						<input type="number" name="" id="zipcode" placeholder="请输入邮编" /><span class="purseCode">√</span>
+					</div>
+					<div class="addresslist  detail">
+						<textarea name="" rows="" cols="" placeholder="请输入具体地址" id="specificAddress"></textarea>
+					</div>
+					<div class="addresslist  note">
+						<textarea name="" rows="" cols="" placeholder="备注" id="purseNote"></textarea>
+					</div>
 				</div>
 			</div>
-		</div>
+			<div class="submit">
+				<button type="button" id="confirm">激活学习卡</button>
+			</div>
 
+		</div>
 		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.picker.js"></script>
 		<script src="js/mui.poppicker.js"></script>
 		<script src="js/city.data.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
-			(function($, doc) {
-				$.plusReady(function() {
-					$.init();
-					//***********数据渲染过程
-					(function() {
-						//****当前的webview
-						var presentWebview = plus.webview.currentWebview();
-						
-						var information = presentWebview.information;
-						
-						//取出数据对应数组
-						var courses = document.getElementById("courseIncloud").getElementsByClassName('right');
-						//取出数据对应数组
-						var books = document.getElementById("bookIncloud").getElementsByClassName('right');
+			mui.init();
+			//*****教材相关信息的外包裹div
+			var addInformation = document.getElementById("bodys");
 
-						//***********使用ajax渲染
-						for(var i = 0; i < courses.length; i++) {
-							courses[i].innerHTML = information.CourseIncloud[i + 1];
-						}
+			//*****教材列表
+			var bookList = document.getElementById("bookIncloud");
 
-						for(var i = 0; i < books.length; i++) {
-							books[i].innerHTML = information.BookIncloud[i + 1];
-						}
-					})()
-					//*******地区选择插件
-					var cityPicker3 = new $.PopPicker({
-						layer: 3
-					});
-					
-					cityPicker3.setData(cityData3);
-					//插件初始化
-					var showCityPickerButton = doc.getElementById('showCityPicker3');
-					var cityResult3 = doc.getElementById('cityResult3');
-					var consignee = document.getElementById("pursePerson");
-					var specificAddress = document.getElementById("specificAddress");
-					var content = document.getElementById("content");
-					//地区
-					var area_data;
-					//收货人
-					var consignee_data;
-					//联系方式
-					var content_data;
-					//具体地址，这三个数据都会使用正则匹配
-					var specificAddress_data;
-					//本地存储
-					var local = plus.storage;
-					//********对所有数据的重置行为
-					local.getItem("consignee_data") ? consignee.value = local.getItem("consignee_data") : null;
-					local.getItem("content_data") ? content.value = local.getItem("content_data") : null;
-					local.getItem("area_data") ? showCityPickerButton.innerText = local.getItem("area_data") : null;
-					local.getItem("specificAddress_data") ? specificAddress.value = local.getItem("specificAddress_data") : null;
-					showCityPickerButton.addEventListener('tap', function(event) {
-						cityPicker3.show(function(items) {
-							area_data = "" + (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
-							showCityPickerButton.innerText = area_data;
-							local.setItem('area_data', area_data);
-							//更换内容，在页面显示
-							document.getElementsByClassName("showCityPicker3")[0].style.display = 'block';
-							mui.ajax('http://server-name/login.php', {
-								data: {
-									areas: area_data
-								},
-								dataType: 'json', //服务器返回json格式数据
-								type: 'post', //HTTP请求类型
-								timeout: 10000, //超时时间设置为10秒；
-								success: function(data) {},
-								error: function(xhr, type, errorThrown) {}
-							});
-							//返回 false 可以阻止选择框的关闭
-							//return false;
-						});
-					}, false);
-					consignee.addEventListener('input', function() {
-						this.onblur = function() {
-							this.onblur = null;
-							var re = new RegExp('^[\\u4e00-\\u9fa5]{0,}$');
-							if(re.test(this.value)) {
-								mui.ajax('http://server-name/login.php', {
-									data: {
-										consignee_data: this.value
-									},
-									dataType: 'json', //服务器返回json格式数据
-									type: 'post', //HTTP请求类型
-									timeout: 10000, //超时时间设置为10秒；
-									success: function(data) {
-										document.getElementsByClassName('pursePerson')[0].style.display = 'block';
-									},
-									error: function(xhr, type, errorThrown) {
-										$.alert('请稍后重试', '网络错误', '确定')
-									}
-								});
-								consignee_data = this.value;
-								local.setItem('consignee_data', this.value);
-							} else {
-								$.alert('请输入汉字', '格式错误', '确定');
-							}
+			//***课程列表
+			var courseList = document.getElementById("courseIncloud");
 
-						}
-					})
-					
-					content.addEventListener('input', function() {
-						this.onblur = function() {
-							this.onblur = null;
-							var isPhone = /^([0-9]{3,4}-)?[0-9]{7,8}$/;
-							var isMob = /^((\+?86)|(\(\+86\)))?(13[012356789][0-9]{8}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8}|1349[0-9]{7})$/;
-							if(isMob.test(this.value) || isPhone.test(this.value)) {
-								mui.ajax('http://server-name/login.php', {
-									data: {
-										content_data: this.value
-									},
-									dataType: 'json', //服务器返回json格式数据
-									type: 'post', //HTTP请求类型
-									timeout: 10000, //超时时间设置为10秒；
-									success: function(data) {
-										document.getElementsByClassName('content')[0].style.display = 'block';
-									},
-									error: function(xhr, type, errorThrown) {
-										$.alert('请稍后重试', '网络错误', '确定')
-									}
-								});
-								content_data = this.value;
-								local.setItem('content_data', this.value);
-							} else {
-								mui.alert('请输入正确的联系方式', '格式错误', '确定')
-							}
+			//**********创建教材信息页面信息
+			var createbooks = function(data) {
+				var fragment = document.createDocumentFragment();
+				var li;
+				for(var i = 0; i < data.length; i++) {
+					li = document.createElement('li');
+					li.innerHTML = '<ul><li><a href="javascript:void(0);" class="left">教材编号 :</a><a href="javascript:void(0);" class="right">' + data[i].Bookno + '</a></li><li><a href="javascript:void(0);" class="left">教材名称 : </a><a href="javascript:void(0);" class="right">' + data[i].Title + '</a></li><li><a href="javascript:void(0);" class="left">教材类型 : </a><a href="javascript:void(0);" class="right">' + data[i].Booktype + '</a></li><li><a href="javascript:void(0);" class="left">出版社: </a><a href="javascript:void(0);" class="right">' + data[i].Press + '</a></li></ul>'
+					fragment.appendChild(li);
+				}
+				return fragment;
+			};
+			//**********创建课程详情
+			var createcourses = function(data) {
+				var fragment = document.createDocumentFragment();
+				var li;
+				for(var i = 0; i < data.length; i++) {
+					li = document.createElement('li');
+					li.innerHTML = '<ul><li><a href="javascript:void(0);" class="left">课程编号：</a><a href="javascript:void(0);" class="right" >' + data[i].Courseno + '</a></li><li><a href="javascript:void(0);" class="left">课程名称 :</a><a href="javascript:void(0);" class="right" >' + data[i].Title + '</a></li><li><a href="javascript:void(0);" class="left">学习有效期（天）：</a><a href="javascript:void(0);" class="right" >' + data[i].Effectivetime + '</a></li></ul>'
+					fragment.appendChild(li);
+				}
+				return fragment;
+			};
 
-						}
-					})
-					specificAddress.addEventListener('input', function() {
-						this.onblur = function() {
-							this.onblur = null;
-							if(this.value) {
-								$.ajax('http://server-name/login.php', {
-									data: {
-										specificAddress_data: this.value
-									},
-									dataType: 'json', //服务器返回json格式数据
-									type: 'post', //HTTP请求类型
-									timeout: 10000, //超时时间设置为10秒；
-									success: function(data) {},
-									error: function(xhr, type, errorThrown) {
-										$.alert('请稍后重试', '网络错误', '确定')
-									}
-								});
-							}
-							specificAddress_data = this.value;
-							local.setItem('specificAddress_data', this.value);
-						}
-					})
-					document.getElementById("submits").addEventListener('tap', function() {
-						$.ajax('http://server-name/login.php', {
-							data: {
-								area_data: area_data,
-								consignee_data: consignee_data,
-								//收货人
-								content_data: content_data,
-								//联系方式
-								specificAddress_data: specificAddress_data
-							},
-							dataType: 'json', //服务器返回json格式数据
-							type: 'post', //HTTP请求类型
-							timeout: 10000, //超时时间设置为10秒；
-							success: function(data) {
-								var btnArray = ['否', '是'];
-								$.confirm('确认激活学习卡？', '学习卡激活', btnArray, function(e) {
-									if(e.index == 1) {
-										mui.alert('你成功激活了学习卡', '学习卡激活');
-									} else {
-										mui.alert('你放弃了激活学习卡', '学习卡激活');
-									}
-								})
-							},
-							error: function(xhr, type, errorThrown) {
-								$.alert('请稍后重试', '网络错误', '确定');
-							}
-						});
-					})
+			mui.plusReady(function() {
+				var thisPage = plus.webview.currentWebview();
+				//地址信息
+				var addressData = thisPage.addressData;
+				//课程信息和教材信息
+				var courseInfo = thisPage.information;
+				//学习卡号
+				var code = thisPage.code;
+
+				/***mui自带本地存储***/
+				var local = plus.storage;
+
+				/***数据发送头部***/
+				var header = JSON.parse(local.getItem('header'));
+
+				/***收货地址对象***/
+				var addressList = {
+					cityResult3: document.getElementById('cityResult3'), //三级联动地区选择
+					consignee: document.getElementById("pursePerson"), //收件人
+					content: document.getElementById("content"), //联系方式
+					specificAddress: document.getElementById("specificAddress"), //详细地址
+					zipcode: document.getElementById("zipcode"), //邮编
+					purseNote: document.getElementById("purseNote") //备注
+				};
+
+				/***三个输入框的对勾，输入成功后方可显示***/
+				var show_pursePerson = document.getElementsByClassName('pursePerson')[0];
+				var show_content = document.getElementsByClassName('content')[0];
+				var show_showCityPicker3 = document.getElementsByClassName("showCityPicker3")[0];
+				var show_code = document.getElementsByClassName("purseCode")[0];
+
+				/***需要发送的地址数据***/
+//				var addressData = {
+//					Name: null, //收货人
+//					Address: null, //收货地址
+//					Phone: null, //收货电话
+//					ZIP: null, //邮编
+//					Memo: null //备注
+//				};
+
+				//***三级联动插件触发插件
+				var showCityPickerButton = document.getElementById('showCityPicker3');
+
+				//插件初始化
+				var cityPicker3 = new mui.PopPicker({
+					layer: 3
 				});
-			})(mui, document);
+				cityPicker3.setData(cityData3);
+
+				//课程数据的初始化，闭包显示
+				(function() {
+					//渲染课程列表
+					courseList.appendChild(createcourses(courseInfo.CourseIncloud));
+					//判断是否有教材
+					if(courseInfo.BookIncloud) {
+						addInformation.style.display = 'block';
+						bookList.appendChild(createbooks(courseInfo.BookIncloud));
+					};
+					//******取出本地存储；闭包
+					(function() {
+						//联系人
+						!!addressData.Name && (function() {
+							addressList.consignee.value = addressData.Name;
+							show_pursePerson.style.display = 'block';
+						}());
+						//联系方式
+						!!addressData.Phone && (function() {
+							addressList.content.value = addressData.Phone;
+							show_content.style.display = 'block';
+						}());
+						//邮编
+						!!addressData.ZIP && (function() {
+							addressList.zipcode.value = addressData.ZIP;
+							show_code.style.display = 'block';
+						}());
+						//备注 
+						!!addressData.Address && (addressList.specificAddress.value = addressData.Address);
+						//详细地址
+						!!addressData.purseNote && (addressList.purseNote.value = addressData.purseNote);
+					}());
+				}());
+
+				//******省市级联动选择
+				showCityPickerButton.addEventListener('tap', function(event) {
+					cityPicker3.show(function(items) {
+						area_data = "" + (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+						//更换内容，在页面显示
+						showCityPickerButton.innerText = area_data;
+						show_showCityPicker3.style.display = 'block';
+						//直接将数据相加一起渲染
+						addressList.specificAddress.value = area_data + addressList.specificAddress.value;
+						addressData.Memo = addressList.specificAddress.value;
+					});
+				}, false);
+
+				//******选择收件人
+				addressList.consignee.addEventListener('input', function() {
+					this.onblur = function() {
+						this.onblur = null;
+						var re = new RegExp('^[\\u4e00-\\u9fa5]{0,}$');
+						if(re.test(this.value)) {
+							addressData.Name = this.value;
+							show_pursePerson.style.display = 'block';
+						} else {
+							mui.alert('请输入汉字', '格式错误', '确定');
+							show_pursePerson.style.display = 'none';
+						}
+					}
+				});
+
+				//******选择联系方式
+				addressList.content.addEventListener('input', function() {
+					this.onblur = function() {
+						this.onblur = null;
+						var isPhone = /^([0-9]{3,4}-)?[0-9]{7,8}$/;
+						var isMob = /^((\+?86)|(\(\+86\)))?(13[012356789][0-9]{8}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8}|1349[0-9]{7})$/;
+						if(isMob.test(this.value) || isPhone.test(this.value)) {
+							addressData.Phone = this.value;
+							show_content.style.display = 'block'
+						} else {
+							mui.alert('请输入正确的联系方式', '格式错误', '确定');
+							show_content.style.display = 'none'
+						}
+					}
+				});
+
+				//******选择邮编
+				addressList.zipcode.addEventListener('input', function() {
+					this.onblur = function() {
+						this.onblur = null;
+						var isCode = /^[1-9][0-9]{5}$/
+						if(isCode.test(this.value)) {
+							addressData.ZIP = this.value;
+							show_code.style.display = 'block';
+						} else {
+							mui.alert('请输入正确的邮编', '格式错误', '确定');
+							show_code.style.display = 'none';
+						}
+					}
+				});
+
+				//******选择详细收件地址
+				addressList.specificAddress.addEventListener('input', function() {
+					this.onblur = function() {
+						this.onblur = null;
+						addressData.Address = this.value;
+					}
+				});
+
+				//******选择备注
+				addressList.purseNote.addEventListener('input', function() {
+					this.onblur = function() {
+						this.onblur = null;
+						addressData.Memo = this.value;
+					}
+				})
+
+				//信息确认，完全正确才能激活确定订单按钮；
+				document.getElementById("confirm").addEventListener('tap', function() {
+					//拥有教材的情况下
+					if(addInformation.style.display == 'block') {
+						if(show_pursePerson.style.display == 'block') {
+							console.log(1);
+							if(show_content.style.display == 'block') {
+								if(show_showCityPicker3.style.display == 'block') {
+									if(show_code.style.display == 'block') {
+
+									} else {
+										mui.alert('请确认输入正确的邮编', '补充信息', '是');
+										return false;
+									}
+								} else {
+									mui.alert('请确认输入正确的联系方式', '补充信息', '是');
+									return false;
+								};
+							} else {
+								mui.alert('请确认输入正确的地址', '补充信息', '是');
+								return false;
+							};
+						} else {
+							mui.alert('请确认输入正确的姓名', '补充信息', '是');
+							return false;
+						};
+					};
+					var btnArray = ['否', '是'];
+					mui.confirm('是否确认激活学习卡？', '确认激活', btnArray, function(e) {
+						if(e.index == 1) {
+							/***开始发送数据***/
+							var data = JSON.stringify({
+								Body: {
+									DeliveryInfo: addressData,
+									Code: code,
+								},
+								Header: header
+							});
+							sendAjax('api/Course/ActivationCrad', data, function(datas) {
+								console.log(datas);
+								if(datas.Code == 200) {
+									mui.alert('学习卡激活成功'); 
+									plus.webview.close(thisPage);
+								} else {
+									mui.alert(Message);
+								}
+							})
+						} else {
+							mui.alert('你取消了激活', '激活确认');
+						}
+					});
+				});
+			});
 		</script>
 	</body>
 

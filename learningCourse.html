@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
 		<title></title>
 		<style type="text/css">
 			html {
@@ -41,6 +41,7 @@
 				height: 36px;
 				padding: 0;
 				margin: 0;
+				margin-top: 200px;
 				display: -webkit-box;
 				-webkit-box-pack: justify;
 				background-color: #FFFFFF
@@ -136,8 +137,27 @@
 			}
 			/*视屏播放控制*/
 			
-			#myVideo {
+			#zjzxVideo {
 				width: 100%;
+				display: block;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 999;
+				height: 100%; 
+				/*height: 200px;*/
+				/*display: block;
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 999;*/
+				/*height: 100%;*/
+				/*height: 200px;*/
+			}
+			#mui-content .video-zjzx-fullscreen{
+				height: 200px;
+				top: 44px;
+				left: 0;
 			}
 			
 			footer>.mui-icon {
@@ -166,9 +186,8 @@
 				color: #E93F32;
 			}
 			
-			.video-js {
-				width: 100%;
-			}
+			
+			
 			/*我的心得*/
 			
 			#get_list>li {
@@ -318,8 +337,9 @@
 		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
 		<link rel="stylesheet" href="css/video-js.min.css" />
 		<link href="css/mui.min.css" rel="stylesheet" />
-		<script src="js/video.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/videojs-contrib-hls.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="js/video.min.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="js/video.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/videojs-contrib-hls.min.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 
 	<body>
@@ -331,9 +351,8 @@
 			<span class="mui-icon iconfont icon-fenxiang" style="color: #E93F32;" id="share"></span>
 			<span class="mui-icon iconfont icon-shoucang" style="color: #acabab;font-size: 25px;" id="collection"></span>
 		</footer>
-		<div class="mui-content">
-			<video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" poster="images/course/logo.jpg" ata-setup="{}">
-				<source src="http://7xpfpu.com2.z0.glb.qiniucdn.com/32c21bb95cb74a929149eb8165d85cfb.m3u8" type="application/x-mpegURL"></source>
+		<div class="mui-content" id="mui-content">
+			<video id="zjzxVideo" class="video-js vjs-default-skin vjs-big-play-centered video-zjzx-fullscreen" controls preload="auto" poster="images/course/logo.jpg" ata-setup="{}">
 			</video>
 			<ul id="table_one">
 				<li>
@@ -454,10 +473,22 @@
 		<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
 		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/fastclick.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
-		    //定义计时器对象。
+			if('addEventListener' in document) {
+				document.addEventListener('DOMContentLoaded', function() {
+					FastClick.attach(document.body);
+				}, false);
+			}
+
+			//定义计时器对象。
 			var timesend = null;
+			//存储原始视屏播放高度
+			var oldHeight = null;
+			//视屏播放区域
+			var videoArea=$("#zjzxVideo");
 			//**************切换按钮函数
+
 			function chatAndAnswer(buttons, contens, classNames) {
 				for(var i = 0; i < buttons.length; i++) {
 					(function(i) {
@@ -542,22 +573,29 @@
 				}
 				return frame;
 			}
+
 			//*************视屏播放函数
 			function resetPlayer(player, src, auto, data, header) {
+				//视屏数据渲染
 				player.src({
 					type: "application/x-mpegURL",
 					src: src
 				});
+
 				//视屏重置
 				player.load();
+
 				//首先清除计时器
 				clearInterval(timesend);
 				//设置自动播放属性的时候进行播放
-				if(auto) {
-					player.ready(function() {
+
+				player.ready(function() {
+					if(auto) {
 						this.play();
-					})
-				};
+						//高度赋值
+					};
+				});
+
 				player.on('play', function() {
 					timesend = setInterval(function() {
 						data.Time = player.currentTime();
@@ -565,17 +603,22 @@
 							Body: data,
 							Header: header
 						});
-						sendAjax('api/Course/SaveLearnWare', send_data, function() {
-						})
+						sendAjax('api/Course/SaveLearnWare', send_data, function() {})
 					}, 10000);
 				});
 				player.on('pause', function() {
 					clearInterval(timesend);
-				})
+				});
+
 			}
 
 			mui.plusReady(function() {
-				mui.init();
+				//				plus.screen.lockOrientation("landscape-primary"); 
+				mui.init({
+					gestureConfig: {
+						doubletap: true
+					}
+				});
 				/*var courselist = {
 						title: "心动日志-成功人士的",
 						childTitle: "行动日志-成功人士的五项基本修炼",
@@ -654,9 +697,8 @@
 					backlist: []
 				}];*/
 
-				
 				//浏览器播放对象
-				var myPlayer = videojs('myVideo');
+				var myPlayer = videojs('zjzxVideo');
 				//目录页标题
 				var title = document.getElementById("title");
 				//课程列表标题
@@ -671,6 +713,32 @@
 				var netType = plus.storage.getItem('netType');
 				//是否允许自动播放
 				var autoPlay = plus.storage.getItem('autoPlay');
+				
+
+//				处理视屏旋转,监听视屏尺寸变化
+				$(window).resize(function() {
+					//					console.log(1);
+					setTimeout(function() {
+						if(!myPlayer.isFullscreen()) {
+							console.log(2);
+							plus.screen.lockOrientation("portrait-primary");
+						}else{
+							console.log(2);
+						}
+					}, 50);
+				});
+
+				//双击暂停和播放
+				myPlayer.on('doubletap', function() {
+					myPlayer.paused() ? myPlayer.play() : myPlayer.pause();
+				});
+
+				myPlayer.on('tap', function() {
+					$('.vjs-control-bar').css('opacity', 1);
+					setTimeout(function() {
+						$('.vjs-control-bar').css('opacity', 0);
+					}, 3000);
+				})
 
 				var CourseId = null; //课程id
 				var WareId = null; //课件id
@@ -716,6 +784,16 @@
 						//列表的渲染
 						table_index.appendChild(creatList(data.Body.children));
 
+						//初始化播放列表
+						var courseData = {
+							CourseId: CourseId,
+							WareId: WareId,
+							SortId: data.Body.children[0].Id,
+							wareType: 2,
+							RecordId: RecordId,
+							Time: Time
+						};
+						resetPlayer(myPlayer, data.Body.children[0].Src, autoPlay, courseData, header);
 						mui(table_index).on('tap', 'li', function() {
 							SortId = this.id;
 							var src = this.getAttribute('data-src');
@@ -726,10 +804,12 @@
 								SortId: SortId,
 								wareType: 2,
 								RecordId: RecordId,
-								Time:Time
+								Time: Time
 							};
 							resetPlayer(myPlayer, src, autoPlay, sendData, header);
-						})
+						});
+						//						plus.screen.lockOrientation("landscape-primary");
+						//						myPlayer.requestFullscreen();
 					});
 					//课程我的心得渲染过程
 					sendAjax('api/Course/GetCourseXinDe', getLists, function(data) {
@@ -769,6 +849,8 @@
 				//***********重写back函数，退出后会关闭整个页面
 				var thiswebview = plus.webview.currentWebview();
 				mui.back = function() {
+					//强制竖屏
+					plus.screen.lockOrientation("portrait-primary");
 					plus.webview.close(thiswebview);
 				}
 				document.getElementById("addCourseGet").addEventListener('click', function(e) {
@@ -779,7 +861,7 @@
 							var src = "images/course/weixin.png";
 							//获取img的src值
 							var time = getNowFormatDate();
-							//获取回复时的时间
+							//获取回复时的时间- 
 							var thisname = '誓约胜利之剑';
 							//回复的昵称，本人的昵称 
 							$("#get_list").append(creatnewget(src, thisname, e.value, time));

@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var Intent = plus.android.importClass("android.content.Intent");
+				var Uri = plus.android.importClass("android.net.Uri");
+				var main = plus.android.runtimeMainActivity();
+				var intent = new Intent(Intent.ACTION_VIEW);
+				var uri = Uri.parse("http://static.zqgame.com/html/playvideo.html?name=http://lom.zqgame.com/v1/video/LOM_Promo~2.flv");
+				intent.setDataAndType(uri, "video/*");
+				main.startActivity(intent); 
+			})
+		</script>
+	</body>
+
+</html>

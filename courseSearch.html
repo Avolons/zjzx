@@ -55,6 +55,12 @@
 				padding: 0 30px;
 				margin: 0;
 				padding-top: 10px;
+				font-size: 0;
+			}
+			.mui-content .history:after{
+				content: '';
+				display: block;
+				clear: both;
 			}
 			
 			.mui-content .history li {
@@ -69,10 +75,11 @@
 				margin-bottom: 10px;
 				background-color: #FFFFFF;
 				border: 1px solid #DDDDDD;
-				opacity: 0;
+				/*opacity: 0;*/
 				height: 33px;
 				text-overflow: ellipsis;
 				white-space: pre;
+				float: left;
 			}
 			
 			.mui-content #hot {
@@ -292,6 +299,15 @@
 				var values = null;
 				//定义分页数
 				var count = 1;
+				//假设初次本地无存储数据，设置它的存储数据
+				if(storage.getItem("hist") == null) {
+					storage.setItem("hist", JSON.stringify(new Array(4)));
+				};
+				//重置样式代码,更改本地记录函数
+				var his_list = JSON.parse(storage.getItem("hist"));
+				//将本地储存进行字符串分割，获得数组
+				var historys = document.getElementsByClassName("history")[0].getElementsByTagName("li");
+				// 页面历史记录
 
 				//**********定义模板函数 课程显示部分
 				var createFragment = function(courseList) {
@@ -323,13 +339,20 @@
 
 				//*************搜索数据函数
 				function noneAndBlock(values) {
+					if (!values) {
+						mui.alert('请输入搜索关键字');
+						return false;
+					};
 					mb.style.display = "none";
 					//主体部分隐藏
 					for(var i = 3; i > 0; i--) {
-						historys[i].innerHTML = historys[i - 1].innerHTML;
+						if (his_list[i-1]) {
+							his_list[i] = his_list[i - 1];
+						} 
 						//当点击搜索，也就是搜索按钮时，触发历史记录更替效果，从最后开始往前更替，使用父子页面传值，子页面进行ajax请求
 					}
-					historys[0].innerHTML = values;
+					his_list[0]= values;
+					localstyle();
 					//分页的页码数
 					var header = JSON.parse(plus.storage.getItem('header'));
 					var data = JSON.stringify({
@@ -347,13 +370,15 @@
 					})
 					list.style.display = "block";
 					
-				}
+				};
 
 				function resetHStyle() {
 					for(var i = 0; i < historys.length; i++) {
-						his_list[i] = historys[i].innerHTML;
-						if(historys[i].innerHTML) {
-							historys[i].style.opacity = 1;
+						if(his_list[i]) {
+							historys[i].innerHTML=his_list[i];
+							historys[i].style.display = 'block'; 
+						}else{
+							historys[i].style.display = 'none'; 
 						}
 					}
 				}
@@ -362,7 +387,7 @@
 				function localstyle() {
 					resetHStyle();
 					//进行历史更新后需要再次判断，显示出有内容的li标签
-					storage.setItem("hist", his_list);
+					storage.setItem("hist", JSON.stringify(his_list));
 					//重置本地历史
 				}
 
@@ -409,11 +434,7 @@
 					})
 				})();
 
-				//假设初次本地无存储数据，设置它的存储数据
-				if(storage.getItem("hist") == null) {
-					var historys = JSON.stringify(["", "", "", ""]);
-					storage.setItem("hist", historys);
-				};
+				
 
 				//懒加载
 				mui(document).imageLazyload({
@@ -451,12 +472,6 @@
 					introduce: "成功人士的五项自我管理成功人",
 					price: 200
 				}];*/
-
-				//重置样式代码,更改本地记录函数
-				var his_list = storage.getItem("hist").split(",");
-				//将本地储存进行字符串分割，获得数组
-				var historys = document.getElementsByClassName("history")[0].getElementsByTagName("li");
-				// 页面历史记录
 
 				resetHStyle();
 				//由于本身历史记录是隐藏的，必须初始化时进行判断，得知是否有内容
@@ -515,16 +530,8 @@
 
 				//定义清除历史记录方法
 				document.getElementById("clear").addEventListener("tap", function() {
-					his_list = ["", "", "", ""];
-					storage.setItem("hist", his_list);
-					for(var i = 0; i < historys.length; i++) {
-						historys[i].innerHTML = his_list[i];
-						if(historys[i].innerHTML) {
-							historys[i].style.opacity = 1;
-						} else {
-							historys[i].style.opacity = 0;
-						}
-					};
+					his_list = new Array(4);
+					localstyle();
 				});
 
 				//点击热门，直接返回搜索结果

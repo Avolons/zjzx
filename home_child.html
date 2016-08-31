@@ -2,14 +2,14 @@
 <html>
 
 	<head>
-		<meta charset="UTF-8">
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<title>home</title>
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
-		<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		
 		<style type="text/css">
 			body {
 				font-family: "微软雅黑";
@@ -38,7 +38,7 @@
 			}
 			
 			.mui-slider {
-				/*height: 150px;*/
+				height: 150px;
 			}
 			
 			.mui-slider .mui-slider-group {
@@ -320,16 +320,8 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav" style="padding: 0  30px;">
-			<div id="search">
-				<span class="mui-icon mui-icon-search" style="padding-right: 200px;"></span>
-			</div>
-			<!--消息按钮-->
-			<span id="message" class="mui-icon mui-icon-email"><i></i></span>
-		</header>
-		<!--<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
-				<div class="mui-scroll"> -->
-		<div class="mui-content">
+		<div id="refresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
 					<!--、轮播图-->
 					<div class="mui-slider">
 						<div class="mui-slider-group mui-slider-loop" id="imglist">
@@ -402,14 +394,14 @@
 						<ul class="mui-table-view mui-grid-view" id="news">
 							<!--新闻列表-->
 							<div class="newsimg" style="position: relative;">
-								<img src="images/newsimage.png" width="100%" / id="news_img">
+								<img src="images/newsimage.png" width="100%" id="news_img">
 								<p style="position: absolute;bottom: 0;text-align: center;width: 100%;padding: 0 20px;background-color: rgba(0,0,0,.2);overflow: hidden;text-overflow: ellipsis;white-space: pre;color: #FFFFFF;"></p>
 							</div>
 						</ul>
 						<p style="width: 100%;height: 20px;margin-bottom: 8px;margin-top: 20px;">
 							<a class="title_nav" href="#" style="float: left;color: #333;display: block;height: 20px;line-height: 20px;padding: 0 5px;font-size: 16px;">最新课程</a>
 						</p>
-						<!--更多课程-->
+						<!--更多课程--> 
 						<ul class="mui-table-view" id="moreCourse">
 							<!--<li>
 						<img width='40%' data-lazyload="images/more_one.png" />
@@ -418,50 +410,46 @@
 							<h3>简介最帅的课程</h3>
 							<h4>￥200</h4>
 						</div>
-					</li>-->
+					</li>--> 
 						</ul>
-					<!--</div>
-				</div>-->
+				</div>
 			</div>
 		</div>
+		<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.min.js"></script>
-		<script src="js/app.js"></script>
 		<script src="js/mui.lazyload.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/mui.lazyload.img.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script>
-			mui(document).imageLazyload({
-				placeholder: 'images/home/hot_four.png'
-			});
 			mui.plusReady(function() {
 				mui.init({
-					swipeBack: true, //启用右滑关闭功能
-					//	预加载页面：1.课程搜索页面 2.证书查询页面 3.激活学习卡页面  4.我的任务页面 5.我的考试页面 6.课程信息页面 7.热点新闻目录页 8.热点新闻阅读页面
-//					pullRefresh: {
-//						container: "#refreshContainer", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
-//						down: {
-//							height: 50, //可选,默认50.触发下拉刷新拖动距离,
-//							auto: false, //可选,默认false.自动下拉刷新一次
-//							contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
-//							contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
-//							contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
-//							callback: pullfresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
-//						}
-//					}
+					pullRefresh: {
+						container: '#refresh',
+						down: {
+							height: 50, //可选,默认50.触发下拉刷新拖动距离,
+							auto: false, //可选,默认false.自动下拉刷新一次 
+							contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+							contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+							contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+							callback: pulldownRefresh 
+						},
+					}
 				});
-
+				/**
+				 * 下拉刷新具体业务实现
+				 */
 				/**********************消息通知栏*************************/
 				//假设有数据则进行未读消息的展示,没有则不展示
-				function messageShow(data, FN) {
-					var message = document.getElementById("message")
-					if(data == 1) {
-						var i = document.createElement('i');
-						message.appendChild(i);
-					} else {
-						message.innerHTML = null;
-					};
-					FN();
-				}
+				//			function messageShow(data, FN) {
+				//				var message = document.getElementById("message")
+				//				if(data == 1) {
+				//					var i = document.createElement('i');
+				//					message.appendChild(i);
+				//				} else {
+				//					message.innerHTML = null;
+				//				};
+				//				FN();
+				//			}
 				//**************创建轮播图渲染
 				var createImgList = function(imglist, FN) {
 					var img = document.getElementById("imglist");
@@ -476,15 +464,15 @@
 							if(i == 0) {
 								div.className = "mui-slider-item mui-slider-item-duplicate";
 								div.id = imglist[i].CourseId;
-								div.innerHTML = "<a href='#'><img src='" + imglist[i].Src + "-applt'/></a>";
+								div.innerHTML = "<a href='#'><img src='" + imglist[i].Src + "'/></a>";
 							} else if(i == imglist.length + 1) {
 								div.className = "mui-slider-item mui-slider-item-duplicate";
 								div.id = imglist[imglist.length - 1].CourseId;
-								div.innerHTML = "<a href='#'><img src='" + imglist[imglist.length - 1].Src + "-applt'/></a>";
+								div.innerHTML = "<a href='#'><img src='" + imglist[imglist.length - 1].Src + "'/></a>";
 							} else {
 								div.className = "mui-slider-item";
 								div.id = imglist[i - 1].CourseId;
-								div.innerHTML = "<a href='#'><img src='" + imglist[i - 1].Src + "-applt'/></a>";
+								div.innerHTML = "<a href='#'><img src='" + imglist[i - 1].Src + "'/></a>";
 							}
 							img.appendChild(div);
 						}
@@ -514,7 +502,7 @@
 					var hot_courses = document.getElementById("hotCourse").getElementsByTagName("li");
 					for(var i = 0; i < data.length; i++) {
 						hot_courses[i].id = data[i].CourseId;
-						hot_courses[i].getElementsByTagName('img')[0].src = data[i].Src+'-applt';
+						hot_courses[i].getElementsByTagName('img')[0].src = data[i].Src;
 						hot_courses[i].getElementsByTagName('div')[0].innerHTML = data[i].Title;
 					};
 					FN();
@@ -525,7 +513,7 @@
 					var img = fragment.getElementsByTagName('div')[0].getElementsByTagName('img')[0];
 					var texts = fragment.getElementsByTagName('div')[0].getElementsByTagName('p')[0];
 					//列表图片的渲染
-					img.src = data.Src+'-applt';
+					img.src = data.Src;
 					img.id = data.Id;
 					texts.innerText = data.Title;
 					createNewsList(data.newlist, fragment);
@@ -551,15 +539,17 @@
 					for(var i = 0; i < courseList.length; i++) {
 						li = document.createElement('li');
 						li.id = courseList[i].Id;
-						li.innerHTML = "<img   width='40%' data-lazyload=" + courseList[i].Src + "-applt /><div><h1>名称：" + courseList[i].Title + "</h1><h3>简介：" + courseList[i].Introduce + "</h3><h4>￥" + courseList[i].Price + "</h4></div>"
+						li.innerHTML = "<img   width='40%' data-lazyload=" + courseList[i].Src + " /><div><h1>名称：" + courseList[i].Title + "</h1><h3>简介：" + courseList[i].Introduce + "</h3><h4>￥" + courseList[i].Price + "</h4></div>"
 						fragment.appendChild(li);
 					}
 					return fragment;
 				};
 
 				//同一加载页面所有资源
-				var pullfresh = function() {
-					var header = JSON.parse(plus.storage.getItem('header'));
+				function pulldownRefresh () {
+					console.log(1);
+					setTimeout(function  () {
+						var header = JSON.parse(plus.storage.getItem('header'));
 					var data = JSON.stringify({
 						Header: header
 					});
@@ -569,39 +559,39 @@
 							//						console.log(JSON.stringify(data));
 
 							//*********数据做本地存储
-							plus.storage.setItem('Home_jsonData', JSON.stringify(data));
-							messageShow(data.Body.IsSHowReddot, function() {
-								//创建轮播图
-								createImgList(data.Body.slider, function() {
-									//创建大家热搜
-									createHotCourse(data.Body.hotsearch, function() {
-										//常见新闻列表 
-										createNewsImg(data.Body.hotnews, function() {
+							plus.storage.setItem('jsonData', JSON.stringify(data));
+							//						messageShow(data.Body.IsSHowReddot, function() {
+							//创建轮播图
+							createImgList(data.Body.slider, function() {
+								//创建大家热搜
+								createHotCourse(data.Body.hotsearch, function() {
+									//常见新闻列表 
+									createNewsImg(data.Body.hotnews, function() {
 
-											var datas = JSON.stringify({
-												Header: header
+										var datas = JSON.stringify({
+											Header: header
+										});
+										sendAjax('api/Course/GetNewestCourseList', datas, function(data) {
+
+											var moreCourse = document.getElementById("moreCourse");
+											//创建最新课程列表
+											moreCourse.appendChild(createNewCourses(data.Body.Items));
+
+											$('#moreCourse>li').height($('#moreCourse>li').width() * 0.4 / (5 / 3));
+
+											$('#moreCourse div').height(parseInt($('#moreCourse>li').width() * 0.4 / (5 / 3)) - 20);
+
+											//图片懒加载
+											mui(document).imageLazyload({
+												placeholder: 'images/home/load.jpg'
 											});
-											sendAjax('api/Course/GetNewestCourseList', datas, function(data) {
 
-												var moreCourse = document.getElementById("moreCourse");
-												//创建最新课程列表
-												moreCourse.appendChild(createNewCourses(data.Body.Items));
+											//												console.log((new Date()).getTime()-dataA);
 
-												$('#moreCourse>li').height($('#moreCourse>li').width() * 0.4 / (5 / 3));
-
-												$('#moreCourse div').height(parseInt($('#moreCourse>li').width() * 0.4 / (5 / 3)) - 20);
-
-												//图片懒加载
-												mui(document).imageLazyload({
-													placeholder: 'images/home/load.jpg'
-												});
-
-												//												console.log((new Date()).getTime()-dataA);
-
-											});
 										});
 									});
 								});
+								//							});
 							});
 
 						}, function() {
@@ -616,26 +606,27 @@
 							});
 						});
 					}, 200);
-//					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+					mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+					},1500);
 				};
 
 				//********进入后先启用本地缓存数据
 				(function() {
-					if(plus.storage.getItem('Home_jsonData')) {
-						var data = JSON.parse(plus.storage.getItem('Home_jsonData'));
-						messageShow(data.Body.IsSHowReddot, function() {
-							//创建轮播图
-							createImgList(data.Body.slider, function() {
-								//创建大家热搜
-								createHotCourse(data.Body.hotsearch, function() {
-									//常见新闻列表 
-								});
+					if(plus.storage.getItem('jsonData')) {
+						var data = JSON.parse(plus.storage.getItem('jsonData'));
+						//						messageShow(data.Body.IsSHowReddot, function() {
+						//创建轮播图
+						createImgList(data.Body.slider, function() {
+							//创建大家热搜
+							createHotCourse(data.Body.hotsearch, function() {
+								//常见新闻列表 
+								createNewsImg(data.Body.hotnews, function() {});
 							});
 						});
+						//						});
 					}
 				}());
 				//执行数据加载
-				pullfresh();
 
 				//代码优化，滚动到显示位置时，开始加载
 				//				$(window).on('scroll', function() {
@@ -719,7 +710,7 @@
 					if(id != "setting.html") {
 						//获得所设置的href值
 						var href = id;
-						//TODO  by chb 当初这么设计，是为了一个App中有多个模板，目前仅有一个模板的情况下，实际上无需这么复杂
+						//TODOby chb 当初这么设计，是为了一个App中有多个模板，目前仅有一个模板的情况下，实际上无需这么复杂
 						//使用父子模板方案打开的页面
 						//获得共用模板组 
 						var template = getTemplate('default'); //getTemplate('default');
@@ -777,29 +768,29 @@
 				}, 400);
 
 				//search定义获取光标跳转页面的事件
-				document.getElementById("search").addEventListener("tap", function() {
-						mui.openWindow({
-							id: 'courseSearch.html',
-							show: {
-								aniShow: "slide-in-right",
-								duration: 200
-							}
-						});
-					})
-					//****消息按钮,使用自定是事件，使得页面被打开后再执行。
-				document.getElementById("message").addEventListener("tap", function() {
-					var detailPage = plus.webview.getWebviewById('messageNotification.html');
-					//*****向消息详情页发送自定义事件
-					mui.fire(detailPage, 'clicked', {
-						click: true
-					});
-					mui.openWindow({
-						id: 'messageNotification.html',
-						show: {
-							duration: 200
-						}
-					})
-				})
+				//				document.getElementById("search").addEventListener("tap", function() {
+				//						mui.openWindow({
+				//							id: 'courseSearch.html',
+				//							show: {
+				//								aniShow: "slide-in-right",
+				//								duration: 200
+				//							}
+				//						});
+				//					})
+				//****消息按钮,使用自定是事件，使得页面被打开后再执行。
+				//				document.getElementById("message").addEventListener("tap", function() {
+				//					var detailPage = plus.webview.getWebviewById('messageNotification.html');
+				//					//*****向消息详情页发送自定义事件
+				//					mui.fire(detailPage, 'clicked', {
+				//						click: true
+				//					});
+				//					mui.openWindow({
+				//						id: 'messageNotification.html',
+				//						show: {
+				//							duration: 200
+				//						}
+				//					})
+				//				})
 
 				//为轮播图绑定事件，需要预加载课程信息页面
 				$(".mui-slider-group").on("tap", ".mui-slider-item", function() {
@@ -858,23 +849,23 @@
 				})
 
 				//为新闻图片绑定点击事件
-				document.getElementById("news_img").addEventListener('tap', function() {
-					var id = this.getAttribute('id');
-					var detailPage = null;
-					//				  向后台传输自带的id值
-					//获得详情页面
-					if(!detailPage) {
-						detailPage = plus.webview.getWebviewById('newsInformation.html');
-					}
-					//触发详情页面的newsId事件
-					mui.fire(detailPage, 'newsId', {
-						id: id
-					});
-					//打开详情页面          
-					mui.openWindow({
-						id: 'newsInformation.html'
-					});
-				})
+//				document.getElementById("news_img").addEventListener('tap', function() {
+//					var id = this.getAttribute('id');
+//					var detailPage = null;
+//					//				  向后台传输自带的id值
+//					//获得详情页面
+//					if(!detailPage) {
+//						detailPage = plus.webview.getWebviewById('newsInformation.html');
+//					}
+//					//触发详情页面的newsId事件
+//					mui.fire(detailPage, 'newsId', {
+//						id: id
+//					});
+//					//打开详情页面          
+//					mui.openWindow({
+//						id: 'newsInformation.html'
+//					});
+//				})
 
 				//为每条新闻添加点击事件，直接跳转到所需加载的新闻阅读页面
 				mui("#news").on("tap", "li", function() {
@@ -915,7 +906,7 @@
 					mui.openWindow({
 						id: 'courseInformation.html'
 					});
-				})
+				});
 			})
 		</script>
 	</body>

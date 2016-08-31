@@ -4,10 +4,10 @@
 		"iPhone",
 		"iPad"
 	],
-	"id": "mui_template_login",/*应用的标识，创建应用时自动生成，勿手动修改*/
+	"id": "zjzx",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "中教在线",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.0.0",/*应用版本名称*/
+		"name": "0.9",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -98,10 +98,7 @@
 		"distribute": {
 			"plugins": {
 				"payment": {
-					"alipay": {
-						"description": "阿里支付",
-						"scheme": ""
-					}
+					"alipay": {"description":"阿里支付","scheme":""},"weixin":{"description":"微信支付","appid":"wx200b7ecf823b477a"}
 				}
 			},
 			"apple": {
@@ -134,10 +131,7 @@
 					"<uses-permission android:name=\"android.permission.CAMERA\"/>"
 				]
 			},
-			"orientation": [
-				"portrait-primary",
-				"portrait-secondary"
-			],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
+			"orientation": ["portrait-primary","portrait-secondary","landscape-primary","landscape-secondary"],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
 			"icons": {
 				"ios": {
 					"prerendered": true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
@@ -446,7 +440,9 @@
 					"css/iconfont.css",
 					"fonts/iconfont.ttf",
 					"js/jquery-2.1.0.min.js",
-					"js/extra.js"
+					"js/extra.js",
+					"js/mui.pullToRefresh.js",
+					"js/mui.pullToRefresh.material.js"
 				],
 				"refer": [
 					"courseInformation.html",
@@ -539,9 +535,12 @@
 					"css/mui.min.css",
 					"images/card/studyCard.png",
 					"fonts/mui.ttf",
-					"activateLearningCard.html"
+					"activateLearningCard.html",
+					"js/extra.js"
 				],
-				"refer": [],
+				"refer": [
+					"activateLearningCardInformation.html"
+				],
 				"priority": 0
 			},
 			"myExam.html": {
@@ -665,7 +664,10 @@
 					"js/jquery-2.1.0.min.js",
 					"js/extra.js",
 					"js/videojs-contrib-hls.js",
-					"images/course/logo.jpg"
+					"images/course/logo.jpg",
+					"js/videojs-contrib-hls.min.js",
+					"js/video.js",
+					"js/fastclick.min.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -806,7 +808,41 @@
 					"css/mui.poppicker.css",
 					"css/mui.picker.css",
 					"js/city.data-3.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/jquery-2.1.0.min.js",
+					"js/extra.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"home_child.html": {
+				"resources": [
+					"images/home/home_1.png",
+					"images/home/home_3.png",
+					"js/app.js",
+					"images/home/load.jpg",
+					"images/home/home_4.png",
+					"js/mui.min.js",
+					"js/jquery-2.1.0.min.js",
+					"js/extra.js",
+					"css/iconfont.css",
+					"css/mui.min.css",
+					"images/newsimage.png",
+					"js/mui.lazyload.js",
+					"images/home/home_2.png",
+					"js/mui.lazyload.img.js"
+				],
+				"refer": [
+					"newsInformation.html",
+					"newslist.html",
+					"template.html"
+				],
+				"priority": 0
+			},
+			"test/video.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0

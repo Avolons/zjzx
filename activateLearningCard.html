@@ -69,15 +69,16 @@
 	    <h1>温馨提示：激活学习卡只需三步骤</h1>
 	    <img src="images/card/studyCard.png" height="217"/>
 	    <form >
-	            <input type="text" class="mui-input-clear" placeholder="请输入学习卡卡密" id="cardsNumber">
-	            	<button type="button" id="submits">激活学习卡</button>
+	            <input type="text" class="mui-input-clear" placeholder="请输入学习卡卡密" id="cardsNumber" value="6e12c2f4ce9948b0bb2ca71e530c880e">
+	            	<button type="button" id="submits">激活学习卡</button> 
 	    </form>
 	    <p>欢迎激活学习卡</p>
 	</div>
 	<script src="js/mui.min.js"></script>
 	<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="UTF-8">
-      	mui.init(); 
+    mui.plusReady(function  () {
+    	mui.init(); 
       	var submits=document.getElementById("submits");
       	//最好能够提前使用正则表达式
       	var number=document.getElementById("cardsNumber");
@@ -92,24 +93,32 @@
 								}
 							});
       		//将数据传输到后台ajax，根据返回的数据打开学习卡的具体信息页面
-      		sendAjax('http://192.168.1.112/api/Course/GetCardInfo',data,function  (data) {
-      			if (data.Body.Cardstate == 1) {
+      		sendAjax('api/Course/GetCardInfo',data,function  (data) {
+      			console.log(JSON.stringify(data)); 
+      			if (data.Code==200) {
+      				if (data.Body.Cardstate == 1) {
 						mui.openWindow({
 		      			url:'activateLearningCardInformation.html',
 		      			styles:{
 		      				scrollIndicator: "none"
 		      			},
 		      			extras:{
-                         information:data.Body.cardinfo
+                         information:data.Body.cardinfo,
+                         addressData:data.Body.DeliveryInfo,
+                         code:numberData
                           },
 		      		})
-					} else if (data.Body.Cardstate==2) {
+					} else{
 						mui.alert('无效的卡密','卡密错误',"确定");
-					}else{
-						mui.alert('该卡密已被使用','卡密错误',"确定");
-					}
+					};
+      			} else if(data.Code==401){
+      				mui.alert('请登陆后重新尝试');
+      			}else{
+      				mui.alert(data.Message);
+      			}
       		})
       	})
+    })
     </script>
 </body>
 </html>

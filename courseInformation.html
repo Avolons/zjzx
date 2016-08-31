@@ -418,11 +418,12 @@
 							} else {
 								mui.alert(data.Message);
 							}
-						})
+						});
 						} else{
 							mui.alert('您未购买此课程，请先购买');
 							return false;
-						}
+						};
+						return false;
 					})
 				}
 
@@ -456,7 +457,8 @@
 							}, 500);
 						});
 						//***购买课程按钮
-						btn_buy.addEventListener('tap', function() {
+						$(btn_buy).off('tap');
+						$(btn_buy).on('tap', function() {
 							if (JSON.parse(plus.storage.getItem('header')).User.Token) {
 								mui.openWindow({
 								url: 'coursePurchase.html',
@@ -470,7 +472,8 @@
 							} else{
 								mui.alert("请登录后购买");
 								return false;
-							}
+							};
+							return false;
 							
 						})
 
