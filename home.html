@@ -525,7 +525,7 @@
 					var img = fragment.getElementsByTagName('div')[0].getElementsByTagName('img')[0];
 					var texts = fragment.getElementsByTagName('div')[0].getElementsByTagName('p')[0];
 					//列表图片的渲染
-					img.src = data.Src+'-applt';
+					img.src = data.Src;
 					img.id = data.Id;
 					texts.innerText = data.Title;
 					createNewsList(data.newlist, fragment);
@@ -609,7 +609,7 @@
 							mui.confirm('加载失败，是否重新加载？', '重新加载', btnArray, function(e) {
 								if(e.index == 1) {
 									//重新加载
-									loadAllMessage();
+									pullfresh();  
 								} else {
 									mui.alert('加载失败');
 								}

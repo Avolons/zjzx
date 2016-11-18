@@ -122,7 +122,7 @@
 					for(var i = 0; i < learingRecode.length; i++) {
 						li = document.createElement('li');
 						li.id = learingRecode[i].Id;
-						li.innerHTML = '<img src=' + learingRecode[i].Src + ' /><div class="title"><h1>' + learingRecode[i].Title + '</h1><p><span class="mui-icon iconfont icon-shizhong"></span>' + learingRecode[i].LearnProcessStr + '/' + learingRecode[i].AllowEnterTime + '</p></div>'
+						li.innerHTML = '<img src=' + learingRecode[i].Src + ' /><div class="title"><h1>' + learingRecode[i].Title + '</h1><p><span class="mui-icon iconfont icon-shizhong"></span>' + learingRecode[i].LearnProcessStr + '/' + learingRecode[i].LastLearnTime + '</p></div>'
 						fragment.appendChild(li);
 					}
 					return fragment;

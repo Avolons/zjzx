@@ -354,7 +354,12 @@
 						li.className = 'mui-table-view-cell mui-media';
 						li.id = courselist[i].Id;
 						//							li.setAttribute('data-process')=courselist[i].LearnProcess;
-						li.innerHTML = "<a href='javascript:void(0);' class=''><img  class='mui-pull-left' src=" + courselist[i].Src + "><div class='title'><h3>" + courselist[i].Title + "</h3><p><span class='mui-icon iconfont icon-shizhong'></span>上次学习时间：" + courselist[i].Time + "</p></div></a>"
+						if (courselist[i].Time) {
+							li.innerHTML = "<a href='javascript:void(0);' class=''><img  class='mui-pull-left' src=" + courselist[i].Src + "><div class='title'><h3>" + courselist[i].Title + "</h3><p><span class='mui-icon iconfont icon-shizhong'></span>上次学习时间：" + courselist[i].Time + "</p></div></a>"
+						} else{
+							li.innerHTML = "<a href='javascript:void(0);' class=''><img  class='mui-pull-left' src=" + courselist[i].Src + "><div class='title'><h3>" + courselist[i].Title + "</h3><p><span class='mui-icon iconfont icon-shizhong'></span>上次学习时间：暂未开始学习</p></div></a>"
+						}
+						
 						fragment.appendChild(li);
 					}
 					return fragment;

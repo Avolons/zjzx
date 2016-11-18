@@ -638,14 +638,15 @@
 						</ul>
 					</li>
 					<li class="level_one">
-						<a href="javascript:void(0);">最新<span class="mui-icon iconfont icon-down-copy-copy"></span></a>
+						<a href="javascript:void(0);" id="type_time">默认<span class="mui-icon iconfont icon-down-copy-copy"></span></a>
 						<ul class="select_two">
-							<li class="select">最新</li>
-							<li>最热</li>
+							<li class="select">默认</li>
+							<li>最新</li>
+							<li>最热</li> 
 						</ul>
 					</li>
 					<li class="level_one">
-						<a href="javascript:void(0);">全部类型<span class="mui-icon iconfont icon-down-copy-copy"></span></a>
+						<a href="javascript:void(0);" id="type_knowleadge">全部类型<span class="mui-icon iconfont icon-down-copy-copy"></span></a>
 						<ul class="select_two">
 							<li class="select">全部类型</li>
 							<li>知识精讲</li>
@@ -653,7 +654,7 @@
 						</ul>
 					</li>
 					<li class="level_one">
-						<a href="javascript:void(0);">全部<span class="mui-icon iconfont icon-down-copy-copy"></span></a>
+						<a href="javascript:void(0);" id="type_level">全部<span class="mui-icon iconfont icon-down-copy-copy"></span></a>
 						<ul class="select_two">
 							<li class="select">全部</li>
 							<li>初级</li>
@@ -725,10 +726,10 @@
 //				});
 				
 				//***********定义搜索项
-				var ClassId = 0,
-					Coursesort = '最新', 
-					Typeclass = '全部类型',
-					Level = '全部'
+				var ClassId = 0;
+//					Coursesort = '最新', 
+//					Typeclass = '全部类型',
+//					Level = '全部'
 					//**定义分页
 				var count = 1;
 				//**课程列表
@@ -741,6 +742,27 @@
 				
 				//第一导航栏
 				var nav_oneAll=$("#one_alltype");
+				
+				//************导航栏一级标题
+				var Coursesort=$('#type_time');
+				
+				var Typeclass=$('#type_knowleadge');
+				
+				var Level=$('#type_level');
+				
+				//************状态码分类
+				var stateType={
+					'默认':0,
+					'最新':1,
+					'最热':2,
+					'全部类型':0,
+				  	'知识精讲':2,
+				  	'实战项目':1,
+				  	'全部':0,
+				  	'初级':1,
+				  	'中级':2,
+				  	'高级':3,
+				};
 			
 
 				var createChiNav = function(data) {
@@ -790,11 +812,11 @@
 								PageIndex: count,
 								PageSize: 20,
 								ClassId: ClassId,
-								Coursesort: Coursesort,
-								Typeclass: Typeclass,
-								Level: Level
+								Coursesort: stateType[Coursesort.text()],
+								Typeclass: stateType[Typeclass.text()],
+								Level: stateType[Level.text()]
 							},
-							Header: header,
+							Header: header,  
 						});
 						console.log(data);
 						sendAjax('api/Course/GetCourseListByFilter', data, function(data) {
@@ -851,7 +873,7 @@
 							selectAll.on('tap',function  () {
 								count=1;
 								ClassId=0;
-								nav_oneAll.html('全部分类' + '<span class="mui-icon iconfont icon-down-copy-copy"></span>');
+								nav_oneAll.html('全部类别' + '<span class="mui-icon iconfont icon-down-copy-copy"></span>');
 								courses.innerHTML='';
 								setTimeout(function() {
 									mui('#pullrefresh').pullRefresh().pullupLoading();

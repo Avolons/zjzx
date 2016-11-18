@@ -7,7 +7,7 @@
 	"id": "zjzx",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "中教在线",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "0.9",/*应用版本名称*/
+		"name": "0.01",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -191,9 +191,9 @@
 					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
 					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
 					"hdpi": "",
-					"xxhdpi": "C:/Users/Administrator/Desktop/启动页.png"
+					"xxhdpi": "C:/Users/Administrator/Desktop/中教在线app红色/启动页.png"
 				}
-			}
+			},"debug":true
 		}
 	},
 	"dependencies": {
@@ -313,7 +313,8 @@
 					"images/startpage.png",
 					"images/help/logo.png",
 					"js/jquery-2.1.0.js",
-					"js/extra.js"
+					"js/extra.js",
+					"js/jquery-2.1.0.min.js"
 				],
 				"refer": [
 					"unlock.html",
@@ -721,7 +722,8 @@
 					"css/iconfont.css",
 					"css/mui.min.css",
 					"js/jquery-2.1.0.js",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/jquery-2.1.0.min.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -843,6 +845,16 @@
 				"resources": [
 					"js/mui.min.js",
 					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"aboutUs.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"images/help/logo.png"
 				],
 				"refer": [],
 				"priority": 0

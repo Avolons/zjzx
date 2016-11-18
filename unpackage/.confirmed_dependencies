@@ -1,583 +1,594 @@
 {
-	"main.html": {
-		"resources": [
-			"fonts/mui.ttf",
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"images/cbd.jpg",
-			"images/yuantiao.jpg",
-			"images/muwu.jpg",
-			"images/shuijiao.jpg",
-			"home.html",
-			"css/iconfont.css",
-			"fonts/iconfont.ttf"
-		],
-		"refer": [
-			"setting.html",
-			"home.html",
-			"cloud.html",
-			"mine.html",
-			"course.html",
-			"courseInformation.html",
-			"messageNotification.html",
-			"courseSearch.html",
-			"login.html"
-		]
-	},
-	"login.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"images/sinaweibo.png",
-			"css/mui.min.css",
-			"css/style.css",
-			"images/weixin.png",
-			"images/qq.png",
-			"js/mui.enterfocus.js",
-			"fonts/mui.ttf",
-			"images/1P35G0O-3.jpg",
-			"images/water.jpg",
-			"libs/easymob-webim-sdk/jquery-1.11.1.js",
-			"images/startpage.png",
-			"images/help/logo.png",
-			"js/jquery-2.1.0.js",
-			"js/extra.js"
-		],
-		"refer": [
-			"main.html",
-			"reg.html",
-			"forget_password.html"
-		]
-	},
-	"setting.html": {
-		"resources": [
-			"libs/easymob-webim-sdk/easemob.im-1.0.5.js",
-			"libs/easymob-webim-sdk/json2.js",
-			"libs/easymob-webim-sdk/jquery-1.11.1.js",
-			"js/mui.locker.js",
-			"js/feedback.js",
-			"css/feedback-page.css",
-			"js/feedback-page.js",
-			"libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
-			"js/mui.view.js",
-			"fonts/mui.ttf",
-			"myExam.html",
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/app.css",
-			"js/extra.js"
-		],
-		"refer": [
-			"myExam.html",
-			"login.html",
-			"barcode.html",
-			"main.html",
-			"aboutUs.html"
-		]
-	},
-	"reg.html": {
-		"refer": [
-			"login.html"
-		],
-		"resources": []
-	},
-	"home.html": {
-		"resources": [
-			"images/cbd.jpg",
-			"images/muwu.jpg",
-			"images/yuantiao.jpg",
-			"images/shuijiao.jpg",
-			"js/app.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"images/home/home-slider.png",
-			"images/home/hot_one.png",
-			"images/home/hot_three.png",
-			"css/iconfont.css",
-			"fonts/iconfont.ttf",
-			"images/home/hot_two.png",
-			"images/home/hot_four.png",
-			"images/home/more_three.png",
-			"images/home/more_one.png",
-			"images/home/more_two.png",
-			"libs/easymob-webim-sdk/jquery-1.11.1.js",
-			"js/mui.lazyload.js",
-			"js/mui.lazyload.img.js",
-			"images/home/home-slider.png/",
-			"images/home/home_1.png",
-			"images/home/home_3.png",
-			"images/home/home_4.png",
-			"images/home/home_2.png",
-			"images/home/home_new2.png",
-			"images/newsimage.png",
-			"images/home/home_new3.png",
-			"images/home/home_new4.png",
-			"images/home/home_new1.png",
-			"images/60x60.gif",
-			"js/getDevice.js",
-			"js/sendAjax.js",
-			"js/extra.js",
-			"js/jquery-2.1.0.min.js",
-			"images/home/load.jpg"
-		],
-		"refer": [
-			"newsInformation.html",
-			"newslist.html",
-			"activateLearningCard.html",
-			"courseInformation.html",
-			"myExam.html",
-			"certificateQuery.html",
-			"myTask.html",
-			"courseSearch.html",
-			"messageNotification.html",
-			"template.html",
-			"myGet.html",
-			"learningRecord.html",
-			"myTrade.html",
-			"myDiscussion.html",
-			"helpAndFeedBack.html"
-		]
-	},
-	"cloud.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"images/center/center (2).gif",
-			"images/center/center (6).gif",
-			"images/center/center (5).gif",
-			"images/center/center (1).png",
-			"images/center/center (4).gif",
-			"images/center/center (3).gif",
-			"images/center/center (1).gif",
-			"libs/easymob-webim-sdk/jquery-1.11.1.js",
-			"images/home/home_new1.png",
-			"images/home/home_new4.png",
-			"images/home/home_new2.png",
-			"images/home/home_new3.png",
-			"css/iconfont.css",
-			"fonts/iconfont.ttf",
-			"js/logined.js",
-			"js/extra.js",
-			"js/jquery-2.1.0.min.js"
-		],
-		"refer": [
-			"learningCourse.html",
-			"login.html"
-		]
-	},
-	"course.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"images/cbd.jpg",
-			"images/muwu.jpg",
-			"images/shuijiao.jpg",
-			"images/home/more_one.png",
-			"images/home/more_three.png",
-			"images/home/more_two.png",
-			"images/center/center (2).gif",
-			"images/center/center (6).gif",
-			"images/center/center (5).gif",
-			"images/center/center (1).png",
-			"images/center/center (4).gif",
-			"images/center/center (3).gif",
-			"images/center/center (1).gif",
-			"libs/easymob-webim-sdk/jquery-1.11.1.js",
-			"js/mui.lazyload.js",
-			"js/mui.lazyload.img.js",
-			"images/home/hot_one.png",
-			"images/home/hot_three.png",
-			"images/home/hot_two.png",
-			"images/home/hot_four.png",
-			"css/iconfont.css",
-			"fonts/iconfont.ttf",
-			"js/jquery-2.1.0.min.js",
-			"js/extra.js",
-			"js/mui.pullToRefresh.js",
-			"js/mui.pullToRefresh.material.js"
-		],
-		"refer": [
-			"courseInformation.html",
-			"coursePurchase.html"
-		]
-	},
-	"mine.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"images/home/bc.jpg",
-			"images/water.jpg",
-			"fonts/mui.ttf",
-			"css/iconfont.css",
-			"fonts/iconfont.ttf",
-			"js/jquery-2.1.0.min.js",
-			"js/extra.js"
-		],
-		"refer": [
-			"myExam.html",
-			"template.html",
-			"myTrade.html",
-			"myGet.html",
-			"myTask.html",
-			"setting.html",
-			"helpAndFeedBack.html",
-			"learningRecord.html",
-			"certificateQuery.html",
-			"messageNotification.html",
-			"myDiscussion.html",
-			"activateLearningCard.html",
-			"login.html"
-		]
-	},
-	"courseInformation.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"libs/easymob-webim-sdk/jquery-1.11.1.js",
-			"images/center/center (1).gif",
-			"images/course_IN.png",
-			"js/jquery-2.1.0.min.js",
-			"js/extra.js",
-			"images/course/bc.png"
-		],
-		"refer": [
-			"coursePurchase.html",
-			"learningCourse.html"
-		]
-	},
-	"courseSearch.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/mui.lazyload.js",
-			"js/mui.lazyload.img.js",
-			"libs/easymob-webim-sdk/jquery-1.11.1.js",
-			"images/home/hot_one.png",
-			"images/home/hot_three.png",
-			"images/home/hot_two.png",
-			"images/home/hot_four.png",
-			"images/60x60.gif",
-			"js/jquery-2.1.0.min.js",
-			"js/extra.js"
-		],
-		"refer": [
-			"coursePurchase.html"
-		]
-	},
-	"newsInformation.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"fonts/mui.ttf",
-			"js/extra.js"
-		],
-		"refer": []
-	},
-	"activateLearningCard.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"images/card/studyCard.png",
-			"fonts/mui.ttf",
-			"activateLearningCard.html",
-			"js/extra.js"
-		],
-		"refer": [
-			"activateLearningCard.html",
-			"activateLearningCardInformation.html"
-		]
-	},
-	"myExam.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"js/extra.js"
-		],
-		"refer": []
-	},
-	"certificateQuery.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"images/60x60.gif",
-			"images/home/home_new2.png",
-			"certificateQuery.html",
-			"js/jquery-2.1.0.min.js",
-			"js/extra.js",
-			"js/md5.min.js"
-		],
-		"refer": [
-			"certificateQuery.html"
-		]
-	},
-	"template.html": {
-		"resources": [
-			"myTrade.html",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"messageNotification.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"images/message/system.png",
-			"js/jquery-2.1.0.js",
-			"images/message/logo.png",
-			"images/message/charster.png",
-			"fonts/mui.ttf",
-			"js/jquery-2.1.0.min.js",
-			"js/extra.js"
-		],
-		"refer": [
-			"messageInformation.html"
-		]
-	},
-	"myTask.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"helpAndFeedBack.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"fonts/mui.ttf",
-			"images/help/logo.png"
-		],
-		"refer": []
-	},
-	"newslist.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"js/extra.js",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"barcode.html": {
-		"resources": [
-			"images/barcode.png",
-			"js/common.js",
-			"css/common.css",
-			"js/immersed.js",
-			"js/mui.min.js"
-		],
-		"refer": [
-			"barcode_scan.html",
-			"login.html"
-		]
-	},
-	"barcode_scan.html": {
-		"resources": [
-			"js/mui.min.js",
-			"js/common.js",
-			"css/common.css"
-		],
-		"refer": [
-			"login.html",
-			"main.html"
-		]
-	},
-	"learningCourse.html": {
-		"resources": [
-			"css/video-js.min.css",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/iconfont.css",
-			"css/mui.min.css",
-			"fonts/iconfont.ttf",
-			"js/video.min.js",
-			"js/webjwplayer.js",
-			"js/webjwplayer.html5.js",
-			"libs/easymob-webim-sdk/jquery-1.11.1.js",
-			"js/zepto.min.js",
-			"images/course/weixin.png",
-			"js/jquery-2.1.0.min.js",
-			"js/extra.js",
-			"js/videojs-contrib-hls.js",
-			"images/course/logo.jpg",
-			"js/videojs-contrib-hls.min.js",
-			"js/video.js",
-			"js/fastclick.min.js"
-		],
-		"refer": []
-	},
-	"learningRecord.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"images/center/center (5).gif",
-			"images/home/hot_three.png",
-			"css/iconfont.css",
-			"js/jquery-2.1.0.js",
-			"fonts/iconfont.ttf",
-			"js/extra.js",
-			"js/jquery-2.1.0.min.js"
-		],
-		"refer": []
-	},
-	"myDiscussion.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/iconfont.css",
-			"fonts/iconfont.ttf"
-		],
-		"refer": [
-			"discussionInformation.html"
-		]
-	},
-	"myTrade.html": {
-		"resources": [
-			"fonts/mui.ttf",
-			"js/jquery-2.1.0.js",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"js/jquery-2.1.0.min.js",
-			"js/extra.js"
-		],
-		"refer": []
-	},
-	"discussionInformation.html": {
-		"resources": [
-			"images/course/weixin.png",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/iconfont.css",
-			"css/mui.min.css",
-			"js/jquery-2.1.0.js",
-			"fonts/iconfont.ttf"
-		],
-		"refer": []
-	},
-	"myGet.html": {
-		"resources": [
-			"css/iconfont.css",
-			"fonts/iconfont.ttf",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"js/extra.js",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"getInformation.html"
-		]
-	},
-	"getInformation.html": {
-		"resources": [
-			"images/course/weixin.png",
-			"fonts/mui.ttf",
-			"js/jquery-2.1.0.js",
-			"js/mui.min.js",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"coursePurchase.html": {
-		"resources": [
-			"js/mui.picker.js",
-			"js/mui.poppicker.js",
-			"js/city.data.js",
-			"css/mui.poppicker.css",
-			"css/mui.picker.css",
-			"js/city.data-3.js",
-			"js/mui.min.js",
-			"css/app.css",
-			"fonts/mui.ttf",
-			"images/center/center (1).png",
-			"css/mui.min.css",
-			"js/jquery-2.1.0.js",
-			"js/jquery-2.1.0.min.js",
-			"js/extra.js"
-		],
-		"refer": [
-			"payment.html"
-		]
-	},
-	"messageInformation.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/extra.js"
-		],
-		"refer": []
-	},
-	"payment.html": {
-		"resources": [
-			"images/course/weixin.png",
-			"images/course/zfb.png",
-			"js/beecloud.js",
-			"images/center/center (1).png",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"js/extra.js",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"activateLearningCardInformation.html": {
-		"resources": [
-			"js/mui.picker.js",
-			"js/mui.min.js",
-			"css/app.css",
-			"js/mui.poppicker.js",
-			"css/mui.min.css",
-			"js/city.data.js",
-			"css/mui.poppicker.css",
-			"css/mui.picker.css",
-			"js/city.data-3.js",
-			"fonts/mui.ttf",
-			"js/jquery-2.1.0.min.js",
-			"js/extra.js"
-		],
-		"refer": []
-	},
-	"home_child.html": {
-		"resources": [
-			"images/home/home_1.png",
-			"images/home/home_3.png",
-			"js/app.js",
-			"images/home/load.jpg",
-			"images/home/home_4.png",
-			"js/mui.min.js",
-			"js/jquery-2.1.0.min.js",
-			"js/extra.js",
-			"css/iconfont.css",
-			"css/mui.min.css",
-			"images/newsimage.png",
-			"js/mui.lazyload.js",
-			"images/home/home_2.png",
-			"js/mui.lazyload.img.js"
-		],
-		"refer": [
-			"newsInformation.html",
-			"newslist.html",
-			"template.html"
-		]
-	},
-	"test/video.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css"
-		],
-		"refer": []
-	}
+  "main.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "images/cbd.jpg",
+      "images/yuantiao.jpg",
+      "images/muwu.jpg",
+      "images/shuijiao.jpg",
+      "home.html",
+      "css/iconfont.css",
+      "fonts/iconfont.ttf"
+    ],
+    "refer": [
+      "setting.html",
+      "home.html",
+      "cloud.html",
+      "mine.html",
+      "course.html",
+      "courseInformation.html",
+      "messageNotification.html",
+      "courseSearch.html",
+      "login.html"
+    ]
+  },
+  "login.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "images/sinaweibo.png",
+      "css/mui.min.css",
+      "css/style.css",
+      "images/weixin.png",
+      "images/qq.png",
+      "js/mui.enterfocus.js",
+      "fonts/mui.ttf",
+      "images/1P35G0O-3.jpg",
+      "images/water.jpg",
+      "libs/easymob-webim-sdk/jquery-1.11.1.js",
+      "images/startpage.png",
+      "images/help/logo.png",
+      "js/jquery-2.1.0.js",
+      "js/extra.js",
+      "js/jquery-2.1.0.min.js"
+    ],
+    "refer": [
+      "main.html",
+      "reg.html",
+      "forget_password.html"
+    ]
+  },
+  "setting.html": {
+    "resources": [
+      "libs/easymob-webim-sdk/easemob.im-1.0.5.js",
+      "libs/easymob-webim-sdk/json2.js",
+      "libs/easymob-webim-sdk/jquery-1.11.1.js",
+      "js/mui.locker.js",
+      "js/feedback.js",
+      "css/feedback-page.css",
+      "js/feedback-page.js",
+      "libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
+      "js/mui.view.js",
+      "fonts/mui.ttf",
+      "myExam.html",
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/app.css",
+      "js/extra.js"
+    ],
+    "refer": [
+      "myExam.html",
+      "login.html",
+      "barcode.html",
+      "main.html",
+      "aboutUs.html"
+    ]
+  },
+  "reg.html": {
+    "refer": [
+      "login.html"
+    ],
+    "resources": []
+  },
+  "home.html": {
+    "resources": [
+      "images/cbd.jpg",
+      "images/muwu.jpg",
+      "images/yuantiao.jpg",
+      "images/shuijiao.jpg",
+      "js/app.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "images/home/home-slider.png",
+      "images/home/hot_one.png",
+      "images/home/hot_three.png",
+      "css/iconfont.css",
+      "fonts/iconfont.ttf",
+      "images/home/hot_two.png",
+      "images/home/hot_four.png",
+      "images/home/more_three.png",
+      "images/home/more_one.png",
+      "images/home/more_two.png",
+      "libs/easymob-webim-sdk/jquery-1.11.1.js",
+      "js/mui.lazyload.js",
+      "js/mui.lazyload.img.js",
+      "images/home/home-slider.png/",
+      "images/home/home_1.png",
+      "images/home/home_3.png",
+      "images/home/home_4.png",
+      "images/home/home_2.png",
+      "images/home/home_new2.png",
+      "images/newsimage.png",
+      "images/home/home_new3.png",
+      "images/home/home_new4.png",
+      "images/home/home_new1.png",
+      "images/60x60.gif",
+      "js/getDevice.js",
+      "js/sendAjax.js",
+      "js/extra.js",
+      "js/jquery-2.1.0.min.js",
+      "images/home/load.jpg"
+    ],
+    "refer": [
+      "newsInformation.html",
+      "newslist.html",
+      "activateLearningCard.html",
+      "courseInformation.html",
+      "myExam.html",
+      "certificateQuery.html",
+      "myTask.html",
+      "courseSearch.html",
+      "messageNotification.html",
+      "template.html",
+      "myGet.html",
+      "learningRecord.html",
+      "myTrade.html",
+      "myDiscussion.html",
+      "helpAndFeedBack.html"
+    ]
+  },
+  "cloud.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "images/center/center (2).gif",
+      "images/center/center (6).gif",
+      "images/center/center (5).gif",
+      "images/center/center (1).png",
+      "images/center/center (4).gif",
+      "images/center/center (3).gif",
+      "images/center/center (1).gif",
+      "libs/easymob-webim-sdk/jquery-1.11.1.js",
+      "images/home/home_new1.png",
+      "images/home/home_new4.png",
+      "images/home/home_new2.png",
+      "images/home/home_new3.png",
+      "css/iconfont.css",
+      "fonts/iconfont.ttf",
+      "js/logined.js",
+      "js/extra.js",
+      "js/jquery-2.1.0.min.js"
+    ],
+    "refer": [
+      "learningCourse.html",
+      "login.html"
+    ]
+  },
+  "course.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "images/cbd.jpg",
+      "images/muwu.jpg",
+      "images/shuijiao.jpg",
+      "images/home/more_one.png",
+      "images/home/more_three.png",
+      "images/home/more_two.png",
+      "images/center/center (2).gif",
+      "images/center/center (6).gif",
+      "images/center/center (5).gif",
+      "images/center/center (1).png",
+      "images/center/center (4).gif",
+      "images/center/center (3).gif",
+      "images/center/center (1).gif",
+      "libs/easymob-webim-sdk/jquery-1.11.1.js",
+      "js/mui.lazyload.js",
+      "js/mui.lazyload.img.js",
+      "images/home/hot_one.png",
+      "images/home/hot_three.png",
+      "images/home/hot_two.png",
+      "images/home/hot_four.png",
+      "css/iconfont.css",
+      "fonts/iconfont.ttf",
+      "js/jquery-2.1.0.min.js",
+      "js/extra.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js"
+    ],
+    "refer": [
+      "courseInformation.html",
+      "coursePurchase.html"
+    ]
+  },
+  "mine.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "images/home/bc.jpg",
+      "images/water.jpg",
+      "fonts/mui.ttf",
+      "css/iconfont.css",
+      "fonts/iconfont.ttf",
+      "js/jquery-2.1.0.min.js",
+      "js/extra.js"
+    ],
+    "refer": [
+      "myExam.html",
+      "template.html",
+      "myTrade.html",
+      "myGet.html",
+      "myTask.html",
+      "setting.html",
+      "helpAndFeedBack.html",
+      "learningRecord.html",
+      "certificateQuery.html",
+      "messageNotification.html",
+      "myDiscussion.html",
+      "activateLearningCard.html",
+      "login.html"
+    ]
+  },
+  "courseInformation.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "libs/easymob-webim-sdk/jquery-1.11.1.js",
+      "images/center/center (1).gif",
+      "images/course_IN.png",
+      "js/jquery-2.1.0.min.js",
+      "js/extra.js",
+      "images/course/bc.png"
+    ],
+    "refer": [
+      "coursePurchase.html",
+      "learningCourse.html"
+    ]
+  },
+  "courseSearch.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/mui.lazyload.js",
+      "js/mui.lazyload.img.js",
+      "libs/easymob-webim-sdk/jquery-1.11.1.js",
+      "images/home/hot_one.png",
+      "images/home/hot_three.png",
+      "images/home/hot_two.png",
+      "images/home/hot_four.png",
+      "images/60x60.gif",
+      "js/jquery-2.1.0.min.js",
+      "js/extra.js"
+    ],
+    "refer": [
+      "coursePurchase.html"
+    ]
+  },
+  "newsInformation.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "js/extra.js"
+    ],
+    "refer": []
+  },
+  "activateLearningCard.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "images/card/studyCard.png",
+      "fonts/mui.ttf",
+      "activateLearningCard.html",
+      "js/extra.js"
+    ],
+    "refer": [
+      "activateLearningCard.html",
+      "activateLearningCardInformation.html"
+    ]
+  },
+  "myExam.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/extra.js"
+    ],
+    "refer": []
+  },
+  "certificateQuery.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "images/60x60.gif",
+      "images/home/home_new2.png",
+      "certificateQuery.html",
+      "js/jquery-2.1.0.min.js",
+      "js/extra.js",
+      "js/md5.min.js"
+    ],
+    "refer": [
+      "certificateQuery.html"
+    ]
+  },
+  "template.html": {
+    "resources": [
+      "myTrade.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "messageNotification.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "images/message/system.png",
+      "js/jquery-2.1.0.js",
+      "images/message/logo.png",
+      "images/message/charster.png",
+      "fonts/mui.ttf",
+      "js/jquery-2.1.0.min.js",
+      "js/extra.js"
+    ],
+    "refer": [
+      "messageInformation.html"
+    ]
+  },
+  "myTask.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "helpAndFeedBack.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "images/help/logo.png"
+    ],
+    "refer": []
+  },
+  "newslist.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "js/extra.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "barcode.html": {
+    "resources": [
+      "images/barcode.png",
+      "js/common.js",
+      "css/common.css",
+      "js/immersed.js",
+      "js/mui.min.js"
+    ],
+    "refer": [
+      "barcode_scan.html",
+      "login.html"
+    ]
+  },
+  "barcode_scan.html": {
+    "resources": [
+      "js/mui.min.js",
+      "js/common.js",
+      "css/common.css"
+    ],
+    "refer": [
+      "login.html",
+      "main.html"
+    ]
+  },
+  "learningCourse.html": {
+    "resources": [
+      "css/video-js.min.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "fonts/iconfont.ttf",
+      "js/video.min.js",
+      "js/webjwplayer.js",
+      "js/webjwplayer.html5.js",
+      "libs/easymob-webim-sdk/jquery-1.11.1.js",
+      "js/zepto.min.js",
+      "images/course/weixin.png",
+      "js/jquery-2.1.0.min.js",
+      "js/extra.js",
+      "js/videojs-contrib-hls.js",
+      "images/course/logo.jpg",
+      "js/videojs-contrib-hls.min.js",
+      "js/video.js",
+      "js/fastclick.min.js"
+    ],
+    "refer": []
+  },
+  "learningRecord.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "images/center/center (5).gif",
+      "images/home/hot_three.png",
+      "css/iconfont.css",
+      "js/jquery-2.1.0.js",
+      "fonts/iconfont.ttf",
+      "js/extra.js",
+      "js/jquery-2.1.0.min.js"
+    ],
+    "refer": []
+  },
+  "myDiscussion.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/iconfont.css",
+      "fonts/iconfont.ttf"
+    ],
+    "refer": [
+      "discussionInformation.html"
+    ]
+  },
+  "myTrade.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "js/jquery-2.1.0.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/jquery-2.1.0.min.js",
+      "js/extra.js"
+    ],
+    "refer": []
+  },
+  "discussionInformation.html": {
+    "resources": [
+      "images/course/weixin.png",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "js/jquery-2.1.0.js",
+      "fonts/iconfont.ttf",
+      "js/jquery-2.1.0.min.js"
+    ],
+    "refer": []
+  },
+  "myGet.html": {
+    "resources": [
+      "css/iconfont.css",
+      "fonts/iconfont.ttf",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/extra.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "getInformation.html"
+    ]
+  },
+  "getInformation.html": {
+    "resources": [
+      "images/course/weixin.png",
+      "fonts/mui.ttf",
+      "js/jquery-2.1.0.js",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "coursePurchase.html": {
+    "resources": [
+      "js/mui.picker.js",
+      "js/mui.poppicker.js",
+      "js/city.data.js",
+      "css/mui.poppicker.css",
+      "css/mui.picker.css",
+      "js/city.data-3.js",
+      "js/mui.min.js",
+      "css/app.css",
+      "fonts/mui.ttf",
+      "images/center/center (1).png",
+      "css/mui.min.css",
+      "js/jquery-2.1.0.js",
+      "js/jquery-2.1.0.min.js",
+      "js/extra.js"
+    ],
+    "refer": [
+      "payment.html"
+    ]
+  },
+  "messageInformation.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/extra.js"
+    ],
+    "refer": []
+  },
+  "payment.html": {
+    "resources": [
+      "images/course/weixin.png",
+      "images/course/zfb.png",
+      "js/beecloud.js",
+      "images/center/center (1).png",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "js/extra.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "activateLearningCardInformation.html": {
+    "resources": [
+      "js/mui.picker.js",
+      "js/mui.min.js",
+      "css/app.css",
+      "js/mui.poppicker.js",
+      "css/mui.min.css",
+      "js/city.data.js",
+      "css/mui.poppicker.css",
+      "css/mui.picker.css",
+      "js/city.data-3.js",
+      "fonts/mui.ttf",
+      "js/jquery-2.1.0.min.js",
+      "js/extra.js"
+    ],
+    "refer": []
+  },
+  "home_child.html": {
+    "resources": [
+      "images/home/home_1.png",
+      "images/home/home_3.png",
+      "js/app.js",
+      "images/home/load.jpg",
+      "images/home/home_4.png",
+      "js/mui.min.js",
+      "js/jquery-2.1.0.min.js",
+      "js/extra.js",
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "images/newsimage.png",
+      "js/mui.lazyload.js",
+      "images/home/home_2.png",
+      "js/mui.lazyload.img.js"
+    ],
+    "refer": [
+      "newsInformation.html",
+      "newslist.html",
+      "template.html"
+    ]
+  },
+  "test/video.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "aboutUs.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "images/help/logo.png"
+    ],
+    "refer": []
+  }
 }

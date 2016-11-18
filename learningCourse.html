@@ -140,7 +140,7 @@
 			#zjzxVideo {
 				width: 100%;
 				display: block;
-				position: absolute;
+				position: fixed; 
 				top: 0;
 				left: 0;
 				z-index: 999;
@@ -338,8 +338,7 @@
 		<link rel="stylesheet" href="css/video-js.min.css" />
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<!--<script src="js/video.min.js" type="text/javascript" charset="utf-8"></script>-->
-		<script src="js/video.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/videojs-contrib-hls.min.js" type="text/javascript" charset="utf-8"></script>
+		
 	</head>
 
 	<body>
@@ -347,10 +346,10 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title" id="title">行动日志——成功人士的</h1>
 		</header>
-		<footer>
+		<!--<footer>
 			<span class="mui-icon iconfont icon-fenxiang" style="color: #E93F32;" id="share"></span>
 			<span class="mui-icon iconfont icon-shoucang" style="color: #acabab;font-size: 25px;" id="collection"></span>
-		</footer>
+		</footer>-->
 		<div class="mui-content" id="mui-content">
 			<video id="zjzxVideo" class="video-js vjs-default-skin vjs-big-play-centered video-zjzx-fullscreen" controls preload="auto" poster="images/course/logo.jpg" ata-setup="{}">
 			</video>
@@ -474,10 +473,12 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/extra.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/fastclick.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/video.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/videojs-contrib-hls.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="UTF-8">
-			if('addEventListener' in document) {
+			if('addEventListener' in document) { 
 				document.addEventListener('DOMContentLoaded', function() {
-					FastClick.attach(document.body);
+					FastClick.attach(document.body); 
 				}, false);
 			}
 
@@ -716,17 +717,16 @@
 				
 
 //				处理视屏旋转,监听视屏尺寸变化
-				$(window).resize(function() {
-					//					console.log(1);
-					setTimeout(function() {
-						if(!myPlayer.isFullscreen()) {
-							console.log(2);
-							plus.screen.lockOrientation("portrait-primary");
-						}else{
-							console.log(2);
-						}
-					}, 50);
-				});
+//				$(window).resize(function() {
+//					//					console.log(1);
+//					setTimeout(function() {
+//						if(!myPlayer.isFullscreen()) {
+//							plus.screen.lockOrientation("portrait-primary");
+//						}else{
+//							console.log(2);
+//						}
+//					}, 50);
+//				});
 
 				//双击暂停和播放
 				myPlayer.on('doubletap', function() {
@@ -849,14 +849,21 @@
 				//***********重写back函数，退出后会关闭整个页面
 				var thiswebview = plus.webview.currentWebview();
 				mui.back = function() {
+					if (!$('#zjzxVideo').hasClass('video-zjzx-fullscreen')) {
+						 $('#zjzxVideo').addClass('video-zjzx-fullscreen');
+						  plus.navigator.setFullscreen(false);
+					     plus.screen.lockOrientation("portrait-primary");
+					}else{
+						plus.screen.lockOrientation("portrait-primary");
+					    plus.webview.close(thiswebview); 
+					}
 					//强制竖屏
-					plus.screen.lockOrientation("portrait-primary");
-					plus.webview.close(thiswebview);
+					
 				}
 				document.getElementById("addCourseGet").addEventListener('click', function(e) {
 					//修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
 					var btnArray = ['取消', '确定'];
-					mui.prompt('请输入你的心得：', '很有收获', 'Hello ZJZX', btnArray, function(e) {
+					mui.prompt('请输入你的心得：', '很有收 获', 'Hello ZJZX', btnArray, function(e) {
 						if(e.index == 1) {
 							var src = "images/course/weixin.png";
 							//获取img的src值

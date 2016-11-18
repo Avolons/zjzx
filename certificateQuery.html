@@ -94,6 +94,9 @@
 				color: #828282;
 				margin-bottom: 7.5px;
 			}
+			#certList{
+				text-align: center;
+			}
 		</style>
 	</head>
 
@@ -101,9 +104,9 @@
 		<div class="mui-content" id="queryList">
 			<img src="images/home/home_new2.png" width="100%" />
 			<form>
-				<h6>*请填写如下信息</h6>
-				<input type="text" id="yours" value="胡茂霞" placeholder="请输入姓名" />
-				<input type="text" id="number" value="460034199201013343" placeholder="请输入身份证号" />
+				<h6>*请填写如下信息,证书查询操作5秒后方能进行二次查询</h6>
+				<input type="text" id="yours" value="" placeholder="请输入姓名" />
+				<input type="text" id="number" value="" placeholder="请输入身份证号" />
 				<div><button type="button" id="check">查询</button></div>
 			</form>
 			<div id="certList">
@@ -197,28 +200,36 @@
 							sendAjax('api/Course/GetCertificateList', datas, function(data) {
 								if(data.Body.TotalCount > 0) {
 									newList.appendChild(createFragment(data.Body.Items));
-									count++;
+//									count++;
 									$(check).off('tap');
+									check.style.backgroundColor='#dadada';
 									setTimeout(function() {
 										$(check).on('tap', function() { 
 											messagecheck();
 										});
-									}, 10000);
+										check.style.backgroundColor='#f2b928';
+									}, 5000);
 								} else {
+									newList.innerHTML='未查到相关数据';
 									$(check).off('tap');
+									check.style.backgroundColor='#dadada';
 									setTimeout(function() {
 										$(check).on('tap', function() {
 											messagecheck();
 										});
-									}, 10000);
+										check.style.backgroundColor='#f2b928';
+										
+									}, 5000);
 								}
 							}, function() {
 								$(check).off('tap');
+								check.style.backgroundColor='#dadada';
 								setTimeout(function() {
 									$(check).on('tap', function() {
 										messagecheck();
 									});
-								}, 10000);
+									check.style.backgroundColor='#f2b928';
+								}, 5000);
 							});
 							} else{
 								mui.alert("请填写正确的身份证号码", '格式错误', '是');

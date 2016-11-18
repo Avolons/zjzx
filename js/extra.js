@@ -101,7 +101,7 @@ function urlopenwindow(callback) {
 				mui.openWindow({
 					url: "login.html"
 				});
-				//						mui.alert(JSON.stringify(thisWebview));
+				//mui.alert(JSON.stringify(thisWebview));
 			} else {
 				return;
 			}
@@ -110,13 +110,13 @@ function urlopenwindow(callback) {
 }
 
 //url 配置
-//var url='http://zjzxvpn.zjzx.cn:88/'; 
+//var url='http://zjzxvpn.zjzx.cn/'; 
 //var url='http://192.168.1.112/';
 var url = 'http://appapi.zjzx.cn/';
-
+ 
 //ajax封装函数
-function sendAjax(urls, data, callback, errors) {
-	errors = errors || function() {
+function sendAjax(urls, data, callback, errors) { 
+	errors = errors || function() {   
 		return false;
 	};
 	urls = url + urls;
@@ -126,13 +126,13 @@ function sendAjax(urls, data, callback, errors) {
 		dataType: 'json', //服务器返回json格式数据
 		type: 'post', //HTTP请求类型
 		timeout: 5000, //超时时间设置为5秒；
-		success: function(data) {
+		success: function(data) { 
 			callback(data);
 		},
 		error: function(xhr, type, errorThrown) {
 			//异常处理；
 			console.log(type);
-			mui.ajax(urls, {
+			mui.ajax(urls, {  
 				data: data,
 				dataType: 'json', //服务器返回json格式数据
 				type: 'post', //HTTP请求类型

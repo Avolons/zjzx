@@ -5142,20 +5142,19 @@ var FullscreenToggle = (function (_Button) {
    */
 
   FullscreenToggle.prototype.handleClick = function handleClick() {
-    if (!this.player_.isFullscreen()) {
-    	var that=this;
-	  plus.screen.lockOrientation("landscape-primary");
-	  	this.player_.requestFullscreen();
-	  	console.log(1);
-   	  	videoArea.removeClass('video-zjzx-fullscreen');
+  	//假设拥有全屏定位样式
+  	if ($('#zjzxVideo').hasClass('video-zjzx-fullscreen')) {
+  		plus.screen.lockOrientation("landscape-primary");
+  		$('#zjzxVideo').removeClass('video-zjzx-fullscreen');
 	  	plus.navigator.setFullscreen(true);
       this.controlText('Non-Fullscreen');
-    } else {
-      this.player_.exitFullscreen();
+  	} else{
+//    this.player_.exitFullscreen();
+      $('#zjzxVideo').addClass('video-zjzx-fullscreen');
       plus.navigator.setFullscreen(false);
       plus.screen.lockOrientation("portrait-primary");
       this.controlText('Fullscreen');
-    }
+  	}
   };
 
   return FullscreenToggle;
